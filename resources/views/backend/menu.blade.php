@@ -19,16 +19,16 @@
           @endphp">
           <a class="nav-link" href="admin/categorys">
               <i class="fa-solid fa-bars"></i>
-              <p>Danh Mục</p>
+              <p>Danh Mục TS</p>
           </a>
         </li>
         <li class="nav-item @php
-              if(isset($activeBrand))
-              echo $activeBrand;
+              if(isset($activeTopping))
+              echo $activeTopping;
           @endphp">
-          <a class="nav-link" href="admin/brands">
+          <a class="nav-link" href="admin/toppings">
               <i class="fa-solid fa-certificate"></i>
-              <p>Thương Hiệu</p>
+              <p>Topping</p>
           </a>
         </li>
         <li class="nav-item @php

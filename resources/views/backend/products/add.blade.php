@@ -82,7 +82,7 @@
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label class="bmd-label-floating">Danh Mục</label>
+                      <label class="bmd-label-floating">Danh Mục TS</label>
                       <select name="category_id" class="form-control">
                         <option value="">---Chọn Loại---</option>
                         @foreach ($dataCategory as $item)
@@ -90,20 +90,6 @@
                         @endforeach
                       </select>
                       @error('category_id')
-                        <span class="text-danger">{{$message}}</span>
-                      @enderror
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Thương Hiệu</label>
-                      <select name="brand_id" class="form-control">
-                        <option value="">---Chọn Thương Hiệu---</option>
-                        @foreach ($dataBrand as $item)
-                          <option value="{{$item->brand_id}}">{{$item->brand_name}}</option>
-                        @endforeach
-                      </select>
-                      @error('brand_id')
                         <span class="text-danger">{{$message}}</span>
                       @enderror
                     </div>

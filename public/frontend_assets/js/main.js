@@ -65,6 +65,19 @@
     03. Product  Masonry (width)
 --------------------------------------------- */
 
+
+    $('.dropdown-toggle').on('click', function(e) {
+        e.preventDefault(); // Ngăn chặn hành động mặc định
+        var $dropdown = $(this).closest('li').find('.dropdown'); // Tìm dropdown tương ứng
+
+        // Kiểm tra trạng thái hiển thị của dropdown
+        if ($dropdown.is(':visible')) {
+            $dropdown.slideUp(); // Nếu đang hiển thị thì ẩn
+        } else {
+            $dropdown.slideDown(); // Nếu không hiển thị thì hiện
+        }
+    });
+
     $('.htc__product__container').imagesLoaded( function() {
 
         // filter items on button click

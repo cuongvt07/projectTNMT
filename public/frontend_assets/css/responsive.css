@@ -604,6 +604,13 @@ nav.off__canvars--menu ul li {
   height: 115px;
 }
 
+.search__area .search__inner form {
+  margin: 10px 0 !important;
+  padding: 0 40px 0 0;
+  position: relative;
+  text-align: center;
+}
+
 nav.mean-nav {
   position: absolute;
   left: 111px;
@@ -732,13 +739,10 @@ nav.mean-nav {
   width: 100%;
 }
 .shopping__cart, .user__meta {
-  width: 97%;
+  width: 90%;
 }
 .shp__pro__thumb {
   margin-right: 10px;
-}
-.shopping__cart__inner {
-  padding: 102px 44px 100px 9px;
 }
 .remove__btn {
   margin-left: 7px;
@@ -1225,7 +1229,7 @@ nav.mean-nav {
   margin-top: -59px;
 }
 .header__top__area, .menumenu__container {
-  padding-left: 0;
+  padding-left: 20px;
   padding-right: 20px;
 }
 .header__account a {

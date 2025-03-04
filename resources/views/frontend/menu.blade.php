@@ -15,21 +15,22 @@
                                 <li class="drop"><a href="/">Trang Chủ</a></li>
                                 <li class="drop"><a href="/shop">Sản Phẩm</a>
                                     <ul class="dropdown mega_dropdown">
-                                        <li><a class="mega__title" href="/shop">Thương Hiệu</a>
+                                        <li><a class="mega__title" href="/shop">Loại Trà Sữa</a>
                                             <ul class="mega__item">
-                                                @foreach ($dataBrand as $item)
-                                                <li><a href="/shop/brand/{{$item->brand_id}}-{{Str::slug($item->brand_name, '-')}}.html">{{$item->brand_name}}</a></li>
+                                                @foreach ($dataCategory->chunk(4) as $chunk)
+                                                    <div class="mega__column">
+                                                        @foreach ($chunk as $item)
+                                                            <li>
+                                                                <a href="/shop/category/{{$item->category_id}}-{{ Str::slug($item->category_name, '-') }}.html">
+                                                                    {{$item->category_name}}
+                                                                </a>
+                                                            </li>
+                                                        @endforeach
+                                                    </div>
                                                 @endforeach
                                             </ul>
                                         </li>
-                                        <li><a class="mega__title" href="/shop">Phân Loại</a>
-                                            <ul class="mega__item">
-                                                @foreach ($dataCategory as $item)
-                                                <li><a href="/shop/category/{{$item->category_id}}-{{Str::slug($item->category_name, '-')}}.html">{{$item->category_name}}</a></li>
-                                                @endforeach
-                                            </ul>
-                                        </li>
-                                        <!-- End Single Mega MEnu -->
+                                        <!-- End Single Mega Menu -->
                                     </ul>
                                 </li>
                                 <li><a href="/contact">Liên Hệ</a></li>
@@ -39,11 +40,35 @@
                         <div class="mobile-menu clearfix visible-xs visible-sm">
                             <nav id="mobile_dropdown">
                                 <ul>
-                                    <li class="drop"><a href="/">Trang Chủ</a></li>
-                                    <li class="drop"><a href="/shop">Của Hàng</a>
+                                    <li class="drop">
+                                        <a href="/">Trang Chủ</a>
                                     </li>
-                                    <li class="drop"><a href="/blog">Bài Viết</a></li>
-                                    <li><a href="/contact">Liên Hệ</a></li>
+                                    <li class="drop">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <a href="/shop" class="me-auto">Sản phẩm</a>
+                                            <span class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            </span>
+                                        </div>
+                                        <ul class="dropdown" style="display: none;">
+                                            @foreach ($dataCategory as $item)
+                                                <li>
+                                                    <div class="row">
+                                                        <div class="col-xs-9">
+                                                            <a href="/shop/category/{{$item->category_id}}-{{ Str::slug($item->category_name, '-') }}.html">
+                                                                {{$item->category_name}}
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                    <li class="drop">
+                                        <a href="/blog">Bài Viết</a>
+                                    </li>
+                                    <li>
+                                        <a href="/contact">Liên Hệ</a>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>

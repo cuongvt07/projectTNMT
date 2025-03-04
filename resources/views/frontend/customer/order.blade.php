@@ -1,7 +1,7 @@
 @extends('frontend.layout')
 
 @section('content')
-<div class="container pt--20" style="background: #c0c5cc;">
+<div class="container pt--20" style="background: #999;">
     @include('frontend.note')
     <div class="row">
         <center>

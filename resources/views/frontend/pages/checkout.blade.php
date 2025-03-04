@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- cart-main-area start -->
-<div class="checkout-wrap ptb--100">
+<div class="checkout-wrap">
     <div class="container">
         <div class="row">
             <div class="col-md-8">
@@ -84,18 +84,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        @foreach ($cart as $index => $item)
-                                            <div class="col-md-12">
-                                                <div class="single-input">
-                                                    <select class="wrist-select" name="wrist_measurement_{{ $item['cart_id'] }}" data-product-id="{{ $item['cart_id'] }}">
-                                                        <option value="">Chọn độ rộng sản phẩm {{ $index + 1 }}</option>
-                                                        @for ($i = 10; $i <= 50; $i++)
-                                                            <option value="{{ $i }}">{{ $i }} cm</option>
-                                                        @endfor
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        @endforeach
                                         <div class="col-md-12">
                                             <div class="single-input">
                                                 <input type="text" name="order_note" placeholder="Lời nhắn">
@@ -184,9 +172,13 @@
                                                 <span class="item-label font-weight-bold">Topping: </span>
                                                 <span class="item-value">
                                                     @foreach ($item['topping'] as $index => $topping)
-                                                        {{ $topping['name'] }} - {{ number_format($topping['price']) }} đ
+                                                        {{ $topping['name'] }}
                                                         @if ($index < count($item['topping']) - 1)
-                                                            ,
+                                                            @if (count($item['topping']) > 2)
+                                                                ;
+                                                            @else
+                                                                ,
+                                                            @endif
                                                         @endif
                                                     @endforeach
                                                 </span>
@@ -196,11 +188,7 @@
                                     <!-- Hiển thị giá và cân nặng -->
                                     <div class="mt-2">
                                         <span class="price">
-                                            {{ number_format($itemTotalPrice) }} đ
-                                        </span>
-                                        -
-                                        <span class="weight">
-                                            {{ \App\Helpers\CommonHelper::get_data_weight($item['cart_weight']) }} kg
+                                            Giá: {{ number_format($itemTotalPrice) }} đ
                                         </span>
                                     </div>
                                     <span class="wrist-measurement" data-product-id="{{ $item['cart_id'] }}"></span>

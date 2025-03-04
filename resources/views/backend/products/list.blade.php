@@ -21,7 +21,7 @@
                                 <th style="width: 150px; font-weight: bold; font-size: 16px; color: #FFFFFF">Tên sản
                                     phẩm
                                 </th>
-                                <th style="width: 150px; font-weight: bold; font-size: 16px;" class="text-center">Danh mục
+                                <th style="width: 150px; font-weight: bold; font-size: 16px;" class="text-center">Danh mục TS
                                 </th>
                                 <th style="width: 100px;font-weight: bold; font-size: 16px;"
                                     class="text-center product-count">Thương hiệu

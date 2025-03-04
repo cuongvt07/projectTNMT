@@ -5,7 +5,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title " style="font-weight: bold">Danh Sách Danh Mục</h4>
+                        <h4 class="card-title " style="font-weight: bold">Danh Sách Danh Mục TS</h4>
                     </div>
                     @include('backend.note')
                     <div class="card-body">
@@ -87,7 +87,7 @@
 
                                                     <a href="admin/categorys/create"
                                                        class="button-common-add add  mb-2 mt-2 mr-2">
-                                                        <i class="fa-solid fa-plus fa-lg mr-1"></i>Thêm Danh Mục
+                                                        <i class="fa-solid fa-plus fa-lg mr-1"></i>Thêm Danh Mục TS
                                                     </a>
 
                                                     <div

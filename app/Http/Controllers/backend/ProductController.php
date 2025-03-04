@@ -67,11 +67,10 @@ class ProductController extends Controller
                 'product_image' => $this->handleUploadImage($request, 'product_image', 'images_product'),
                 'product_name' => $request->product_name,
                 'category_id' => $request->category_id,
-                'brand_id' => $request->brand_id,
                 'product_price_buy' => $request->product_price_buy,
                 'product_price_sell' => $request->product_price_sell,
                 'product_amount' => $request->product_amount,
-                'product_sale' => $request->product_sale,
+                'product_sale' => $request->product_sale ?? 0,
                 'product_attribute' => $request->product_attribute,
                 'product_detail' => $request->product_detail,
                 'product_keyword' => $request->product_keyword,
@@ -134,11 +133,10 @@ class ProductController extends Controller
 
             $data->product_name = $request->product_name;
             $data->category_id = $request->category_id;
-            $data->brand_id = $request->brand_id;
             $data->product_price_buy = $request->product_price_buy;
             $data->product_price_sell = $request->product_price_sell;
             $data->product_amount = $request->product_amount;
-            $data->product_sale = $request->product_sale;
+            $data->product_sale = $request->product_sale ?? 0;
             $data->product_attribute = $request->product_attribute;
             $data->product_detail = $request->product_detail;
             $data->product_keyword = $request->product_keyword;

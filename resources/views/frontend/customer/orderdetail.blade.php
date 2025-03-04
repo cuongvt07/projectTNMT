@@ -1,7 +1,7 @@
 @extends('frontend.layout')
 
 @section('content')
-<div class="container pt--20" style="background: #c0c5cc;">
+<div class="container pt--20" style="background: #999;">
     @include('frontend.note')
     <div class="row">
         <center>
@@ -61,7 +61,6 @@
                         {{ $status['label'] }}
                     </div>
                     </div>
-
                 </div>
             </div>
             <div class="row">
@@ -72,18 +71,38 @@
                             <tr>
                                 <th>Sản phẩm</th>
                                 <th>Ảnh sản phẩm</th>
+                                <th>Topping</th>
+                                <th>Tổng giá</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($data as $item)
                             <tr>
                                 <td>
-                                    <a style="font-size: 20px" href="/shop/product/{{$item->product_id}}-{{Str::slug($item->product->product_name, '-')}}.html">{{$item->product->product_name}}</a>
+                                    <a style="font-size: 20px; color: #fff" href="/shop/product/{{$item->product_id}}-{{Str::slug($item->product->product_name, '-')}}.html">{{$item->product->product_name}}</a>
                                     <br>
                                     <span>Số lượng: {{$item->order_detail_quantity}}</span><br>
-                                    <span>Giá: {{number_format($item->order_detail_price)}}</span>
+                                    <span>Giá: {{number_format($item->order_detail_price)}} VNĐ</span>
                                 </td>
                                 <td><img style="width: 100px; height: 100px" src="{{$item->product->product_image}}" alt=""></td>
+                                <td>
+                                    @if($item->topping_detail->isNotEmpty())
+                                        @foreach($item->topping_detail as $toppingDetail)
+                                            {{ $toppingDetail->topping->topping_name ?? 'N/A' }} ({{ number_format($toppingDetail->topping->price ?? 0) }} VNĐ);
+                                        @endforeach
+                                    @else
+                                        <span>Không có topping</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @php
+                                        $toppingTotal = $item->topping_detail->sum(function ($toppingDetail) {
+                                            return $toppingDetail->topping->price ?? 0;
+                                        });
+                                        $totalPrice = ($item->order_detail_price * $item->order_detail_quantity) + $toppingTotal * $item->order_detail_quantity;
+                                    @endphp
+                                    {{ number_format($totalPrice) }} VNĐ
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

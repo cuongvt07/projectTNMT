@@ -18,7 +18,6 @@ class ProductModel extends Model
         'product_image',
         'product_name',
         'category_id',
-        'brand_id',
         'product_price_buy',
         'product_price_sell',
         'product_amount',
@@ -37,16 +36,6 @@ class ProductModel extends Model
     public function category()
     {
         return $this->belongsTo(CategoryModel::class, 'category_id', 'category_id');
-    }
-
-    /**
-     * Get the brand that owns the ProductModel
-     *
-     * @return BelongsTo
-     */
-    public function brand()
-    {
-        return $this->belongsTo(BrandModel::class, 'brand_id', 'brand_id');
     }
 
     /**

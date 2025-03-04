@@ -50,7 +50,7 @@ class ProductExport implements FromCollection, WithHeadings, WithCustomStartCell
             "ID",
             "Tên sản phẩm",
             "Số lượng",
-            "danh mục",
+            "danh mục TS",
             "Thương Hiệu",
             "Giá nhập vào",
             "Giá bán ra",

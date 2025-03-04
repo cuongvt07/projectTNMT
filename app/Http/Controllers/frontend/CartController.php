@@ -29,6 +29,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 use App\Http\Services\CartService;
 use App\Models\ToppingModel;
+use App\Models\OrderdetailToppingModel;
 
 class CartController extends Controller
 {
@@ -135,39 +136,43 @@ class CartController extends Controller
     }
 
     //Hàm thanh toán đơn hàng
-    public function payment(CheckoutRequest $request){
+    public function payment(CheckoutRequest $request)
+    {
         $today = Carbon::today('Asia/Ho_Chi_Minh');
         $order_profit = 0;
         $user_id = Auth::id();
-
-        foreach($this->cart as $product){
+    
+        // Kiểm tra số lượng sản phẩm trong kho
+        foreach ($this->cart as $product) {
             $data = ProductModel::find($product['cart_id']);
-            if($data->product_amount == 0 || $data->product_amount < $product['cart_quantity']){
+            if ($data->product_amount == 0 || $data->product_amount < $product['cart_quantity']) {
                 $this->deleteSession();
                 return redirect('/')->with('msgError', 'Đặt hàng thất bại do sản phẩm đã hết hàng hoặc số lượng hàng không đủ');
             }
-        };
-
+        }
+    
+        // Xử lý coupon
         $this->coupon = Session::get('coupon');
-        if($this->coupon){
+        if ($this->coupon) {
             $dataCoupon = CouponModel::find($this->coupon['coupon_id']);
-            $dataCoupon->user_id = $dataCoupon->user_id . $user_id .',';
+            $dataCoupon->user_id = $dataCoupon->user_id . $user_id . ',';
             $dataCoupon->save();
         }
-
+    
+        // Tính tổng giá trị đơn hàng
         $this->shiping = Session::get('priceShip');
         $cart_total = $this->getTotal($this->cart);
-
         $cart_totals = $this->getTotals($cart_total, $this->shiping);
         $priceProduct = 0;
-
+    
         foreach ($this->cart as $product) {
             $priceProductSub = ProductModel::find($product['cart_id'])->product_price_buy * $product['cart_quantity'];
-            $priceProduct+= $priceProductSub;
+            $priceProduct += $priceProductSub;
         }
-
+    
         $order_profit = $cart_totals - $priceProduct;
-
+    
+        // Lấy thông tin địa chỉ
         $dataCity = CityModel::find($request->city_id);
         $dataDistrict = DistrictModel::find($request->district_id);
         $coupon = $this->coupon;
@@ -175,11 +180,11 @@ class CartController extends Controller
             'user_id' => $user_id,
             'order_note' => $request->order_note,
             'order_shipping' =>
-                "Tên người nhận: ".$request->order_name .
-                " - Email: " . $request->order_email.
-                " - Số điện thoại: " . $request->order_phone.
-                " - Địa chỉ: " . $request->order_addres.
-                " - " . $dataDistrict->district_name.
+                "Tên người nhận: " . $request->order_name .
+                " - Email: " . $request->order_email .
+                " - Số điện thoại: " . $request->order_phone .
+                " - Địa chỉ: " . $request->order_addres .
+                " - " . $dataDistrict->district_name .
                 " - " . $dataCity->city_name,
             'order_pay_type' => $request->order_pay_type,
             'order_address' => $request->order_addres,
@@ -189,10 +194,12 @@ class CartController extends Controller
             'order_status' => 1,
             'created_at' => $today,
         ];
-
+    
         Session::put('dataCustomer', $dataCustomerOrder);
         Session::save();
-        if($request->order_pay_type == 2){
+    
+        // Xử lý các phương thức thanh toán
+        if (in_array($request->order_pay_type, [2, 3, 4])) {
             return view('frontend.vnpay.index', [
                 'order_total' => $cart_totals,
                 'order_pay_type' => $request->order_pay_type,
@@ -201,69 +208,72 @@ class CartController extends Controller
                 'cart_totals' => $cart_totals,
                 'cart_total' => $cart_total,
                 'priceShip' => $this->shiping,
-                'coupon' => $coupon['coupon_show'],
-            ]);
-        } elseif ($request->order_pay_type == 3){
-            return view('frontend.vnpay.index', [
-                'order_total' => $cart_totals,
-                'order_pay_type' => $request->order_pay_type,
-                'dataCustomerOrder' => Session::get('dataCustomer'),
-                'cart' => $this->cart,
-                'cart_totals' => $cart_totals,
-                'cart_total' => $cart_total,
-                'priceShip' =>  $this->shiping,
-                'coupon' => $coupon['coupon_show'],
-            ]);
-        }elseif ($request->order_pay_type == 4){
-            return view('frontend.vnpay.index', [
-                'order_total' => $cart_totals,
-                'order_pay_type' => $request->order_pay_type,
-                'priceShip' =>  $this->shiping,
-                'coupon' => $coupon['coupon_show'],
+                'coupon' => $coupon ? $coupon['coupon_show'] : null,
             ]);
         }
-        else {
-            $dataOrder = new OrderModel();
-            $dataUser = UserModel::find($user_id);
-            $dataCustomerOrderShow = Session::get('dataCustomer');
-
-            $dataOrder->user_id = $dataCustomerOrderShow['user_id'];
-            $dataOrder->order_note = $dataCustomerOrderShow['order_note'];
-            $dataOrder->order_shipping = $dataCustomerOrderShow['order_shipping'];
-            $dataOrder->address = $dataCustomerOrderShow['order_address'];
-            $dataOrder->ward = $dataCustomerOrderShow['order_ward'];
-            $dataOrder->order_pay_type = $dataCustomerOrderShow['order_pay_type'];
-            $dataOrder->order_profit = $dataCustomerOrderShow['order_profit'];
-            $dataOrder->order_total = $dataCustomerOrderShow['order_total'];
-            $dataOrder->order_status = 1;
-            $dataOrder->order_note = $request->order_note;
-            $dataOrder->created_at = $dataCustomerOrderShow['created_at'];
-
-            $dataOrder->save();
-
-            $order_id = $dataOrder->order_id;//Lấy id order vừa insert vào bảng
-
-            foreach($this->cart as $val){
-                $dataProduct = ProductModel::find($val['cart_id']);
-                $dataProduct->product_amount = $dataProduct->product_amount - $val['cart_quantity'];
-                $dataProduct->save();
-
-                $dataOrderdetail = new OrderdetailModel();
-                $dataOrderdetail->order_id = $order_id;
-                $dataOrderdetail->product_id = $val['cart_id'];
-                $dataOrderdetail->order_detail_quantity = $val['cart_quantity'];
-                $dataOrderdetail->order_detail_price = $val['cart_price_sale'];
-                $wrist_key = "wrist_measurement_{$val['cart_id']}";
-                $dataOrderdetail->wrist_measurement = $request->input($wrist_key, $val['wrist_measurement'] ?? null);
-                $dataOrderdetail->save();
+    
+        // Lưu đơn hàng
+        $dataOrder = new OrderModel();
+        $dataUser = UserModel::find($user_id);
+        $dataCustomerOrderShow = Session::get('dataCustomer');
+    
+        $dataOrder->user_id = $dataCustomerOrderShow['user_id'];
+        $dataOrder->order_note = $dataCustomerOrderShow['order_note'];
+        $dataOrder->order_shipping = $dataCustomerOrderShow['order_shipping'];
+        $dataOrder->address = $dataCustomerOrderShow['order_address'];
+        $dataOrder->ward = $dataCustomerOrderShow['order_ward'];
+        $dataOrder->order_pay_type = $dataCustomerOrderShow['order_pay_type'];
+        $dataOrder->order_profit = $dataCustomerOrderShow['order_profit'];
+        $dataOrder->order_total = $dataCustomerOrderShow['order_total'];
+        $dataOrder->order_status = 1;
+        $dataOrder->created_at = $dataCustomerOrderShow['created_at'];
+        $dataOrder->save();
+    
+        $order_id = $dataOrder->order_id; // Lấy ID đơn hàng vừa tạo
+    
+        // Lưu chi tiết đơn hàng và topping
+        foreach ($this->cart as $val) {
+            // Cập nhật số lượng sản phẩm trong kho
+            $dataProduct = ProductModel::find($val['cart_id']);
+            $dataProduct->product_amount = $dataProduct->product_amount - $val['cart_quantity'];
+            $dataProduct->save();
+    
+            // Lưu chi tiết đơn hàng
+            $dataOrderdetail = new OrderdetailModel();
+            $dataOrderdetail->order_id = $order_id;
+            $dataOrderdetail->product_id = $val['cart_id'];
+            $dataOrderdetail->size = $val['size'] ?? null; // Lưu kích thước (M, L, v.v.)
+            $dataOrderdetail->order_detail_quantity = $val['cart_quantity'];
+            $dataOrderdetail->order_detail_price = $val['cart_price_sale'];
+            $dataOrderdetail->save();
+    
+            // Lưu topping vào bảng orderdetail_topping (nếu có)
+            if (!empty($val['topping']) && is_array($val['topping'])) {
+                foreach ($val['topping'] as $topping) {
+                    $dataOrderdetailTopping = new OrderdetailToppingModel();
+                    $dataOrderdetailTopping->order_detail_id = $dataOrderdetail->order_detail_id;
+                    $dataOrderdetailTopping->topping_id = $topping['id'];
+                    $dataOrderdetailTopping->topping_price = $topping['price'];
+                    $dataOrderdetailTopping->save();
+                }
             }
-
-           $this->sendMailOrder($request->order_email, $dataOrder, $dataUser, $dataCustomerOrderShow['order_shipping'], $this->cart, $this->coupon, $this->shiping);
-
-            $this->deleteSession();
-
-            return redirect('/')->with('msgSuccess', 'Đặt Hàng Thành Công');
         }
+    
+        // Gửi email xác nhận đơn hàng (bỏ comment nếu cần)
+        // $this->sendMailOrder(
+        //     $request->order_email,
+        //     $dataOrder,
+        //     $dataUser,
+        //     $dataCustomerOrderShow['order_shipping'],
+        //     $this->cart,
+        //     $this->coupon,
+        //     $this->shiping
+        // );
+    
+        // Xóa session sau khi đặt hàng thành công
+        $this->deleteSession();
+    
+        return redirect('/')->with('msgSuccess', 'Đặt Hàng Thành Công');
     }
 
     public function paymentMomo(Request $request)
@@ -440,8 +450,8 @@ class CartController extends Controller
     {
         $productId = $request->product_id;
         $type = $request->type;
-        $size = $request->size ?? 'M'; // Mặc định size là M nếu không có
-        $toppings = $request->topping ?? []; // Mặc định là mảng rỗng nếu không có topping
+        $size = $request->size ?? 'M'; // Default size là M nếu không có
+        $toppings = $request->topping ?? []; // Default là mảng rỗng nếu không có topping
         sort($toppings); // Sắp xếp toppings để so sánh chính xác
     
         $dataProduct = ProductModel::find($productId);
@@ -449,14 +459,15 @@ class CartController extends Controller
             return response()->json('Sản phẩm không tồn tại', 404);
         }
     
-        // Truy vấn để lấy thông tin topping (topping_name và price) dựa trên topping_id
+        // Lấy thông tin topping (topping_name và price) dựa trên topping_id
         $toppingDetails = [];
         if (!empty($toppings)) {
-            $toppingDetails = ToppingModel::select('topping_name', 'price') // Giả sử cột giá là 'price'
+            $toppingDetails = ToppingModel::select('topping_id', 'topping_name', 'price')
                 ->whereIn('topping_id', $toppings)
                 ->get()
                 ->map(function ($topping) {
                     return [
+                        'id' => $topping->topping_id, // Thêm id để lưu trữ
                         'name' => $topping->topping_name,
                         'price' => $topping->price,
                     ];
@@ -470,12 +481,12 @@ class CartController extends Controller
         $checkIsset = false;
         if ($cart) {
             foreach ($cart as $key => $item) {
-                // So sánh product_id, size và toppings
+                // Lấy danh sách topping_id từ giỏ hàng
                 $itemToppings = $item['topping'] ?? [];
-                // Chuyển topping trong giỏ hàng thành mảng topping_id để so sánh
-                $itemToppingIds = array_column($itemToppings, 'id') ?? [];
-                sort($itemToppingIds); // Sắp xếp toppings trong giỏ để so sánh
+                $itemToppingIds = array_column($itemToppings, 'id'); // Trích xuất topping_id
+                sort($itemToppingIds); // Sắp xếp để so sánh chính xác
     
+                // So sánh product_id, size và toppings
                 if ($item['cart_id'] == $productId && 
                     $item['size'] == $size && 
                     $itemToppingIds == $toppings) {
@@ -499,12 +510,12 @@ class CartController extends Controller
                     'cart_product' => $request->product_name,
                     'cart_price' => $request->product_price,
                     'cart_price_sale' => $request->product_sale_price,
-                    'cart_weight' => $request->product_brand ?? '', // Nếu không có brand thì để rỗng
+                    'cart_weight' => $request->product_brand ?? '', 
                     'cart_amount' => $request->product_amount,
                     'cart_quantity' => 1, // Số lượng ban đầu là 1
                     'cart_image' => $request->product_image,
                     'size' => $size,
-                    'topping' => $toppingDetails, // Lưu thông tin topping dưới dạng object
+                    'topping' => $toppingDetails, // Lưu thông tin topping
                 ];
             } else {
                 return response()->json('Số lượng sản phẩm đã đến mức tối đa. Bạn không thể thêm vào giỏ nữa');
@@ -530,9 +541,11 @@ class CartController extends Controller
             // Giá ban đầu của sản phẩm
             $price = $val['cart_price_sale'];
     
-            // Nếu có topping, cộng thêm giá topping (giả sử key là 'topping_price')
-            if(isset($val['topping_price'])){
-                $price += $val['topping_price'];
+            // Tính toán giá topping nếu có
+            if(isset($val['topping'])){
+                foreach($val['topping'] as $topping){
+                    $price += $topping['price']; // Cộng thêm giá topping
+                }
             }
     
             // Nếu kích cỡ là L thì cộng thêm 7000, kích cỡ M giữ nguyên
@@ -543,29 +556,28 @@ class CartController extends Controller
             // Tính tổng cho sản phẩm: giá đã tính * số lượng
             $cart_total += $price * $val['cart_quantity'];
         }
+        
         return $cart_total;
     }
 
     //Hàm xử lý tính tổng giỏ hàng
     public function getTotals($cart_total, $shipping = 0){
-        $cart_totals = 0;
+        $cart_totals = $cart_total; // Khởi tạo với giá trị tổng ban đầu
         $this->coupon = Session::get('coupon');
+    
         if($this->coupon){
             if($this->coupon['coupon_status'] == 1){
                 // Trường hợp giảm theo phần trăm
-                $cart_totals = $cart_total - ($cart_total / 100 * $this->coupon['coupon_value']);
+                $cart_totals -= ($cart_total / 100 * $this->coupon['coupon_value']);
             }
             else if($this->coupon['coupon_status'] == 2){
                 // Trường hợp giảm theo số tiền cố định
-                $cart_totals = $cart_total - $this->coupon['coupon_value'];
+                $cart_totals -= $this->coupon['coupon_value'];
             }
         }
-        else{
-            $cart_totals = $cart_total;
-        }
-        
+    
         // Cộng thêm phí ship (nếu có)
-        $cart_totals = $cart_totals + $shipping;
+        $cart_totals += $shipping;
     
         return $cart_totals;
     }

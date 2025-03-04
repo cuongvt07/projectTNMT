@@ -251,9 +251,16 @@ class CustomerController extends Controller
     {
         $dataOrder = OrderModel::find($id);
         $dataUser = Auth::user();
-        $data = OrderdetailModel::where('order_id', $id)->get();
-
-        return view('frontend.customer.orderdetail', ['data' => $data, 'dataOrder' => $dataOrder, 'dataUser' => $dataUser]);
+        
+        $data = OrderdetailModel::with(['topping_detail.topping', 'product'])
+            ->where('order_id', $id)
+            ->get();
+        
+        return view('frontend.customer.orderdetail', [
+            'data' => $data,
+            'dataOrder' => $dataOrder,
+            'dataUser' => $dataUser
+        ]);
     }
 
     public function customerWishList()

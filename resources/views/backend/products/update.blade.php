@@ -29,7 +29,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                         <label class="bmd-label-floating">Mã sản phẩm</label>
-                        <input type="text" name="product_keyword" value="{{$data->product_keyword}}" class="form-control" readonly>
+                        <input type="text" name="product_keyword" value="{{$data->product_keyword}}" class="form-control">
                         @error('product_keyword')
                           <span class="text-danger">{{$message}}</span>
                         @enderror
@@ -82,7 +82,7 @@
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label class="bmd-label-floating">Danh Mục</label>
+                      <label class="bmd-label-floating">Danh Mục TS</label>
                       <select name="category_id" class="form-control">
                         <option value="">---Chọn Loại---</option>
                         @foreach ($dataCategory as $item)
@@ -94,24 +94,6 @@
                         @endforeach
                       </select>
                       @error('category_id')
-                        <span class="text-danger">{{$message}}</span>
-                      @enderror
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Thương Hiệu</label>
-                      <select name="brand_id" class="form-control">
-                        <option value="">---Chọn Thương Hiệu---</option>
-                        @foreach ($dataBrand as $item)
-                          <option value="{{$item->brand_id}}"
-                            @if ($item->brand_id == $data->brand_id)
-                                {{'selected'}}
-                            @endif
-                          >{{$item->brand_name}}</option>
-                        @endforeach
-                      </select>
-                      @error('brand_id')
                         <span class="text-danger">{{$message}}</span>
                       @enderror
                     </div>

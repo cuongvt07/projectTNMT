@@ -82,7 +82,7 @@
                         <!-- End Prize Range -->
                         <!-- Start Category Area -->
                         <div class="htc__category">
-                            <h4 class="title__line--4">Loại Danh Mục</h4>
+                            <h4 class="title__line--4">Loại Danh Mục TS</h4>
                             <ul class="ht__cat__list">
                                 @foreach ($dataCategory as $item)
                                 <li><a href="/shop/category/{{$item->category_id}}">{{$item->category_name}}</a></li>

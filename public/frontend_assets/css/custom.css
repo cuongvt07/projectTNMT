@@ -194,3 +194,50 @@ label.star:before {
 .item-option {
   display: flex;
 }
+
+.order-details .order-details__item {
+  height: 300px;
+  overflow-y: auto;
+  width: 90%;
+}
+
+.mega__item {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mega__column {
+  flex: 1 1 25%; /* Mỗi cột chiếm 25% chiều rộng (4 cột trong một hàng) */
+  box-sizing: border-box;
+}
+
+.mega__column li {
+  margin: 5px 0; /* Khoảng cách giữa các mục */
+}
+
+.mobile-menu ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.mobile-menu .drop {
+  position: relative;
+}
+
+.dropdown {
+  padding-left: 0; /* Xóa padding bên trái nếu cần */
+}
+
+.dropdown-toggle {
+  position: absolute;
+  right: 115px;
+}
+
+.button_del {
+  border: none; 
+  padding: 10px;
+}

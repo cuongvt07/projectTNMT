@@ -577,7 +577,7 @@ nav.off__canvars--menu ul li ul li a:hover {
   transition: color 300ms ease 0s;
 }
 .search__area {
-  background: #c0c5cc none repeat scroll 0 0;
+  background: #999 none repeat scroll 0 0;
   box-shadow: 0 8px 10px rgba(0, 0, 0, 0.08);
   left: 0;
   position: fixed;
@@ -753,14 +753,14 @@ nav.off__canvars--menu ul li ul li a:hover {
 .shopping__cart__inner,
 .user__meta__inner {
     height: 100%;
-    padding: 60px 50px 60px;
+    padding: 50px;
 }
 .offsetmenu__close__btn {
     background-color: #eee;
-    padding: 29px 50px 24px;
+    padding: 0px;
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 25px;
+    top: 5px;
     z-index: 10;
 }
 .offsetmenu__close__btn a i {
@@ -769,7 +769,7 @@ nav.off__canvars--menu ul li ul li a:hover {
     transition: all 0.3s ease 0s;
 }
 .offsetmenu__close__btn a:hover i{
-    color: #2b8d06;
+    color: #000000;
 }
 .offset__widget {
     display: flex;
@@ -881,12 +881,6 @@ h4.offset__title {
 }
 .sidebar__thumd li a:hover::before {
     opacity: 0.7;
-}
-.shopping__cart__inner {
-    padding: 102px 50px;
-}
-.shopping__cart__inner .offsetmenu__close__btn {
-    padding: 21px 50px 24px;
 }
 
 

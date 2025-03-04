@@ -10,7 +10,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header card-header-primary">
-              <h4 class="card-title">Thêm loại danh mục</h4>
+              <h4 class="card-title">Thêm loại danh mục TS</h4>
             </div>
             <div class="card-body">
                 <div class="row">

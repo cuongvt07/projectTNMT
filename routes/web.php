@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\backend\BrandController;
+use App\Http\Controllers\backend\ToppingController;
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\CommentController;
 use App\Http\Controllers\backend\CouponController;
@@ -120,15 +120,13 @@ Route::prefix('admin')->middleware('handleLoginAdmin')->group(function () {
     Route::get('/categorys/export' , [CategoryController::class, 'export'])->name('category.export');
     Route::delete('/categorys/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
 
-    //Route Brands
-//    Route::resource('/brands', BrandController::class);
-
-    Route::get('/brands', [BrandController::class, 'index'])->name('brand.index');
-    Route::get('/brands/create', [BrandController::class, 'create'])->name('brand.create');
-    Route::post('/brands', [BrandController::class, 'store']);
-    Route::get('/brands/{id}/edit', [BrandController::class, 'edit']);
-    Route::patch('/brands/{id}', [BrandController::class, 'update']);
-    Route::delete('/brands/{id}', [BrandController::class, 'delete'])->name('brand.destroy');
+    //Route Toppings
+    Route::get('/toppings', [ToppingController::class, 'index'])->name('topping.index');
+    Route::get('/toppings/create', [ToppingController::class, 'create'])->name('topping.create');
+    Route::post('/toppings', [ToppingController::class, 'store']);
+    Route::get('/toppings/{id}/edit', [ToppingController::class, 'edit']);
+    Route::patch('/toppings/{id}', [ToppingController::class, 'update']);
+    Route::delete('/toppings/{id}', [ToppingController::class, 'delete'])->name('topping.destroy');
 
     //Route products
     Route::get('/products', [ProductController::class, 'index'])->name('product.index');

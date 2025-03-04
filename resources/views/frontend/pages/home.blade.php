@@ -103,7 +103,7 @@
                         @include('frontend.libs.product')
                     </div>
                 @endforeach
-            </div>
+            </div> 
             @foreach ($dataProductSales as $item)
             <div id="cartModal_{{$item->product_id}}" class="cart-modal cart-modal-{{$item->product_id}}">
                 <div class="modal-content">

@@ -48,7 +48,7 @@ class CateExport implements FromCollection, WithHeadings, WithCustomStartCell, S
     {
         return [
             "ID",
-            "Tên danh mục",
+            "Tên danh mục TS",
             "Số lượng",
             "Từ khoá",
             "Mô tả"

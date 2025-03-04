@@ -105,59 +105,30 @@ class PageController extends Controller
         ]);
     }
 
-    public function category($id){
-        $dataProductSales = ProductModel::orderBy('product_sale', 'DESC')->limit(4)->get();
-        $data_category = CategoryModel::find($id);
-        if($this->checkFilter()){
-            // echo $id;
-            $price_start = $_GET['price_start'];
-            $price_end = $_GET['price_end'];
-            $data = ProductModel::where('category_id', $id)->whereBetween('product_price_sell', [$price_start, $price_end])->orderBy('product_id', 'DESC')->paginate(Constant::NUMBER_PRODUCT);
-        }
-        else if($this->checkSort()){
-            $sortBy = $_GET['sort_by'];
-            $data = $this->sortByCategory($sortBy, $id);
-        }
-        else{
-            $data = ProductModel::where('category_id', $id)->orderBy('product_id', 'DESC')->paginate(Constant::NUMBER_PRODUCT);
-        }
-        return view('frontend.pages.shop',[
-            'data' => $data,
-            'dataProductSales' => $dataProductSales,
-        ]);
-    }
-
-    public function brand($id){
-        $dataProductSales = ProductModel::orderBy('product_sale', 'DESC')->limit(4)->get();
-        $data_brand = BrandModel::find($id);
-        if($this->checkFilter()){
-            $price_start = $_GET['price_start'];
-            $price_end = $_GET['price_end'];
-            $data = ProductModel::where('brand_id', $id)->whereBetween('product_price_sell', [$price_start, $price_end])->orderBy('product_id', 'DESC')->paginate(Constant::NUMBER_PRODUCT);
-        }
-        else if($this->checkSort()){
-            $sortBy = $_GET['sort_by'];
-            $data = $this->sortByBrand($sortBy, $id);
-        }
-        else{
-            $data = ProductModel::where('brand_id', $id)->orderBy('product_id', 'DESC')->paginate(Constant::NUMBER_PRODUCT);
-        }
-        return view('frontend.pages.shop',[
-            'data' => $data,
-            'dataProductSales' => $dataProductSales,
-        ]);
-    }
-
     public function product($id){
         $pos = strpos($id, "-");
-        $id = substr($id, 0, $pos);//Cắt lấy id theo cái - đầu
-
+        $id = substr($id, 0, $pos); // Cắt lấy id trước dấu "-"
+    
+        // Lấy thông tin sản phẩm
         $data = ProductModel::find($id);
-        $dataProductCategory = ProductModel::where('product_id', '!=', $id)->where('category_id', $data->category_id)->orderBy('product_sale', 'DESC')->limit(Constant::NUMBER_PRODUCT)->get();
+        
+        // Lấy sản phẩm cùng danh mục (không bao gồm sản phẩm hiện tại)
+        $dataProductCategory = ProductModel::where('product_id', '!=', $id)
+            ->where('category_id', $data->category_id)
+            ->orderBy('product_sale', 'DESC')
+            ->limit(Constant::NUMBER_PRODUCT)
+            ->get();
+        
+        // Lấy hình ảnh sản phẩm
         $dataProductImages = ImageModel::where('product_id', $id)->get();
-        $dataComment = CommentModel::where('product_id', $id)->orderBy('comment_id', 'DESC')->limit(3)->get();
-        $rating = CommentModel::where('product_id', $id)->avg('comment_rating');
-        $rating = round($rating);
+        
+        // Lấy bình luận
+        $dataComment = CommentModel::where('product_id', $id)
+            ->orderBy('comment_id', 'DESC')
+            ->limit(3)
+            ->get();
+        
+        // Kiểm tra xem người dùng đã mua sản phẩm để được phép bình luận
         $checkCmt = false;
         $dataOrder = OrderModel::where('user_id', Auth::id())->get();
         foreach($dataOrder as $order){
@@ -168,16 +139,18 @@ class PageController extends Controller
                 }
             }
         }
-
-
-        return view('frontend.pages.product',[
+    
+        // Lấy thông tin topping liên quan đến sản phẩm
+        $dataToppings = ToppingModel::get(); // Điều chỉnh truy vấn theo cấu trúc bảng của bạn
+    
+        return view('frontend.pages.product', [
             'data' => $data,
             'dataProductCategory' => $dataProductCategory,
             'dataProductImages' => $dataProductImages,
             'dataComment' => $dataComment,
-            'rating' => $rating,
             'data_seo_image' => $data->product_image,
             'checkCmt' => $checkCmt,
+            'dataToppings' => $dataToppings, // Truyền dữ liệu topping sang view
         ]);
     }
 

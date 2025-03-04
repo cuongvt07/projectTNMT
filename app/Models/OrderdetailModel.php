@@ -29,4 +29,9 @@ class OrderdetailModel extends Model
     {
         return $this->belongsTo(ProductModel::class, 'product_id', 'product_id');
     }
+
+    public function topping_detail()
+    {
+        return $this->hasMany(OrderdetailToppingModel::class, 'order_detail_id', 'order_detail_id');
+    }
 }
