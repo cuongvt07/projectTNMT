@@ -1,0 +1,70 @@
+[20-Dec-2023 09:08:51 UTC] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected ',' in /home/devlifei/public_html/vendor/symfony/translation-contracts/TranslatorTrait.php:138
+Stack trace:
+#0 /home/devlifei/public_html/vendor/composer/ClassLoader.php(427): Composer\Autoload\{closure}('/home/devlifei/...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 /home/devlifei/public_html/vendor/symfony/translation/IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 /home/devlifei/public_html/vendor/composer/ClassLoader.php(576): include('/home/devlifei/...')
+#4 /home/devlifei/public_html/vendor/composer/ClassLoader.php(427): Composer\Autoload\{closure}('/home/devlifei/...')
+#5 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Compone...')
+#6 /home/devlifei/public_html/vendor/symfony/translation/Formatter/MessageFormatter.php(33): spl_autoload_call('Symfony\\Compone...')
+#7 /home/devlifei/public_html/vendor/nesbot/carbon/src/Carbon/MessageFormatter/M in /home/devlifei/public_html/vendor/symfony/translation/IdentityTranslator.php on line 23
+[20-Dec-2023 09:09:14 UTC] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected ',' in /home/devlifei/public_html/vendor/symfony/translation-contracts/TranslatorTrait.php:138
+Stack trace:
+#0 /home/devlifei/public_html/vendor/composer/ClassLoader.php(427): Composer\Autoload\{closure}('/home/devlifei/...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 /home/devlifei/public_html/vendor/symfony/translation/IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 /home/devlifei/public_html/vendor/composer/ClassLoader.php(576): include('/home/devlifei/...')
+#4 /home/devlifei/public_html/vendor/composer/ClassLoader.php(427): Composer\Autoload\{closure}('/home/devlifei/...')
+#5 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Compone...')
+#6 /home/devlifei/public_html/vendor/symfony/translation/Formatter/MessageFormatter.php(33): spl_autoload_call('Symfony\\Compone...')
+#7 /home/devlifei/public_html/vendor/nesbot/carbon/src/Carbon/MessageFormatter/M in /home/devlifei/public_html/vendor/symfony/translation/IdentityTranslator.php on line 23
+[20-Dec-2023 09:10:45 UTC] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected ',' in /home/devlifei/public_html/vendor/symfony/translation-contracts/TranslatorTrait.php:138
+Stack trace:
+#0 /home/devlifei/public_html/vendor/composer/ClassLoader.php(427): Composer\Autoload\{closure}('/home/devlifei/...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 /home/devlifei/public_html/vendor/symfony/translation/IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 /home/devlifei/public_html/vendor/composer/ClassLoader.php(576): include('/home/devlifei/...')
+#4 /home/devlifei/public_html/vendor/composer/ClassLoader.php(427): Composer\Autoload\{closure}('/home/devlifei/...')
+#5 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Compone...')
+#6 /home/devlifei/public_html/vendor/symfony/translation/Formatter/MessageFormatter.php(33): spl_autoload_call('Symfony\\Compone...')
+#7 /home/devlifei/public_html/vendor/nesbot/carbon/src/Carbon/MessageFormatter/M in /home/devlifei/public_html/vendor/symfony/translation/IdentityTranslator.php on line 23
+[20-Dec-2023 09:10:45 UTC] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected ',' in /home/devlifei/public_html/vendor/symfony/translation-contracts/TranslatorTrait.php:138
+Stack trace:
+#0 /home/devlifei/public_html/vendor/composer/ClassLoader.php(427): Composer\Autoload\{closure}('/home/devlifei/...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 /home/devlifei/public_html/vendor/symfony/translation/IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 /home/devlifei/public_html/vendor/composer/ClassLoader.php(576): include('/home/devlifei/...')
+#4 /home/devlifei/public_html/vendor/composer/ClassLoader.php(427): Composer\Autoload\{closure}('/home/devlifei/...')
+#5 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Compone...')
+#6 /home/devlifei/public_html/vendor/symfony/translation/Formatter/MessageFormatter.php(33): spl_autoload_call('Symfony\\Compone...')
+#7 /home/devlifei/public_html/vendor/nesbot/carbon/src/Carbon/MessageFormatter/M in /home/devlifei/public_html/vendor/symfony/translation/IdentityTranslator.php on line 23
+[20-Dec-2023 09:10:56 UTC] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected ',' in /home/devlifei/public_html/vendor/symfony/translation-contracts/TranslatorTrait.php:138
+Stack trace:
+#0 /home/devlifei/public_html/vendor/composer/ClassLoader.php(427): Composer\Autoload\{closure}('/home/devlifei/...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 /home/devlifei/public_html/vendor/symfony/translation/IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 /home/devlifei/public_html/vendor/composer/ClassLoader.php(576): include('/home/devlifei/...')
+#4 /home/devlifei/public_html/vendor/composer/ClassLoader.php(427): Composer\Autoload\{closure}('/home/devlifei/...')
+#5 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Compone...')
+#6 /home/devlifei/public_html/vendor/symfony/translation/Formatter/MessageFormatter.php(33): spl_autoload_call('Symfony\\Compone...')
+#7 /home/devlifei/public_html/vendor/nesbot/carbon/src/Carbon/MessageFormatter/M in /home/devlifei/public_html/vendor/symfony/translation/IdentityTranslator.php on line 23
+[20-Dec-2023 09:16:49 UTC] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected ',' in /home/devlifei/public_html/vendor/symfony/translation-contracts/TranslatorTrait.php:138
+Stack trace:
+#0 /home/devlifei/public_html/vendor/composer/ClassLoader.php(427): Composer\Autoload\{closure}('/home/devlifei/...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 /home/devlifei/public_html/vendor/symfony/translation/IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 /home/devlifei/public_html/vendor/composer/ClassLoader.php(576): include('/home/devlifei/...')
+#4 /home/devlifei/public_html/vendor/composer/ClassLoader.php(427): Composer\Autoload\{closure}('/home/devlifei/...')
+#5 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Compone...')
+#6 /home/devlifei/public_html/vendor/symfony/translation/Formatter/MessageFormatter.php(33): spl_autoload_call('Symfony\\Compone...')
+#7 /home/devlifei/public_html/vendor/nesbot/carbon/src/Carbon/MessageFormatter/M in /home/devlifei/public_html/vendor/symfony/translation/IdentityTranslator.php on line 23
+[20-Dec-2023 09:16:50 UTC] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected ',' in /home/devlifei/public_html/vendor/symfony/translation-contracts/TranslatorTrait.php:138
+Stack trace:
+#0 /home/devlifei/public_html/vendor/composer/ClassLoader.php(427): Composer\Autoload\{closure}('/home/devlifei/...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 /home/devlifei/public_html/vendor/symfony/translation/IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 /home/devlifei/public_html/vendor/composer/ClassLoader.php(576): include('/home/devlifei/...')
+#4 /home/devlifei/public_html/vendor/composer/ClassLoader.php(427): Composer\Autoload\{closure}('/home/devlifei/...')
+#5 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Compone...')
+#6 /home/devlifei/public_html/vendor/symfony/translation/Formatter/MessageFormatter.php(33): spl_autoload_call('Symfony\\Compone...')
+#7 /home/devlifei/public_html/vendor/nesbot/carbon/src/Carbon/MessageFormatter/M in /home/devlifei/public_html/vendor/symfony/translation/IdentityTranslator.php on line 23
