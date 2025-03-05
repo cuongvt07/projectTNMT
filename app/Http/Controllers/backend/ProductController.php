@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Models\BrandModel;
 use App\Models\ImageModel;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
@@ -54,9 +53,8 @@ class ProductController extends Controller
     public function create()
     {
         $dataCategory = CategoryModel::all();
-        $dataBrand = BrandModel::all();
 
-        return view('backend.products.add', ['dataCategory' => $dataCategory, 'dataBrand' => $dataBrand]);
+        return view('backend.products.add', ['dataCategory' => $dataCategory]);
     }
 
     public function store(ProductRequest $request)
@@ -107,11 +105,10 @@ class ProductController extends Controller
     public function edit($id)
     {
         $dataCategory = CategoryModel::all();
-        $dataBrand = BrandModel::all();
         $data = ProductModel::find($id);
         $dataImage = ImageModel::where('product_id', $id)->get();
 
-        return view('backend.products.update', ['data' => $data, 'dataCategory' => $dataCategory, 'dataBrand' => $dataBrand, 'dataImage' => $dataImage]);
+        return view('backend.products.update', ['data' => $data, 'dataCategory' => $dataCategory, 'dataImage' => $dataImage]);
 
     }
 

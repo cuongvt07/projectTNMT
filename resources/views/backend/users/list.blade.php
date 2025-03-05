@@ -20,10 +20,10 @@
                 <table class="table">
                     <thead class=" text-primary">
                         {{-- <th>ID</th> --}}
-                        <th>Tên Người Dùng</th>
+                        <th>Tài Khoản</th>
                         <th>Email</th>
                         <th>Vai Trò</th>
-                        <th></th>
+                        <th>Tác Vụ</th>
                     </thead>
                     <tbody>
                     @foreach ($data as $item)

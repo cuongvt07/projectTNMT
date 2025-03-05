@@ -148,19 +148,18 @@
                                     @endforeach
                                 </div>
                             </div>
+                            <div class="sin__desc mt-2 quantity-container">
+                                <label>Số lượng:</label>&nbsp;
+                                <div class="quantity">
+                                    <button type="button" class="minus" aria-label="Decrease">&minus;</button>
+                                    <input type="number" class="input-box cart_quantity_{{$item->product_id}}" value="1" min="1" max="{{$item->product_amount}}" readonly>
+                                    <button type="button" class="plus" aria-label="Increase">&plus;</button>
+                                </div>
+                            </div>
                             <!-- Nút thêm vào giỏ hàng -->
                             <button class="add-to-cart-with-options" data-id="{{$item->product_id}}" data-item="{{ json_encode($item) }}" type="button">
                                 Thêm vào giỏ hàng
                             </button>
-                        </div>
-
-                        <div class="sin__desc mt-2 quantity-container">
-                            <p><span>Số lượng:</span></p> &nbsp;
-                            <div class="quantity">
-                                <button type="button" class="minus" aria-label="Decrease">&minus;</button>
-                                <input type="number" class="input-box cart_quantity_{{$data->product_id}}" value="1" min="1" max="{{$data->product_amount}}" readonly>
-                                <button type="button" class="plus" aria-label="Increase">&plus;</button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -368,7 +367,7 @@
 <!-- End Blog Area -->
 <section class="order-process custom-order-process">
     <div class="container">
-        <h2>Quy trình đặt hàng tại Rolex Shop</h2>
+        <h2>Quy trình đặt hàng tại TEA SHOP</h2>
         <div class="process-steps">
             <div class="step">
                 <div class="step-icon">
@@ -435,7 +434,7 @@
 
 @section('script')
 <script>
-    $('.add_to_cart').click(function() {
+    $('.add-to-cart-with-options').click(function() {
         var id = $(this).data('id');
         var type = 'add-to-cart';
         var _token = $('input[name=_token]').val();
@@ -443,10 +442,27 @@
         var cart_price = $('.cart_price_' + id).val();
         var cart_price_sale = $('.cart_price_sale_' + id).val();
         var cart_amount = $('.cart_amount_' + id).val();
-        var cart_quantity = $('.cart_quantity_' + id).val();
+        var cart_quantity = parseInt($('.cart_quantity_' + id).val());
         var cart_image = $('.cart_image_' + id).val();
         var cart_brand = $('.cart_brand_' + id).val();
+        var modal = $('#cartModal_' + id);
 
+        // Lấy giá trị size trực tiếp từ radio button được chọn
+        var size = modal.find('input[name="size_' + id + '"]:checked').val();
+        
+        // Nếu không có size nào được chọn (trường hợp lỗi), đặt mặc định là "M"
+        if (!size) {
+            size = 'M';
+            modal.find('input[name="size_' + id + '"][value="M"]').prop('checked', true);
+        }
+
+        // Lấy các topping đã chọn
+        var toppings = [];
+        modal.find('input[name="topping[]"]:checked').each(function() {
+            toppings.push($(this).val());
+        });
+
+        // Gửi Ajax với dữ liệu
         $.ajax({
             url: 'add_to_cart',
             method: 'POST',
@@ -461,16 +477,18 @@
                 cart_quantity: cart_quantity,
                 cart_image: cart_image,
                 cart_brand: cart_brand,
-
+                size: size, // Thêm size vào dữ liệu gửi đi
+                toppings: toppings,
             },
             success: function(data) {
-                //
-                Swal.fire(data)
-                //
+                Swal.fire(data);
+                $('.cart-modal-' + id).removeClass('show-modal');
+            },
+            error: function(xhr, status, error) {
+                console.log('Error:', error); // Thêm log để debug nếu cần
             }
-        })
-
-    })
+        });
+    });
 
     $('.handle_wishlist').click(function() {
         var product_id = $(this).data('product_id');

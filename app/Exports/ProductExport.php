@@ -71,8 +71,7 @@ class ProductExport implements FromCollection, WithHeadings, WithCustomStartCell
             'D' => 30,
             'E' => 30,
             'F' => 30,
-            'G' => 30,
-            'H' => 30
+            'G' => 30
         ];
     }
 
@@ -94,7 +93,7 @@ class ProductExport implements FromCollection, WithHeadings, WithCustomStartCell
                 $event->sheet->mergeCells(sprintf('A2:%s2', $last_column));
                 $event->sheet->mergeCells(sprintf('A%d:%s%d', $last_row, $last_column, $last_row));
 
-                $event->sheet->setCellValue('A1', 'Thông kê sản phẩm ROLEX SHOP');
+                $event->sheet->setCellValue('A1', 'Thông kê sản phẩm TEA SHOP');
                 $event->sheet->setCellValue('A2', "(Ngày: $currentTime)");
                 $event->sheet->setCellValue(sprintf('A%d', $last_row), "(Ngày: $currentTime)");
                 $event->sheet->getStyle('A1:A2')->applyFromArray($style_text_center);
@@ -144,7 +143,6 @@ class ProductExport implements FromCollection, WithHeadings, WithCustomStartCell
             $row['product_name'],
             $row['product_amount'],
             $row['category_name'],
-            $row['brand_keyword'],
             $row['product_price_buy'],
             $row['product_price_sell'],
             $row['product_sale']

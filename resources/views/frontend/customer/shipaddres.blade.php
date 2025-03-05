@@ -1,7 +1,7 @@
 @extends('frontend.layout')
 
 @section('content')
-<div class="container pt--20" style="background: #999;">
+<div class="container pt--20">
     @include('frontend.note')
     <div class="row">
         <center>
@@ -17,7 +17,7 @@
                 <button class="btn" style="color: #000; border: 1px solid #000; background: transparent; border-radius: 0">Đăng Xuất</button>
             </form>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9" style ="background: #92929e; padding: 20px">
             <div class="row">
                 <div class="col-md-12">
                     <form>
@@ -51,7 +51,7 @@
                             @enderror
                         </div>
                     </form>
-                    <form action="/customer/change_addres" method="post">
+                    <form action="/customer/change_address" method="post">
                         @method('PATCH')
                         @csrf
                         <div class="form-group">

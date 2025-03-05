@@ -33,8 +33,8 @@ class VerifyRegister extends Mailable
      */
     public function build()
     {
-        return $this->from('pvc2000atk@gmail.com', 'ROLEX SHOP')
-            ->subject("Đăng ký thành viên ROLEX SHOP')")
+        return $this->from('pvc2000atk@gmail.com', 'TEA SHOP')
+            ->subject("Đăng ký thành viên TEA SHOP')")
             ->view('mail.verify_register', ['data' => $this->data]);
     }
 }

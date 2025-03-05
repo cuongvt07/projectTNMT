@@ -70,8 +70,21 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $data = UserModel::find($id);
+        
+        $request->validate([
+            'role_id' => 'required|integer',
+            'password' => 'nullable|min:5|confirmed',
+        ], [
+            'role_id.required' => 'Vui lòng chọn quyền',
+            'password.min' => 'Mật khẩu phải lớn hơn 5 kí tự',
+            'password.confirmed' => 'Mật khẩu không khớp'
+        ]);
 
         $data->role_id = $request->role_id;
+
+        if ($request->filled('password')) {
+            $data->password = bcrypt($request->password);
+        }
 
         if($data->save()){
             return redirect()->back()->with('msgSuccess', 'Cập nhật thông tin thành công');

@@ -1,7 +1,7 @@
 @extends('frontend.layout')
 
 @section('content')
-<div class="container pt--20" style="background: #999;">
+<div class="container pt--20">
     @include('frontend.note')
     <div class="row">
         <center>
@@ -17,7 +17,7 @@
                 <button class="btn" style="color: #000; border: 1px solid #000; background: transparent; border-radius: 0">Đăng Xuất</button>
             </form>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9" style ="background: #92929e;">
             <div class="row">
                 <div class="product__wrap clearfix">
                     @foreach ($data as $item)

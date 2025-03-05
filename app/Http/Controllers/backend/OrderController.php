@@ -41,7 +41,9 @@ class OrderController extends Controller
     public function show($id)
     {
         $dataOrder = OrderModel::find($id);
-        $dataOrderdetail = OrderdetailModel::where('order_id', $id)->get();
+        $dataOrderdetail = OrderdetailModel::with(['topping_detail.topping', 'product'])
+            ->where('order_id', $id)
+            ->get();
         return view('backend.orders.show', [
             'dataOrder' => $dataOrder,
             'dataOrderdetail' => $dataOrderdetail,

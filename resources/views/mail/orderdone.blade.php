@@ -1,8 +1,8 @@
 <div class="container" style="max-width: 700px;margin: 0 auto; border: 1px solid #2b8d06;">
     <div class="header" style="background-color: #2b8d06; color: #fff; padding: 15px;">
-        <h3 style="font-size: 20px; text-align: center">ĐẶT HÀNG THÀNH CÔNG TẠI - ROLEX SHOP</h3>
+        <h3 style="font-size: 20px; text-align: center">ĐẶT HÀNG THÀNH CÔNG TẠI - TEA SHOP</h3>
         <h4>Xin Chào {{$data['dataUser']['user_name'}}</h4>
-        <p>Cảm ơn bạn đã đặt hàng ở ROLEX SHOP</p>
+        <p>Cảm ơn bạn đã đặt hàng ở TEA SHOP</p>
     </div>
 
     <div class="box-infor" style="margin: 0 20px;">
@@ -43,8 +43,8 @@
     <br>
     <br>
     <div class="footer" style="font-size: 15px; text-align: center; background-color: #2b8d06; color: #fff; padding: 10px;">
-        <p>Đây là tin nhắn tự động từ ROLEX SHOP - Vui lòng không trả lời tin nhắn này</p>
-        <p>Mọi thắc mắc về đơn hàng hãy liên hệ đến ROLEX SHOP ở phần liên hệ</p>
-        <p>ROLEX SHOP Xin Cảm Ơn Quý Khách Hàng</p>
+        <p>Đây là tin nhắn tự động từ TEA SHOP - Vui lòng không trả lời tin nhắn này</p>
+        <p>Mọi thắc mắc về đơn hàng hãy liên hệ đến TEA SHOP ở phần liên hệ</p>
+        <p>TEA SHOP Xin Cảm Ơn Quý Khách Hàng</p>
     </div>
 </div>

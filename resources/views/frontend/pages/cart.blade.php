@@ -25,7 +25,6 @@
                                     @if (Session::get('cart'))
                                         @foreach ($cart as $key => $item)
                                             <?php
-                                                $weight = \App\Helpers\CommonHelper::get_data_weight($item['cart_weight']);
                                                 // Tính tổng giá topping (nếu có)
                                                 $toppingTotalPrice = !empty($item['topping']) 
                                                     ? array_sum(array_column($item['topping'], 'price')) 

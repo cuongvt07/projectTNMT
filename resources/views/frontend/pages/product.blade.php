@@ -101,7 +101,7 @@
                                     <p><span>Topping:</span></p>
                                     <div class="topping-options" style="display: flex; gap: 10px; flex-wrap: wrap;">
                                         @foreach ($dataToppings as $topping)
-                                        <label><input type="checkbox" name="topping_{{$data->product_id}}[]" value="{{$topping->topping_id}}"> {{$topping->topping_name}} ({{number_format($topping->topping_price)}}đ)</label>
+                                        <label><input type="checkbox" name="topping_{{$data->product_id}}[]" value="{{$topping->topping_id}}"> {{$topping->topping_name}} ({{number_format($topping->price)}}đ)</label>
                                         @endforeach
                                     </div>
                                 </div>

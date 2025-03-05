@@ -18,17 +18,14 @@
                                         type="checkbox" id="select_all"/>
                                 </th>
 
-                                <th style="width: 150px; font-weight: bold; font-size: 16px; color: #FFFFFF">Tên sản
+                                <th style="width: 250px; font-weight: bold; font-size: 16px; color: #FFFFFF">Tên sản
                                     phẩm
                                 </th>
-                                <th style="width: 150px; font-weight: bold; font-size: 16px;" class="text-center">Danh mục TS
+                                <th style="width: 100px; font-weight: bold; font-size: 16px;" class="text-center">Danh mục TS
                                 </th>
-                                <th style="width: 100px;font-weight: bold; font-size: 16px;"
-                                    class="text-center product-count">Thương hiệu
+                                <th style="width: 100px;font-weight: bold; font-size: 16px;" class="text-center">Ảnh
                                 </th>
-                                <th style="width: 150px;font-weight: bold; font-size: 16px;" class="text-center">Ảnh
-                                </th>
-                                <th style="width: 100px;font-weight: bold; font-size: 16px;"
+                                <th style="width: 120px;font-weight: bold; font-size: 16px;"
                                     class="text-center align-items-center">Trạng thái trong kho
                                 </th>
                                 <th style="width: 200px;font-weight: bold; font-size: 16px;"
@@ -46,14 +43,13 @@
                                         </td>
                                         <td class="text-center">{{$item->product_name}}</td>
                                         <td class="text-center">{{$item->category->category_name ?? ''}}</td>
-                                        <td class="text-center">{{$item->brand->brand_name ?? ''}}</td>
-                                        <td class="text-center"><img style="width: 120px" src="{{$item->product_image}}"
+                                        <td class="text-center"><img style="width: 70px; height: auto" src="{{$item->product_image}}"
                                                                      alt=""></td>
                                         <td class="text-center">
                                             @if ($item->product_amount == 0)
                                                 {{'Hết hàng'}}
                                             @else
-                                                {{'Còn hàng'}}
+                                                {{'Còn hàng'}}  ({{ $item->product_amount }})
                                             @endif
                                         </td>
                                         <td class="justify-content-between">

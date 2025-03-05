@@ -1,6 +1,6 @@
 <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
     <div class="logo"><a href="/" class="simple-text logo-normal">
-        ROLEX SHOP
+        TEA SHOP
       </a></div>
     <div class="sidebar-wrapper">
       <ul class="nav">
@@ -100,15 +100,6 @@
           <a class="nav-link" href="admin/comments">
               <i class="fa-solid fa-comments"></i>
             <p>Bình Luận</p>
-          </a>
-        </li>
-        <li class="nav-item @php
-              if(isset($activeRequirement))
-              echo $activeRequirement;
-          @endphp">
-          <a class="nav-link" href="admin/requirements">
-              <i class="fa-solid fa-paper-plane"></i>
-            <p>Lời Nhắn</p>
           </a>
         </li>
       </ul>

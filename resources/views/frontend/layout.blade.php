@@ -76,7 +76,7 @@
                                         <div class="col-sm-9">
                                             <img src="{{$dataLogoFooter->image}}" alt="">
                                             <p style="margin-top: 10px;">
-                                            Rolex Shop là đại lý bán lẻ đồng hồ chính hãng, cam kết mang đến cho khách hàng trải nghiệm mua sắm dễ dàng, thuận tiện và an toàn trên nhiều nền tảng khác nhau. Chúng tôi cung cấp các sản phẩm từ các thương hiệu đồng hồ uy tín, đảm bảo chất lượng và bảo hành chính hãng.</p>
+                                            TEA SHOP là đại lý bán lẻ đồng hồ chính hãng, cam kết mang đến cho khách hàng trải nghiệm mua sắm dễ dàng, thuận tiện và an toàn trên nhiều nền tảng khác nhau. Chúng tôi cung cấp các sản phẩm từ các thương hiệu đồng hồ uy tín, đảm bảo chất lượng và bảo hành chính hãng.</p>
                                         </div>
                                     </div>
                                     <div class="ft__social__link">
@@ -662,7 +662,7 @@
                                                     ${item['cart_product']}
                                                 </a>
                                             </h2>
-                                            <div class="d-flex flex-wrap">
+                                            <div style=" display: flex;  flex-direction: column;>
                                                 <span class="mr-2">Size: ${item['size']}</span>
                                                 <span class="mr-2">${toppingText}</span>
                                                 <span class="mr-2">SL: ${quantity}</span>

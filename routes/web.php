@@ -58,9 +58,6 @@ Route::post('/delete_coupon_cart', [CartController::class, 'deleteCouponCart']);
 Route::get('/get_data_cart', [CartController::class, 'getDataCart']);
 Route::post('/delete_cart_offset', [CartController::class, 'deteleProductCartOffset']);
 Route::post('/get_district_checkout', [CartController::class, 'getDistricCheckout']);
-//Login Google
-Route::get('/auth/redirect/{provider}', [SocialController::class, 'redirect']);
-Route::get('/callback/{provider}', [SocialController::class, 'callback']);
 
 //Route Chatrealtime
 Route::get('/chat', [ChatController::class, 'index'])->name('chat.home');
@@ -76,6 +73,7 @@ Route::get('/blog/{id}', [PageController::class, 'viewBlog']);
 
 //Route Customer
 Route::get('/customer', [CustomerController::class, 'index']);
+Route::post('/customer/forgot', [CustomerController::class, 'forgotPassword']);
 Route::post('/customer/login', [CustomerController::class, 'customerLogin']);
 Route::post('/customer/register', [CustomerController::class, 'customerRegister']);
 Route::get('/customer/verify/{user_id}/{token}', [CustomerController::class, 'verify'])->name('verify.user');
@@ -85,7 +83,7 @@ Route::prefix('customer')->middleware('HandleLoginCustomer')->group(function () 
     Route::post('/logout', [CustomerController::class, 'customerLogout']);
     Route::patch('/change_profile', [CustomerController::class, 'customerChangeProfile']);
     Route::patch('/change_profile_more', [CustomerController::class, 'customerChangeProfileMore']);
-    Route::patch('/change_addres', [CustomerController::class, 'customerChangeAddres']);
+    Route::patch('/change_address', [CustomerController::class, 'customerChangeAddres']);
     Route::get('/order', [CustomerController::class, 'customerOrder']);
     Route::get('/orderdetail/{id}', [CustomerController::class, 'customerOrderDetail']);
     Route::get('/wishlist', [CustomerController::class, 'customerWishList']);
@@ -182,11 +180,6 @@ Route::prefix('admin')->middleware('handleLoginAdmin')->group(function () {
     Route::post('/slides', [SlideController::class, 'store']);
     Route::post('/slides/{id}', [SlideController::class, 'update']);
     Route::delete('/slides/{id}', [SlideController::class, 'destroy']);
-
-    //Route requirements
-    Route::get('/requirements', [RequirementController::class, 'index']);
-    Route::get('/requirements/{id}', [RequirementController::class, 'update']);
-    Route::delete('/requirements/{id}', [RequirementController::class, 'destroy']);
 
     //Route posts
     Route::get('/posts', [PostController::class, 'index']);

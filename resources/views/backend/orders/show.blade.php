@@ -72,6 +72,8 @@
           <div class="card">
             <div class="card-header card-header-primary">
               <h4 class="card-title">Hóa Đơn Chi Tiết</h4>
+              <span>Ngày đặt hàng: {{date('d-m-Y', strtotime($dataOrder->order_date))}}</span> <br>
+              <span>Phí Vận Chuyển: {{number_format($dataOrder->shipping_fee)}} VNĐ</span>
             </div>
             <div class="card-body">
               <div class="table-responsive table-hover">
@@ -79,19 +81,37 @@
                   <thead class=" text-primary">
                       <th>Sản Phẩm</th>
                       <th>Số Lượng</th>
-                      <th>Kích thước</th>
+                      <th>Topping -  Size</th>
                       <th>Hình Ảnh</th>
                       <th>Giá</th>
                   </thead>
                   <tbody>
                   @foreach ($dataOrderdetail as $item)
-                  <tr>
+                    <tr>
                     <td>{{$item->product->product_name ?? 'Sản phẩm đã xóa'}}</td>
                     <td>{{$item->order_detail_quantity}}</td>
-                    <td>{{$item->wrist_measurement}}</td>
+                    <td>
+                      @if ($item->topping_detail->isNotEmpty())
+                        <ul>
+                          @foreach ($item->topping_detail as $toppingDetail)
+                            <li>
+                              {{ $toppingDetail->topping->topping_name ?? 'Topping đã xóa' }} 
+                              ({{ number_format($toppingDetail->topping->price ?? 0) }} VNĐ)
+                            </li>
+                          @endforeach
+                        </ul>
+                      @else
+                        Không có topping
+                      @endif
+                      <ul>
+                        <li>Size: {{ $item->size ?? 'Size đã xóa' }}</li>  
+                      </ul>
+                    </td>
                     <td><img style="max-width: 110px" src="{{$item->product->product_image ?? '/libs/image_no.png'}}" alt="Sản phẩm đã xóa"></td>
-                    <td>{{number_format($item->order_detail_price)}}</td>
-                  </tr>
+                    <td>
+                      {{number_format($item->order_detail_price)}} VNĐ
+                    </td>
+                    </tr>
                   @endforeach
                   </tbody>
               </table>

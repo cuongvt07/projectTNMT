@@ -1421,8 +1421,9 @@ nav.mean-nav {
 }
 
 .product-price {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  flex-direction: column;
 }
 
 .starrating > label
@@ -1581,4 +1582,8 @@ nav.mean-nav {
 
 .single-input {
   margin-top: 10px;
+}
+
+.dropdown-item{
+  justify-content: center !important;
 }

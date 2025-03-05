@@ -10,14 +10,14 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header card-header-primary">
-              <h4 class="card-title">Thêm Người Dùng</h4>
+              <h4 class="card-title">Tài Khoản</h4>
             </div>
             <div class="card-body">
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label class="bmd-label-floating">Tên người dùng <span class="text-danger">*</span></label>
-                      <input type="text" value="{{ old('user_name') }}" name="user_name" class="form-control" placeholder="Họ Tên">
+                      <label class="bmd-label-floating">Tài Khoản<span class="text-danger">*</span></label>
+                      <input type="text" value="{{ old('user_name') }}" name="user_name" class="form-control" placeholder="Tài Khoản">
                       @error('user_name')
                           <span class="text-danger">{{$message}}</span>
                       @enderror

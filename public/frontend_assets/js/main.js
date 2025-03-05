@@ -145,6 +145,53 @@
         return false;
     });
 
+    $('.forgot-password').on('click', function(e){
+        e.preventDefault();
+        $("#forgotPasswordPopup").modal('show');
+    });
+
+    function closePopup() {
+        $("#forgotPasswordPopup").modal('hide');
+    }
+
+    document.querySelectorAll('.quantity').forEach(quantityContainer => {
+        const minusBtn = quantityContainer.querySelector('.minus');
+        const plusBtn = quantityContainer.querySelector('.plus');
+        const inputBox = quantityContainer.querySelector('.input-box');
+
+        updateButtonStates();
+
+        quantityContainer.addEventListener('click', handleButtonClick);
+
+        function updateButtonStates() {
+            const value = parseInt(inputBox.value);
+            minusBtn.disabled = value <= 1;
+            plusBtn.disabled = value >= parseInt(inputBox.max);
+        }
+
+        function handleButtonClick(event) {
+            if (event.target.classList.contains('minus')) {
+                decreaseValue();
+            } else if (event.target.classList.contains('plus')) {
+                increaseValue();
+            }
+        }
+
+        function decreaseValue() {
+            let value = parseInt(inputBox.value);
+            value = isNaN(value) ? 1 : Math.max(value - 1, 1);
+            inputBox.value = value;
+            updateButtonStates();
+        }
+
+        function increaseValue() {
+            let value = parseInt(inputBox.value);
+            value = isNaN(value) ? 1 : Math.min(value + 1, parseInt(inputBox.max));
+            inputBox.value = value;
+            updateButtonStates();
+        }
+    });
+
 
 /*------------------------------------
     07. Shopping Cart Area
@@ -291,64 +338,6 @@
         $('.cart-modal-' + cart_id).removeClass('show-modal');
     });
 
-    // Xử lý sự kiện khi click nút "Thêm vào giỏ hàng" trong modal
-    $('.add-to-cart-with-options').on('click', function() {
-        var token = $('input[name=_token]').val();
-        var cart_id = $(this).data('id');
-        var type = 'add-to-cart';
-        var modal = $('#cartModal_' + cart_id);
-        var itemData = $(this).data('item'); // Lấy dữ liệu từ data-item
-    
-        // Xóa dòng đặt "M" mặc định để tôn trọng lựa chọn của người dùng
-        // modal.find('input[name="size"][value="M"]').prop('checked', true);
-    
-        // Đặt "M" làm mặc định chỉ khi không có radio nào được chọn
-        if (!modal.find('input[name="size_' + cart_id + '"]:checked').length) {
-            modal.find('input[name="size_' + cart_id + '"][value="M"]').prop('checked', true);
-        }
-    
-        // Lấy các tùy chọn đã chọn
-        var size = modal.find('input[name="size_' + cart_id + '"]:checked').val();
-        var toppings = [];
-        modal.find('input[name="topping[]"]:checked').each(function() {
-            toppings.push($(this).val());
-        });
-    
-        // Nếu itemData chứa toàn bộ thông tin sản phẩm, sử dụng trực tiếp
-        var productName = itemData.product_name;
-        var productPrice = itemData.product_price_sell;
-        var productSalePrice = productPrice - (productPrice / 100 * itemData.product_sale);
-        var productImage = itemData.product_image;
-        var productAmount = itemData.product_amount || 1; // Mặc định là 1 nếu không có
-    
-        // Gửi dữ liệu tới route /add_to_cart bằng AJAX
-        $.ajax({
-            url: '/add_to_cart',
-            method: 'POST',
-            data: {
-                _token: token,
-                cart_id: cart_id,
-                size: size,
-                toppings: toppings,
-                cart_product: productName,
-                cart_price: productPrice,
-                cart_price_sale: productSalePrice,
-                cart_amount: productAmount,
-                cart_image: productImage,
-                cart_quantity: 1,
-                type: type
-            },
-            success: function(response) {
-                alert('Sản phẩm đã được thêm vào giỏ hàng!');
-                modal.fadeOut();
-            },
-            error: function(xhr) {
-                alert('Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng.');
-                console.log(xhr.responseText); // Để debug lỗi nếu cần
-            }
-        });
-    });
-
 
 /*---------------------------------------------------
     14. Testimonial Image Slider As Nav
@@ -409,8 +398,7 @@
     $('.product__list').owlCarousel({
         loop: true,
         margin: 15,
-        autoplay: true,
-        autoplayTimeout: 5000,
+        item: 5,
         autoHeight: true,
         responsive: {
             0: {
@@ -431,8 +419,6 @@
       loop: true,
       margin:0,
       nav:false,
-      autoplay: true,
-      autoplayTimeout: 10000,
       items:5,
       dots: false,
       lazyLoad: true,

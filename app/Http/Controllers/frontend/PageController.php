@@ -9,7 +9,6 @@ use App\Models\UserModel;
 use Illuminate\Http\Request;
 use App\Models\ProductModel;
 use App\Models\CategoryModel;
-use App\Models\BrandModel;
 use App\Models\ImageModel;
 use App\Models\CommentModel;
 use App\Models\OrderModel;
@@ -29,7 +28,6 @@ class PageController extends Controller
         $priceMax = ProductModel::max('product_price_sell');
         $priceMin = ProductModel::min('product_price_sell');
         $dataCategory = CategoryModel::all();
-        $dataBrand = BrandModel::all();
         $dataLogo = SlideModel::where('type', 3)->first();
         $dataLogoFooter = SlideModel::where('type', 4)->first();
         $countCart = OrderModel::where('user_id', Auth::id())->where('order_status', 1)
@@ -40,7 +38,6 @@ class PageController extends Controller
 
         view()->share([
             'dataCategory' => $dataCategory,
-            'dataBrand' => $dataBrand,
             'priceMax' => $priceMax,
             'priceMin' => $priceMin,
             'dataLogo' => $dataLogo,
@@ -226,21 +223,6 @@ class PageController extends Controller
         }
         else {
             return $data = ProductModel::where('category_id', $id)->orderBy('product_name', 'DESC')->paginate(Constant::NUMBER_PRODUCT);
-        }
-    }
-
-    public function sortByBrand($sortBy, $id){
-        if($sortBy == 'tang_dan'){
-            return $data = ProductModel::where('brand_id', $id)->orderBy('product_price_sell', 'ASC')->paginate(Constant::NUMBER_PRODUCT);
-        }
-        else if($sortBy == 'giam_dan'){
-            return $data = ProductModel::where('brand_id', $id)->orderBy('product_price_sell', 'DESC')->paginate(Constant::NUMBER_PRODUCT);
-        }
-        else if($sortBy == 'kitu_az'){
-            return $data = ProductModel::where('brand_id', $id)->orderBy('product_name', 'ASC')->paginate(Constant::NUMBER_PRODUCT);
-        }
-        else {
-            return $data = ProductModel::where('brand_id', $id)->orderBy('product_name', 'DESC')->paginate(Constant::NUMBER_PRODUCT);
         }
     }
 }

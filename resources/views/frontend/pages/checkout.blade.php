@@ -18,6 +18,7 @@
                                     <div class="row">
                                     <form id="paymentForm" action="/payment" method="POST">
                                         @csrf
+                                        <input type="hidden" name="shipping_option" id="shipping_option" value="standard">
                                         <div class="col-md-12">
                                             <div class="single-input">
                                                 <select name="city_id" id="city_id">
@@ -54,7 +55,7 @@
 
                                         <div class="col-md-12">
                                             <div class="single-input">
-                                                <input type="text" name="order_name" value="{{$dataUser->user_name}}" placeholder="Họ Tên">
+                                                <input type="text" name="order_name" value="{{$dataUser->user_name}}" placeholder="Tài Khoản">
                                                 @error('order_name')
                                                 <span class="text-danger">{{$message}}</span>
                                                 @enderror
@@ -347,6 +348,7 @@
 <script>
     $(document).ready(function () {
         // Hàm gửi yêu cầu phí vận chuyển tới server
+        $('#shipping_option').val($('select.selectpicker').val() || 'standard');
         function sendShippingFeeRequest(paymentType, selectedShippingOption) {
             var _token = $('input[name="_token"]').val();
             $.ajax({
@@ -384,6 +386,7 @@
         $('select.selectpicker').change(function() {
             var paymentType = $('input[name="order_pay_type"]:checked').val() || '1';
             var selectedShippingOption = $(this).val();
+            $('#shipping_option').val(selectedShippingOption);
             sendShippingFeeRequest(paymentType, selectedShippingOption);
         });
 

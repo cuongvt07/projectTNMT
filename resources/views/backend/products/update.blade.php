@@ -153,7 +153,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="bmd-label-floating">Mô tả</label>
+                    <label class="bmd-label-floating">Mô tả ngắn</label>
                     <textarea name="product_attribute" id="my-editor-2" cols="30" rows="10"  class="ckeditor"> {!!$data->product_attribute!!}</textarea>
                     @error('product_attribute')
                       <span class="text-danger">{{$message}}</span>

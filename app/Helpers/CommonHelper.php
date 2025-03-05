@@ -3,7 +3,6 @@
 namespace App\Helpers;
 
 use App\Enums\Constant;
-use App\Models\BrandModel;
 use App\Models\CategoryModel;
 use App\Models\UserModel;
 
@@ -20,19 +19,9 @@ class CommonHelper
         }
     }
 
-    public static function get_data_weight($weight_id)
-    {
-        $weight = BrandModel::where('brand_id', $weight_id)->first();
-        if ($weight) {
-            return $weight->brand_name;
-        } else {
-            return 0;
-        }
-    }
-
     public function checkUserVerify($param)
     {
-        $user = UserModel::where('user_email', $param)->first();
+        $user = UserModel::where('user_name', $param)->first();
         if (!$user) {
             return redirect('/admin')->with('msgError', 'Xác nhận thất bại, có vẻ như tài khoản của bạn chưa được tạo,Xin hãy tạo tài khoản khác!');
         }

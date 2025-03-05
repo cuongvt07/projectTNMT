@@ -15,7 +15,7 @@
                 <table class="table">
                     <tbody>
                     <tr>
-                        <td>Họ Tên</td>
+                        <td>Tài Khoản</td>
                         <td class="text-primary">{{$data->user_name}}</td>
                     </tr>
                     <tr>

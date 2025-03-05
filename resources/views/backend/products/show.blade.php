@@ -37,22 +37,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="bmd-label-floating">Mô tả:</label>
-                                    <span> {{ $data->brand->brand_description}}</span>
-
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <label class="bmd-label-floating">Loại:</label>
                                     <span> {{ $data->category->category_name}}</span>
-
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Thương Hiệu:</label>
-                                    <span> {{ $data->brand->brand_name}}</span>
 
                                 </div>
                             </div>
@@ -86,7 +72,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="bmd-label-floating">Thuộc tính: </label>
+                                    <label class="bmd-label-floating">Mô tả ngắn: </label>
                                     <span> {!! $data->product_attribute!!}</span>
 
                                 </div>

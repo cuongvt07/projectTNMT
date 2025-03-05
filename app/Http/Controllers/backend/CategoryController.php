@@ -147,6 +147,6 @@ class CategoryController extends Controller
             "category_keyword",
             "category_description"
         ]);
-        return Excel::download(new CateExport($orderedResponses), 'Thống kê loại Danh Mục TS ROLEX SHOP-' . now()->format('Y-m-d') . '.xlsx');
+        return Excel::download(new CateExport($orderedResponses), 'Thống kê loại Danh Mục TS TEA SHOP-' . now()->format('Y-m-d') . '.xlsx');
     }
 }

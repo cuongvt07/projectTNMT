@@ -43,9 +43,9 @@ class UserUpdateProfileRequest extends FormRequest
     public function messages()
     {
         return [
-            'user_name.required' => 'Họ tên không được để trống',
-            'user_name.min' => 'Họ tên phải lớn hơn 5 kí tự',
-            'user_name.max' => 'Họ tên phải bé hơn 50 kí tự',
+            'user_name.required' => 'Tài khoản không được để trống',
+            'user_name.min' => 'Tài khoản phải lớn hơn 5 kí tự',
+            'user_name.max' => 'Tài khoản phải bé hơn 50 kí tự',
             'user_password_old.required' => 'Mật khẩu cũ không được để trống',
             'user_password.required' => 'Mật khẩu không được để trống',
             'user_password.min' => 'Mật khẩu phải dài hơn 5 kí tự',

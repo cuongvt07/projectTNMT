@@ -15436,6 +15436,7 @@ h2.title {
   line-height: 1.428571;
   text-overflow: ellipsis;
   word-wrap: break-word;
+  justify-content: center;
 }
 
 @media (min-width: 768px) {

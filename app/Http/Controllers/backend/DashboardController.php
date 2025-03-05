@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ProductModel;
 use App\Models\CategoryModel;
-use App\Models\BrandModel;
 use App\Models\CouponModel;
 use App\Models\UserModel;
 use App\Models\CommentModel;

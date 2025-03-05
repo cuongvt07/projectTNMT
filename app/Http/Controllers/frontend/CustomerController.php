@@ -11,7 +11,6 @@ use App\Models\SlideModel;
 use Illuminate\Http\Request;
 use App\Models\ProductModel;
 use App\Models\CategoryModel;
-use App\Models\BrandModel;
 use App\Models\CouponModel;
 use App\Models\UserModel;
 use App\Models\CommentModel;
@@ -24,6 +23,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerController extends Controller
 {
@@ -31,12 +31,10 @@ class CustomerController extends Controller
     {
 //        $this->middleware(['auth','verified']);
         $dataCategory = CategoryModel::all();
-        $dataBrand = BrandModel::all();
         $dataLogo = SlideModel::where('type', 3)->first();
         $dataLogoFooter = SlideModel::where('type', 4)->first();
 
         view()->share(['dataCategory' => $dataCategory,
-            'dataBrand' => $dataBrand,
             'dataLogo' => $dataLogo,
             'dataLogoFooter' => $dataLogoFooter,
 
@@ -56,18 +54,18 @@ class CustomerController extends Controller
     public function customerLogin(Request $request)
     {
         $request->validate([
-            'user_email' => 'required',
+            'user_name' => 'required|min:5|max:20',
             'user_password' => 'required',
         ], [
-            'user_email.required' => 'Email không được để trống',
+            'user_name.required' => 'Tài khoản không được để trống',
             'user_password.required' => 'Mật khẩu không được để trống',
         ]);
 
-        $check_verify = (new \App\Helpers\CommonHelper)->checkUserVerify($request->user_email);
+        $check_verify = (new \App\Helpers\CommonHelper)->checkUserVerify($request->user_name);
         if (!$check_verify) {
             return redirect('customer')->with('msgError', 'Xác nhận thất bại! Tài khoản của bạn chưa được kích hoạt. Vui lòng kiểm tra email và xác nhận.');
         }
-        if (Auth::attempt(['user_email' => $request->user_email, 'password' => $request->user_password])) {
+        if (Auth::attempt(['user_name' => $request->user_name, 'password' => $request->user_password])) {
             return redirect('customer/profile')->with('msgSuccess', 'Đăng nhập thành công');
         }
 
@@ -78,19 +76,22 @@ class CustomerController extends Controller
     {
         $data = new UserModel();
         $request->validate([
-            'user_name' => 'required|min:5|max:50',
+            'user_name' => 'required|min:5|max:50|unique:users,user_name',
             'user_email' => 'required|email:rfc,dns|max:30',
             'user_password' => 'required|min:5|max:20',
             'user_password_again' => 'required|same:user_password',
         ], [
-            'user_name.required' => 'Họ tên không được để trống',
+            'user_name.required' => 'Tài khoản không được để trống',
+            'user_name.min' => 'Tài khoản quá ngắn phải lớn hơn 5 kí tự',
+            'user_name.max' => 'Tài khoản quá dài phải nhỏ hơn 50 kí tự',
+            'user_name.unique' => 'Tài khoản đã tồn tại vui lòng chọn tài khoản khác',
             'user_email.required' => 'Email không được để trống',
             'user_password.required' => 'Mật khẩu không được để trống',
             'user_password_again.required' => 'Mật khẩu xác nhận không được để trống',
-            'user_name.min' => 'Họ tên quá ngắn phải lớn hơn 5 kí tự',
-            'user_name.max' => 'Họ tên quá dài phải nhỏ hơn 50 kí tự',
+            'user_name.min' => 'Tài khoản quá ngắn phải lớn hơn 5 kí tự',
+            'user_name.max' => 'Tài khoản quá dài phải nhỏ hơn 50 kí tự',
             'user_email.email' => 'Email không đúng định dạng',
-//            'user_email.unique' => 'Email đã được sử dụng',
+            'user_email.unique' => 'Email đã được sử dụng',
             'user_email.max' => 'Email quá dài',
             'user_password.min' => 'Mật khẩu quá ngắn phải lớn hơn 5 kí tự',
             'user_password.max' => 'Mật khẩu quá dài phải nhỏ hơn 20 kí tự',
@@ -106,17 +107,6 @@ class CustomerController extends Controller
         $data->save();
 
         $userRoles = UserModel::where('role_id', 2)->get();
-
-        foreach ($userRoles as $userRole) {
-            $dataMessage = [
-                'from' => $data->user_id,
-                'to' => $userRole->user_id,
-                'message' => null,
-                'is_read' => 0,
-            ];
-
-            DB::table('messages')->insert($dataMessage);
-        }
 
         if ($data != null) {
             dispatch(new VerifyCustumer($data));
@@ -165,11 +155,11 @@ class CustomerController extends Controller
             'user_password' => 'required|min:5|max:20',
             'user_password_again' => 'required|same:user_password',
         ], [
-            'user_name.required' => 'Họ tên không được để trống',
+            'user_name.required' => 'Tài khoản không được để trống',
             'user_password.required' => 'Mật khẩu không được để trống',
             'user_password_again.required' => 'Mật khẩu xác nhận không được để trống',
-            'user_name.min' => 'Họ tên quá ngắn phải lớn hơn 5 kí tự',
-            'user_name.max' => 'Họ tên quá dài phải nhỏ hơn 20 kí tự',
+            'user_name.min' => 'Tài khoản quá ngắn phải lớn hơn 5 kí tự',
+            'user_name.max' => 'Tài khoản quá dài phải nhỏ hơn 20 kí tự',
             'user_password.min' => 'Mật khẩu quá ngắn phải lớn hơn 5 kí tự',
             'user_password.max' => 'Mật khẩu quá dài phải nhỏ hơn 20 kí tự',
             'user_password_again.same' => 'Mật khẩu xác nhận không khớp',
@@ -196,9 +186,9 @@ class CustomerController extends Controller
         $vali = Validator::make($request->all(), [
             'user_name' => 'required|min:5|max:20',
         ], [
-            'user_name.required' => 'Họ tên không được để trống',
-            'user_name.min' => 'Họ tên quá ngắn phải lớn hơn 5 kí tự',
-            'user_name.max' => 'Họ tên quá dài phải nhỏ hơn 20 kí tự',
+            'user_name.required' => 'Tài khoản không được để trống',
+            'user_name.min' => 'Tài khoản quá ngắn phải lớn hơn 5 kí tự',
+            'user_name.max' => 'Tài khoản quá dài phải nhỏ hơn 20 kí tự',
         ]);
 
         if ($vali->fails()) {
@@ -336,5 +326,30 @@ class CustomerController extends Controller
         }
         $user->update(['is_verify' => 1]);
         return redirect('customer')->with('msgSuccess', 'Xác nhận tài khoản thành công. Bạn có thể đăng nhập ngay bây giờ.');
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $request->validate([
+            'forgot_email' => 'required|email'
+        ]);
+
+        $email = $request->input('forgot_email');
+        $customer = UserModel::where('user_email', $email)->first();
+
+        if (!$customer) {
+            return response()->json(['error' => 'Email không tồn tại trong hệ thống'], 404);
+        }
+
+        $newPassword = Str::random(10);
+        $customer->password = bcrypt($newPassword);
+        $customer->save();
+
+        Mail::raw("Mật khẩu mới của bạn là: **$newPassword**\nVui lòng đổi mật khẩu sau khi đăng nhập.", function ($message) use ($email) {
+            $message->to($email)
+                    ->subject('Reset Mật Khẩu');
+        });
+
+        return response()->json(['success' => 'Mật khẩu mới đã được gửi tới email của bạn']);
     }
 }
