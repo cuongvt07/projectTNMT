@@ -26,7 +26,7 @@
                 @if ($item->product_amount != 0)
                 <li>
                     <button class="open-cart-modal" data-id="{{$item->product_id}}" type="button">
-                        <i class="icon-handbag icons"></i> Mua ngay
+                        <i class="icon-handbag icons"></i>
                     </button>
                 </li>
                 @endif
@@ -37,7 +37,7 @@
             <ul class="product__action">
                 <li>
                     <button class="handle_wishlist" data-product_id="{{$item->product_id}}" type="button">
-                        <i class="icon-heart icons"></i> Yêu thích
+                        <i class="icon-heart icons"></i>
                     </button>
                 </li>
             </ul>

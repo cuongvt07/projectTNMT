@@ -58,10 +58,10 @@
                             <div class="product-price" id="price-preview">
                                 <span class="pro-sale">Giảm {{$data->product_sale}}%</span>
                                 @if($data->product_sale == 0)
-                                    <span class="pro-price">{{number_format($data->product_price_sell)}} ₫</span>
+                                <span class="pro-price">{{number_format($data->product_price_sell)}} ₫</span>
                                 @else
-                                    <del>{{number_format($product_price_sale = $data->product_price_sell - ($data->product_price_sell/100 * $data->product_sale))}} ₫</del>  
-                                    <span class="pro-price">{{number_format($data->product_price_sell)}} ₫</span>
+                                <del>{{number_format($product_price_sale = $data->product_price_sell - ($data->product_price_sell/100 * $data->product_sale))}} ₫</del>  
+                                <span class="pro-price">{{number_format($data->product_price_sell)}} ₫</span>
                                 @endif
                             </div>
                             <div class="sin__desc align--left">
@@ -85,7 +85,6 @@
                                 <input type="hidden" class="cart_price_{{$data->product_id}}" value="{{$data->product_price_buy}}">
                                 <input type="hidden" class="cart_price_sale_{{$data->product_id}}" value="{{$product_price_sale}}">
                                 <input type="hidden" class="cart_amount_{{$data->product_id}}" value="{{$data->product_amount}}">
-                                <input type="hidden" class="cart_quantity_{{$data->product_id}}" value="1">
                                 <input type="hidden" class="cart_image_{{$data->product_id}}" value="{{$data->product_image}}">
 
                                 <!-- Tùy chọn Size -->
@@ -102,7 +101,7 @@
                                     <p><span>Topping:</span></p>
                                     <div class="topping-options" style="display: flex; gap: 10px; flex-wrap: wrap;">
                                         @foreach ($dataToppings as $topping)
-                                            <label><input type="checkbox" name="topping_{{$data->product_id}}[]" value="{{$topping->topping_id}}"> {{$topping->topping_name}} ({{number_format($topping->topping_price)}}đ)</label>
+                                        <label><input type="checkbox" name="topping_{{$data->product_id}}[]" value="{{$topping->topping_id}}"> {{$topping->topping_name}} ({{number_format($topping->topping_price)}}đ)</label>
                                         @endforeach
                                     </div>
                                 </div>
@@ -201,6 +200,44 @@
 
 @section('script')
 <script>
+    document.querySelectorAll('.quantity').forEach(quantityContainer => {
+        const minusBtn = quantityContainer.querySelector('.minus');
+        const plusBtn = quantityContainer.querySelector('.plus');
+        const inputBox = quantityContainer.querySelector('.input-box');
+
+        updateButtonStates();
+
+        quantityContainer.addEventListener('click', handleButtonClick);
+
+        function updateButtonStates() {
+            const value = parseInt(inputBox.value);
+            minusBtn.disabled = value <= 1;
+            plusBtn.disabled = value >= parseInt(inputBox.max);
+        }
+
+        function handleButtonClick(event) {
+            if (event.target.classList.contains('minus')) {
+                decreaseValue();
+            } else if (event.target.classList.contains('plus')) {
+                increaseValue();
+            }
+        }
+
+        function decreaseValue() {
+            let value = parseInt(inputBox.value);
+            value = isNaN(value) ? 1 : Math.max(value - 1, 1);
+            inputBox.value = value;
+            updateButtonStates();
+        }
+
+        function increaseValue() {
+            let value = parseInt(inputBox.value);
+            value = isNaN(value) ? 1 : Math.min(value + 1, parseInt(inputBox.max));
+            inputBox.value = value;
+            updateButtonStates();
+        }
+    });
+
     $('.add_to_cart').click(function() {
         var id = $(this).data('id');
         var type = 'add-to-cart';
@@ -209,13 +246,15 @@
         var cart_price = $('.cart_price_' + id).val();
         var cart_price_sale = $('.cart_price_sale_' + id).val();
         var cart_amount = $('.cart_amount_' + id).val();
-        var cart_quantity = $('.cart_quantity_' + id).val();
+        var cart_quantity = parseInt($('.cart_quantity_' + id).val()); // Lấy số lượng từ input đúng với id
         var cart_image = $('.cart_image_' + id).val();
         var size = $('input[name=size_' + id + ']:checked').val();
         var toppings = [];
         $('input[name="topping_' + id + '[]"]:checked').each(function() {
             toppings.push($(this).val());
         });
+
+        console.log('Cart Quantity (Add to Cart):', cart_quantity); // Debug số lượng
 
         $.ajax({
             url: 'add_to_cart',
@@ -228,17 +267,21 @@
                 cart_price: cart_price,
                 cart_price_sale: cart_price_sale,
                 cart_amount: cart_amount,
-                cart_quantity: cart_quantity,
+                cart_quantity: cart_quantity, // Gửi số lượng từ input
                 cart_image: cart_image,
                 size: size,
                 toppings: toppings
             },
             success: function(data) {
                 Swal.fire(data);
+            },
+            error: function(xhr) {
+                Swal.fire('Có lỗi xảy ra khi thêm vào giỏ hàng!');
             }
         });
     });
 
+    // Xử lý mua ngay
     $('.buy-now').click(function() {
         var id = $(this).data('id');
         var type = 'buy-now';
@@ -247,13 +290,15 @@
         var cart_price = $('.cart_price_' + id).val();
         var cart_price_sale = $('.cart_price_sale_' + id).val();
         var cart_amount = $('.cart_amount_' + id).val();
-        var cart_quantity = $('.cart_quantity_' + id).val();
+        var cart_quantity = parseInt($('.cart_quantity_' + id).val()); // Lấy số lượng từ input đúng với id
         var cart_image = $('.cart_image_' + id).val();
         var size = $('input[name=size_' + id + ']:checked').val();
         var toppings = [];
         $('input[name="topping_' + id + '[]"]:checked').each(function() {
             toppings.push($(this).val());
         });
+
+        console.log('Cart Quantity (Buy Now):', cart_quantity); // Debug số lượng
 
         $.ajax({
             url: 'add_to_cart',
@@ -266,18 +311,18 @@
                 cart_price: cart_price,
                 cart_price_sale: cart_price_sale,
                 cart_amount: cart_amount,
-                cart_quantity: cart_quantity,
+                cart_quantity: cart_quantity, // Gửi số lượng từ input
                 cart_image: cart_image,
                 size: size,
                 toppings: toppings
             },
             success: function(data) {
                 window.location.href = '/checkout';
+            },
+            error: function(xhr) {
+                Swal.fire('Có lỗi xảy ra khi mua ngay!');
             }
         });
     });
-
-    $('.btn-comment').click(function() { /* Giữ nguyên phần comment */ });
-    $('.handle_wishlist').click(function() { /* Giữ nguyên phần wishlist */ });
 </script>
 @endsection

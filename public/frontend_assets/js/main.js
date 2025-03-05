@@ -278,8 +278,8 @@
 
     $('.open-cart-modal').on('click', function() {
         console.log('click modal mở');
-        var productId = $(this).data('id');
-        var modal = $('.cart-modal-' + productId);
+        var cart_id = $(this).data('id');
+        var modal = $('.cart-modal-' + cart_id);
         // Hiển thị modal
         modal.appendTo('body').addClass('show-modal');
     });
@@ -287,28 +287,28 @@
     // Đóng modal khi click vào nút "close-btn"
     $('.close-btn').on('click', function() {
         console.log('click modal đóng');
-        var productId = $(this).data('id');
-        $('.cart-modal-' + productId).removeClass('show-modal');
+        var cart_id = $(this).data('id');
+        $('.cart-modal-' + cart_id).removeClass('show-modal');
     });
 
     // Xử lý sự kiện khi click nút "Thêm vào giỏ hàng" trong modal
     $('.add-to-cart-with-options').on('click', function() {
         var token = $('input[name=_token]').val();
-        var productId = $(this).data('id');
+        var cart_id = $(this).data('id');
         var type = 'add-to-cart';
-        var modal = $('#cartModal_' + productId);
+        var modal = $('#cartModal_' + cart_id);
         var itemData = $(this).data('item'); // Lấy dữ liệu từ data-item
     
         // Xóa dòng đặt "M" mặc định để tôn trọng lựa chọn của người dùng
         // modal.find('input[name="size"][value="M"]').prop('checked', true);
     
         // Đặt "M" làm mặc định chỉ khi không có radio nào được chọn
-        if (!modal.find('input[name="size_' + productId + '"]:checked').length) {
-            modal.find('input[name="size_' + productId + '"][value="M"]').prop('checked', true);
+        if (!modal.find('input[name="size_' + cart_id + '"]:checked').length) {
+            modal.find('input[name="size_' + cart_id + '"][value="M"]').prop('checked', true);
         }
     
         // Lấy các tùy chọn đã chọn
-        var size = modal.find('input[name="size_' + productId + '"]:checked').val();
+        var size = modal.find('input[name="size_' + cart_id + '"]:checked').val();
         var toppings = [];
         modal.find('input[name="topping[]"]:checked').each(function() {
             toppings.push($(this).val());
@@ -319,7 +319,6 @@
         var productPrice = itemData.product_price_sell;
         var productSalePrice = productPrice - (productPrice / 100 * itemData.product_sale);
         var productImage = itemData.product_image;
-        var productBrand = itemData.product_brand || ''; // Nếu không có thì để trống
         var productAmount = itemData.product_amount || 1; // Mặc định là 1 nếu không có
     
         // Gửi dữ liệu tới route /add_to_cart bằng AJAX
@@ -328,15 +327,15 @@
             method: 'POST',
             data: {
                 _token: token,
-                product_id: productId,
+                cart_id: cart_id,
                 size: size,
-                topping: toppings,
-                product_name: productName,
-                product_price: productPrice,
-                product_sale_price: productSalePrice,
-                product_brand: productBrand,
-                product_amount: productAmount,
-                product_image: productImage,
+                toppings: toppings,
+                cart_product: productName,
+                cart_price: productPrice,
+                cart_price_sale: productSalePrice,
+                cart_amount: productAmount,
+                cart_image: productImage,
+                cart_quantity: 1,
                 type: type
             },
             success: function(response) {

@@ -448,18 +448,24 @@ class CartController extends Controller
     //Hàm thêm cart
     public function addToCart(Request $request)
     {
-        $productId = $request->product_id;
+        $productId = $request->cart_id;
         $type = $request->type;
-        $size = $request->size ?? 'M'; // Default size là M nếu không có
-        $toppings = $request->topping ?? []; // Default là mảng rỗng nếu không có topping
-        sort($toppings); // Sắp xếp toppings để so sánh chính xác
+        $size = $request->size ?? 'M'; 
     
+        // Đảm bảo topping luôn là mảng
+        $toppings = $request->toppings;
+        if (!is_array($toppings)) {
+            $toppings = $toppings ? [$toppings] : [];
+        }
+        // Ép các topping thành int (nếu cần) và sắp xếp
+        $toppings = array_map('intval', $toppings);
+        sort($toppings);
+        
         $dataProduct = ProductModel::find($productId);
         if (!$dataProduct) {
             return response()->json('Sản phẩm không tồn tại', 404);
         }
-    
-        // Lấy thông tin topping (topping_name và price) dựa trên topping_id
+        
         $toppingDetails = [];
         if (!empty($toppings)) {
             $toppingDetails = ToppingModel::select('topping_id', 'topping_name', 'price')
@@ -467,28 +473,28 @@ class CartController extends Controller
                 ->get()
                 ->map(function ($topping) {
                     return [
-                        'id' => $topping->topping_id, // Thêm id để lưu trữ
+                        'id' => (int)$topping->topping_id, // Ép về số nếu cần
                         'name' => $topping->topping_name,
                         'price' => $topping->price,
                     ];
                 })
                 ->toArray();
         }
-    
+        
         // Lấy giỏ hàng từ session
         $cart = Session::get('cart', []);
-    
+        
         $checkIsset = false;
         if ($cart) {
             foreach ($cart as $key => $item) {
-                // Lấy danh sách topping_id từ giỏ hàng
+                // Lấy danh sách topping_id từ giỏ hàng (ép về int để so sánh)
                 $itemToppings = $item['topping'] ?? [];
-                $itemToppingIds = array_column($itemToppings, 'id'); // Trích xuất topping_id
+                $itemToppingIds = array_map('intval', array_column($itemToppings, 'id'));
                 sort($itemToppingIds); // Sắp xếp để so sánh chính xác
-    
-                // So sánh product_id, size và toppings
-                if ($item['cart_id'] == $productId && 
-                    $item['size'] == $size && 
+                
+                // So sánh product_id, size và topping
+                if ($item['cart_id'] == $productId &&
+                    $item['size'] == $size &&
                     $itemToppingIds == $toppings) {
                     $quantity = $item['cart_quantity'] + 1;
                     if ($quantity <= $dataProduct->product_amount) {
@@ -501,19 +507,18 @@ class CartController extends Controller
                 }
             }
         }
-    
+        
         // Nếu không trùng, thêm sản phẩm mới vào giỏ
         if (!$checkIsset) {
-            if (1 <= $dataProduct->product_amount) { // Kiểm tra số lượng tối đa
+            if (1 <= $dataProduct->product_amount) {
                 $cart[] = [
                     'cart_id' => $productId,
-                    'cart_product' => $request->product_name,
-                    'cart_price' => $request->product_price,
-                    'cart_price_sale' => $request->product_sale_price,
-                    'cart_weight' => $request->product_brand ?? '', 
-                    'cart_amount' => $request->product_amount,
-                    'cart_quantity' => 1, // Số lượng ban đầu là 1
-                    'cart_image' => $request->product_image,
+                    'cart_product' => $request->cart_product,
+                    'cart_price' => $request->cart_price,
+                    'cart_price_sale' => $request->cart_price_sale,
+                    'cart_amount' => $request->cart_amount,
+                    'cart_quantity' => $request->cart_quantity,
+                    'cart_image' => $request->cart_image,
                     'size' => $size,
                     'topping' => $toppingDetails, // Lưu thông tin topping
                 ];
@@ -521,11 +526,11 @@ class CartController extends Controller
                 return response()->json('Số lượng sản phẩm đã đến mức tối đa. Bạn không thể thêm vào giỏ nữa');
             }
         }
-    
+        
         // Lưu giỏ hàng vào session
         Session::put('cart', $cart);
         Session::save();
-    
+        
         // Phản hồi theo type
         if ($type === 'add-to-cart') {
             return response()->json('Thêm sản phẩm giỏ hàng thành công');
@@ -533,6 +538,7 @@ class CartController extends Controller
             return redirect('/checkout');
         }
     }
+    
 
     //Hàm xử lý tính tổng theo sản phẩmgiỏ hàng
     public function getTotal($cart){

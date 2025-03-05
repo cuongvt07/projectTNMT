@@ -153,6 +153,15 @@
                                 Thêm vào giỏ hàng
                             </button>
                         </div>
+
+                        <div class="sin__desc mt-2 quantity-container">
+                            <p><span>Số lượng:</span></p> &nbsp;
+                            <div class="quantity">
+                                <button type="button" class="minus" aria-label="Decrease">&minus;</button>
+                                <input type="number" class="input-box cart_quantity_{{$data->product_id}}" value="1" min="1" max="{{$data->product_amount}}" readonly>
+                                <button type="button" class="plus" aria-label="Increase">&plus;</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
