@@ -14,19 +14,36 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Dumping data for table projecttnmt.brands: ~3 rows (approximately)
-INSERT INTO `brands` (`brand_id`, `brand_name`, `brand_keyword`, `brand_description`, `created_at`, `updated_at`) VALUES
-	(2, 'Citizen', 'Citizen', 'Citizen', '2021-12-19 12:53:53', '2025-02-17 21:24:24'),
-	(3, 'Casio', 'Casio', 'Casio', '2021-12-19 12:54:15', '2025-02-17 21:24:06'),
-	(15, 'Rolex', 'Rolex', 'Rolex', '2023-10-06 00:24:23', '2025-02-17 21:23:57');
 
--- Dumping data for table projecttnmt.categorys: ~5 rows (approximately)
+-- Dumping database structure for projecttnmt
+CREATE DATABASE IF NOT EXISTS `projecttnmt` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `projecttnmt`;
+
+-- Dumping structure for table projecttnmt.categorys
+CREATE TABLE IF NOT EXISTS `categorys` (
+  `category_id` tinyint unsigned NOT NULL AUTO_INCREMENT,
+  `category_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_keyword` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`category_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- Dumping data for table projecttnmt.categorys: ~4 rows (approximately)
 INSERT INTO `categorys` (`category_id`, `category_name`, `category_keyword`, `category_description`, `created_at`, `updated_at`) VALUES
-	(4, 'Đồng hồ treo tường', 'Đồng hồ treo tường', 'Đồng hồ treo tường', '2021-12-19 12:58:04', '2025-02-26 00:18:46'),
-	(5, 'Đồng hồ đôi', 'Đồng hồ đôi', 'Đồng hồ đôi', '2021-12-19 12:58:37', '2025-02-26 00:18:27'),
-	(6, 'Đồng hồ nam', 'Đồng hồ nam', 'Đồng hồ nam', '2021-12-20 13:01:29', '2025-02-17 21:49:45'),
-	(30, 'Đồng hồ nữ', 'Đồng hồ nữ', 'Đồng hồ nữ', '2023-11-23 09:00:21', '2025-02-17 21:49:28'),
-	(33, 'Đồng hồ thể thao', 'Đồng hồ thể thao', 'Đồng hồ thể thao', '2023-12-03 08:57:45', '2025-02-17 21:48:03');
+	(1, 'Trà Trái Cây', 'Trà Trái Cây', 'Trà Trái Cây', '2021-12-19 12:58:37', '2025-03-06 09:10:45'),
+	(2, 'Kem Sữa & Latte', 'Kem Sữa & Latte', 'Kem Sữa & Latte', '2021-12-20 13:01:29', '2025-03-06 09:10:35'),
+	(3, 'Trà Tươi', 'Trà Tươi', 'Trà Tươi', '2023-11-23 09:00:21', '2025-03-06 09:10:22'),
+	(4, 'Trà Sữa', 'Trà Sữa', 'Trà Sữa', '2023-12-03 08:57:45', '2025-03-06 09:09:56');
+
+-- Dumping structure for table projecttnmt.citys
+CREATE TABLE IF NOT EXISTS `citys` (
+  `city_id` int NOT NULL,
+  `city_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`city_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table projecttnmt.citys: ~63 rows (approximately)
 INSERT INTO `citys` (`city_id`, `city_name`, `city_type`) VALUES
@@ -94,17 +111,50 @@ INSERT INTO `citys` (`city_id`, `city_name`, `city_type`) VALUES
 	(95, 'Tỉnh Bạc Liêu', 'Tỉnh'),
 	(96, 'Tỉnh Cà Mau', 'Tỉnh');
 
--- Dumping data for table projecttnmt.comments: ~2 rows (approximately)
-INSERT INTO `comments` (`comment_id`, `user_id`, `product_id`, `comment_customer`, `comment_admin`, `comment_rating`, `comment_status`, `created_at`, `updated_at`) VALUES
-	(1, 23, 56, 'rất tôt', NULL, 5, 3, '2023-11-08 19:56:41', '2023-11-11 06:46:50'),
-	(3, 23, 57, 'Không còn gì để diễn tả quá ngon và rẻ', 'Cảm ơn bạn', 5, 3, '2023-11-10 10:28:28', '2023-11-10 10:30:33');
+-- Dumping structure for table projecttnmt.comments
+CREATE TABLE IF NOT EXISTS `comments` (
+  `comment_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
+  `product_id` int DEFAULT NULL,
+  `comment_customer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comment_admin` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comment_rating` int DEFAULT NULL,
+  `comment_status` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`comment_id`) USING BTREE,
+  KEY `comments_user_id_foreign` (`user_id`) USING BTREE,
+  KEY `comments_product_id_foreign` (`product_id`) USING BTREE,
+  CONSTRAINT `comments_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE,
+  CONSTRAINT `comments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table projecttnmt.coupons: ~4 rows (approximately)
-INSERT INTO `coupons` (`coupon_id`, `coupon_name`, `coupon_code`, `coupon_value`, `coupon_status`, `coupon_expiry`, `user_id`, `created_at`, `updated_at`) VALUES
-	(2, 'Mã giảm giá thường niên', 'CODE20', 20, 1, '2024-02-29', '23,23,23,23,23,23,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,', '2023-11-08 01:28:01', '2023-12-09 00:14:31'),
-	(3, 'Mã khuyến mãi cho khách hàng', 'CODE 50', 50, 1, '2024-02-29', '62,62,62,', '2023-11-21 03:46:50', '2024-01-11 08:04:09'),
-	(4, 'Mã cho bạn của Cường', 'CODE NE', 100000, 2, '2024-02-29', '23,57,', '2023-11-21 03:47:28', '2023-12-26 09:26:18'),
-	(5, 'Mã thường niên 2023', 'CODE2024', 10000, 2, '2025-03-30', '23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,', '2023-11-21 11:43:04', '2025-02-25 02:41:26');
+-- Dumping data for table projecttnmt.comments: ~0 rows (approximately)
+
+-- Dumping structure for table projecttnmt.coupons
+CREATE TABLE IF NOT EXISTS `coupons` (
+  `coupon_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `coupon_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `coupon_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `coupon_value` int NOT NULL,
+  `coupon_status` int NOT NULL,
+  `coupon_expiry` date NOT NULL,
+  `user_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`coupon_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- Dumping data for table projecttnmt.coupons: ~0 rows (approximately)
+
+-- Dumping structure for table projecttnmt.districts
+CREATE TABLE IF NOT EXISTS `districts` (
+  `district_id` int NOT NULL,
+  `district_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `district_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city_id` int NOT NULL,
+  PRIMARY KEY (`district_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table projecttnmt.districts: ~713 rows (approximately)
 INSERT INTO `districts` (`district_id`, `district_name`, `district_type`, `city_id`) VALUES
@@ -822,7 +872,17 @@ INSERT INTO `districts` (`district_id`, `district_name`, `district_type`, `city_
 	(972, 'Huyện Phú Tân', 'Huyện', 96),
 	(973, 'Huyện Ngọc Hiển', 'Huyện', 96);
 
--- Dumping data for table projecttnmt.images: ~114 rows (approximately)
+-- Dumping structure for table projecttnmt.images
+CREATE TABLE IF NOT EXISTS `images` (
+  `image_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `image_name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`image_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=210 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- Dumping data for table projecttnmt.images: ~121 rows (approximately)
 INSERT INTO `images` (`image_id`, `product_id`, `image_name`, `created_at`, `updated_at`) VALUES
 	(7, 3, '/storage/images_product/MD6kulqucT_den-gan-tuong-ma-vang-dgt-003-.jpg', '2021-12-21 08:33:59', '2021-12-21 08:33:59'),
 	(8, 3, '/storage/images_product/vGITJ6ZNCF_den-gan-tuong-ma-vang-dgt-003-1.jpg', '2021-12-21 08:33:59', '2021-12-21 08:33:59'),
@@ -932,48 +992,27 @@ INSERT INTO `images` (`image_id`, `product_id`, `image_name`, `created_at`, `upd
 	(188, 57, '/storage/images_product/UX6EtUd554_casio-ltp-vt01gl-4budf-nu-thumb-fix-600x600.jpg', '2025-02-18 00:50:19', '2025-02-18 00:50:19'),
 	(189, 57, '/storage/images_product/tTZ64yrhmU_casio-mtp-vt01gl-1b2udf-nam-thumb-600x600.jpg', '2025-02-18 00:50:19', '2025-02-18 00:50:19'),
 	(190, 57, '/storage/images_product/H0sPkVii4S_citizen-bi5120-51z-nam-thumb-638702013388393690-600x600.jpg', '2025-02-18 00:50:19', '2025-02-18 00:50:19'),
-	(191, 56, '/storage/images_product/OByjG9K9LS_casio-ltp-vt01gl-4budf-nu-thumb-fix-600x600.jpg', '2025-02-18 00:52:21', '2025-02-18 00:52:21'),
-	(192, 56, '/storage/images_product/DKXc8tLp5H_casio-mtp-vt01gl-1b2udf-nam-thumb-600x600.jpg', '2025-02-18 00:52:21', '2025-02-18 00:52:21'),
-	(193, 56, '/storage/images_product/XcTKIYnRgS_elio-ess11-02-unisex-thumb-600x600.jpg', '2025-02-18 00:52:21', '2025-02-18 00:52:21'),
-	(197, 58, '/storage/images_product/piWk0HUL1q_900x900-Xanh-Sua-Nhai-Dao-Tien.jpg', '2025-03-04 07:17:29', '2025-03-04 07:17:29');
+	(197, 58, '/storage/images_product/piWk0HUL1q_900x900-Xanh-Sua-Nhai-Dao-Tien.jpg', '2025-03-04 07:17:29', '2025-03-04 07:17:29'),
+	(198, 62, '/storage/images_product/razgOiqre3_luc_tra_hoang_kim_4b2ef28d7cc04db0a47c0587e05f8963_large.webp', '2025-03-06 09:30:36', '2025-03-06 09:30:36'),
+	(199, 62, '/storage/images_product/wVNgTY7fR8_ts_suong_sao_c5f9f21a549543f89ec8fa2a74885b41_large.webp', '2025-03-06 09:30:36', '2025-03-06 09:30:36'),
+	(200, 62, '/storage/images_product/PkML2eTnkH_ts_tran_chau_052aed385e41470db7cec46eddfcfdbb_large.webp', '2025-03-06 09:30:36', '2025-03-06 09:30:36'),
+	(201, 63, '/storage/images_product/PNC9kaeDcU_luc_tra_hoang_kim_4b2ef28d7cc04db0a47c0587e05f8963_large.webp', '2025-03-06 09:36:04', '2025-03-06 09:36:04'),
+	(202, 63, '/storage/images_product/rZylg8woyM_ts_suong_sao_c5f9f21a549543f89ec8fa2a74885b41_large.webp', '2025-03-06 09:36:04', '2025-03-06 09:36:04'),
+	(203, 63, '/storage/images_product/jKlsFzCQAe_ts_tran_chau_052aed385e41470db7cec46eddfcfdbb_large.webp', '2025-03-06 09:36:04', '2025-03-06 09:36:04'),
+	(204, 64, '/storage/images_product/5DkWsi7JZH_luc_tra_hoang_kim_4b2ef28d7cc04db0a47c0587e05f8963_large.webp', '2025-03-06 09:37:05', '2025-03-06 09:37:05'),
+	(205, 64, '/storage/images_product/pv1LWS594V_ts_suong_sao_c5f9f21a549543f89ec8fa2a74885b41_large.webp', '2025-03-06 09:37:05', '2025-03-06 09:37:05'),
+	(206, 64, '/storage/images_product/1EdQPuJc6U_ts_tran_chau_052aed385e41470db7cec46eddfcfdbb_large.webp', '2025-03-06 09:37:05', '2025-03-06 09:37:05'),
+	(207, 65, '/storage/images_product/90K8oejwLV_luc_tra_hoang_kim_4b2ef28d7cc04db0a47c0587e05f8963_large.webp', '2025-03-06 09:38:12', '2025-03-06 09:38:12'),
+	(208, 65, '/storage/images_product/d255a52cCk_ts_suong_sao_c5f9f21a549543f89ec8fa2a74885b41_large.webp', '2025-03-06 09:38:12', '2025-03-06 09:38:12'),
+	(209, 65, '/storage/images_product/n3dXE99Z00_ts_tran_chau_052aed385e41470db7cec46eddfcfdbb_large.webp', '2025-03-06 09:38:12', '2025-03-06 09:38:12');
 
--- Dumping data for table projecttnmt.messages: ~35 rows (approximately)
-INSERT INTO `messages` (`id`, `from`, `to`, `message`, `is_read`, `created_at`, `updated_at`) VALUES
-	(1, 23, 38, 'Đảm bảo rằng factory và model của bạn', 0, '2023-10-20 22:00:01', '2023-10-20 22:00:01'),
-	(2, 38, 23, 'Đảm bảo rằng factory và model của bạn', 1, '2023-10-20 22:02:19', '2023-10-29 07:23:17'),
-	(4, 40, 23, 'Đảm bảo rằng factory và model của bạn', 1, '2023-10-20 22:02:34', '2024-01-09 00:09:43'),
-	(5, 38, 40, 'Đảm bảo rằng factory và model của bạn', 1, '2023-10-20 22:02:35', '2024-01-03 08:00:56'),
-	(15, 23, 38, '12313', 0, '2023-10-21 00:52:30', '2023-10-21 00:52:30'),
-	(16, 23, 38, '1231', 0, '2023-10-21 00:52:45', '2023-10-21 00:52:45'),
-	(17, 23, 38, '15121990', 0, '2023-10-21 00:53:19', '2023-10-21 00:53:19'),
-	(18, 40, 23, 'alo', 1, '2023-10-21 08:21:59', '2024-01-09 00:09:43'),
-	(19, 40, 23, 'bên khách hàng đang muốn chúng ta nhập về cho họ 1 số lượng lớn hàng, sếp thấy thế nào', 1, '2023-10-21 08:22:43', '2024-01-09 00:09:43'),
-	(21, 23, 38, 'oke tôi hiểu', 0, '2023-10-25 09:25:43', '2023-10-25 09:25:43'),
-	(22, 40, 23, 'alo', 1, '2023-10-29 09:06:39', '2024-01-09 00:09:43'),
-	(23, 23, 40, '2', 1, '2023-10-29 09:06:45', '2024-01-03 08:01:12'),
-	(24, 52, 40, '', 1, NULL, '2024-01-03 08:00:56'),
-	(25, 54, 40, NULL, 1, NULL, '2024-01-03 08:00:55'),
-	(26, 55, 40, NULL, 1, NULL, '2024-01-03 08:00:55'),
-	(27, 24, 23, 'Alo a có đang ở đó k', 1, '2023-11-20 10:12:45', '2024-01-09 00:09:42'),
-	(28, 23, 24, 'có tôi đây', 1, '2023-11-20 10:13:00', '2023-11-20 10:57:04'),
-	(29, 23, 40, 'tôi đây', 1, '2023-11-20 10:17:26', '2024-01-03 08:01:12'),
-	(30, 23, 40, 'bạn cần gì nhỉ', 1, '2023-11-20 10:21:56', '2024-01-03 08:01:12'),
-	(31, 23, 24, 'sao vậy', 1, '2023-11-20 10:23:51', '2023-11-20 10:57:04'),
-	(32, 23, 24, 'nói đi bạn', 1, '2023-11-20 10:25:22', '2023-11-20 10:57:04'),
-	(33, 24, 23, 'tôi muốn lấy lương', 1, '2023-11-20 10:29:53', '2024-01-09 00:09:42'),
-	(34, 23, 24, 'm10 mới có lương  nhé', 1, '2023-11-20 10:52:08', '2023-11-20 10:57:04'),
-	(35, 23, 24, 'tôi sẽ xem xét trước cho cậu', 1, '2023-11-20 17:57:03', '2023-11-20 10:57:04'),
-	(36, 57, 40, NULL, 1, NULL, '2024-01-03 08:00:54'),
-	(38, 59, 40, NULL, 1, NULL, '2024-01-03 08:00:53'),
-	(39, 40, 23, 'tôi cần xem vài thứ', 1, '2024-01-03 15:00:24', '2024-01-09 00:09:43'),
-	(40, 23, 40, 'oce hãy vào việc nào', 1, '2024-01-03 15:01:12', '2024-01-03 08:01:12'),
-	(41, 23, 40, 'bạn ơi', 0, '2024-01-09 04:01:50', '2024-01-08 21:01:50'),
-	(42, 60, 40, NULL, 0, NULL, NULL),
-	(43, 61, 40, NULL, 0, NULL, NULL),
-	(44, 62, 40, NULL, 1, NULL, '2024-01-12 00:13:40'),
-	(45, 62, 40, 'xin chào quản lý', 1, '2024-01-11 16:13:27', '2024-01-12 00:13:40'),
-	(46, 40, 62, 'chào bạn!', 1, '2024-01-11 16:13:36', '2024-01-12 00:13:34'),
-	(47, 62, 40, 'xin chao bn', 1, '2024-01-12 07:13:33', '2024-01-12 00:13:40');
+-- Dumping structure for table projecttnmt.migrations
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table projecttnmt.migrations: ~18 rows (approximately)
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -996,124 +1035,155 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(18, '2023_09_22_024631_add_column_to_users_table', 2),
 	(19, '2023_10_21_035212_create_messages_table', 3);
 
--- Dumping data for table projecttnmt.orderdetail: ~13 rows (approximately)
-INSERT INTO `orderdetail` (`order_detail_id`, `order_id`, `product_id`, `size`, `order_detail_quantity`, `order_detail_price`, `created_at`, `updated_at`) VALUES
-	(1, 60, 58, 'M', 3, 20000, '2025-03-04 08:31:03', '2025-03-04 08:31:03'),
-	(2, 61, 58, 'M', 3, 20000, '2025-03-04 08:31:36', '2025-03-04 08:31:36'),
-	(3, 62, 58, 'M', 3, 20000, '2025-03-04 08:33:49', '2025-03-04 08:33:49'),
-	(4, 63, 58, 'M', 3, 20000, '2025-03-04 08:34:02', '2025-03-04 08:34:02'),
-	(5, 63, 58, 'L', 1, 20000, '2025-03-04 08:34:02', '2025-03-04 08:34:02'),
-	(6, 64, 58, 'M', 2, 20000, '2025-03-04 08:38:53', '2025-03-04 08:38:53'),
-	(7, 64, 58, 'M', 1, 20000, '2025-03-04 08:38:53', '2025-03-04 08:38:53'),
-	(8, 64, 58, 'M', 1, 20000, '2025-03-04 08:38:53', '2025-03-04 08:38:53'),
-	(9, 65, 58, 'M', 5, 20000, '2025-03-05 10:05:53', '2025-03-05 10:05:53'),
-	(10, 66, 58, 'M', 6, 20000, '2025-03-05 10:09:40', '2025-03-05 10:09:40'),
-	(11, 67, 58, 'M', 3, 27000, '2025-03-05 10:19:39', '2025-03-05 10:19:39'),
-	(12, 68, 58, 'M', 1, 27000, '2025-03-05 10:21:09', '2025-03-05 10:21:09'),
-	(13, 69, 58, 'M', 4, 108000, '2025-03-05 10:37:34', '2025-03-05 10:37:34'),
-	(14, 70, 58, 'M', 2, 54000, '2025-03-05 11:14:32', '2025-03-05 11:14:32'),
-	(15, 70, 58, 'M', 2, 40000, '2025-03-05 11:14:32', '2025-03-05 11:14:32'),
-	(16, 70, 58, 'L', 1, 20000, '2025-03-05 11:14:32', '2025-03-05 11:14:32');
+-- Dumping structure for table projecttnmt.orderdetail
+CREATE TABLE IF NOT EXISTS `orderdetail` (
+  `order_detail_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` bigint unsigned DEFAULT NULL,
+  `product_id` int DEFAULT NULL,
+  `size` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_detail_quantity` int NOT NULL,
+  `order_detail_price` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`order_detail_id`),
+  KEY `order_id` (`order_id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `orderdetail_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
+  CONSTRAINT `orderdetail_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table projecttnmt.orderdetail_topping: ~4 rows (approximately)
-INSERT INTO `orderdetail_topping` (`order_detail_id`, `topping_id`, `topping_price`) VALUES
-	(4, 1, 5000.00),
-	(5, 2, 2000.00),
-	(6, 1, 5000.00),
-	(7, 2, 2000.00),
-	(8, 3, 3000.00),
-	(10, 1, 5000.00),
-	(10, 2, 2000.00),
-	(11, 1, 5000.00),
-	(11, 2, 2000.00),
-	(12, 1, 5000.00),
-	(12, 2, 2000.00),
-	(13, 1, 5000.00),
-	(13, 2, 2000.00),
-	(14, 1, 5000.00),
-	(14, 2, 2000.00);
+-- Dumping data for table projecttnmt.orderdetail: ~0 rows (approximately)
 
--- Dumping data for table projecttnmt.orders: ~45 rows (approximately)
-INSERT INTO `orders` (`order_id`, `user_id`, `order_shipping`, `ward`, `address`, `order_note`, `order_pay_type`, `order_profit`, `order_total`, `shipping_fee`, `order_status`, `created_at`, `updated_at`) VALUES
-	(11, 52, 'Tên người nhận: Trần Văn Mạnh - Email: vanmanh123@gmail.com - Số điện thoại: 0857086588 - Địa chỉ: Hoa Thủy - Huyện Lệ Thủy - Tỉnh Quảng Bình', NULL, NULL, NULL, 1, 840000, 8840000, NULL, 1, '2021-12-21 17:00:00', '2021-12-21 10:48:43'),
-	(13, 52, 'Tên người nhận: Trần Văn Mạnh - Email: vanmanh123@gmail.com - Số điện thoại: 0857086588 - Địa chỉ: Hoa Thủy - Huyện Lệ Thủy - Tỉnh Quảng Bình', NULL, NULL, NULL, 1, 70620000, 77620000, NULL, 1, '2021-12-21 17:00:00', '2021-12-21 10:49:28'),
-	(14, 52, 'Tên người nhận: Trần Văn Mạnh - Email: vanmanh123@gmail.com - Số điện thoại: 0857086588 - Địa chỉ: Hoa Thủy - Huyện Lệ Thủy - Tỉnh Quảng Bình', NULL, NULL, NULL, 1, 2600000, 13600000, NULL, 1, '2021-12-21 17:00:00', '2021-12-21 10:49:43'),
-	(16, 52, 'Tên người nhận: Trương Hồng Khánh - Email: hongkhanh123@gmail.com - Số điện thoại: 0857086588 - Địa chỉ: Hoa Thủy - Huyện Lệ Thủy - Tỉnh Quảng Bình', NULL, NULL, NULL, 1, -40000, 2960000, NULL, 1, '2021-12-21 17:00:00', '2021-12-21 10:51:39'),
-	(17, 52, 'Tên người nhận: Trương Hồng Khánh - Email: hongkhanh123@gmail.com - Số điện thoại: 0857086588 - Địa chỉ: Hoa Thủy - Huyện Lệ Thủy - Tỉnh Quảng Bình', NULL, NULL, NULL, 1, 2900000, 5900000, NULL, 1, '2021-12-21 17:00:00', '2021-12-21 10:51:56'),
-	(20, 52, 'Tên người nhận: Nguyễn Văn Thuận - Email: thuannv06022001@gmail.com - Số điện thoại: 0857086588 - Địa chỉ: Hoa Thủy - Huyện Lệ Thủy - Tỉnh Quảng Bình', NULL, NULL, NULL, 1, 3970000, 33970000, NULL, 1, '2021-12-21 17:00:00', '2021-12-21 10:52:44'),
-	(21, 52, 'Tên người nhận: Nguyễn Văn Thuận - Email: thuannv06022001@gmail.com - Số điện thoại: 0857086588 - Địa chỉ: Hoa Thủy - Huyện Lệ Thủy - Tỉnh Quảng Bình', NULL, NULL, NULL, 1, 2900000, 5900000, NULL, 1, '2021-12-21 17:00:00', '2021-12-21 10:52:57'),
-	(22, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0774405020 - Địa chỉ: địa chỉ 2 - Huyện Đồng Văn - Tỉnh Hà Giang', NULL, NULL, 'ok', 1, 10320000, 34320000, NULL, 1, '2022-11-12 17:00:00', '2022-11-13 08:56:58'),
-	(23, 23, 'Tên người nhận: admin - Email: maitrungkien.qn@gmail.com - Số điện thoại: 0774405020 - Địa chỉ: địa chỉ 2 - Huyện Đồng Văn - Tỉnh Hà Giang', NULL, NULL, 'ok', 1, 10320000, 34320000, NULL, 1, '2022-11-12 17:00:00', '2022-11-13 08:57:37'),
-	(28, 23, 'Tên người nhận: admin - Email: visang@masterkorean.vn - Số điện thoại: 0842467996 - Địa chỉ: 2123185 - Huyện Đoan Hùng - Tỉnh Phú Thọ', NULL, NULL, '111', 2, 20000, 22130, NULL, 1, '2023-10-12 17:00:00', '2023-10-13 00:14:54'),
-	(29, 23, 'Tên người nhận: admin - Email: khoa.x.bug@gmail.com - Số điện thoại: 0943206425 - Địa chỉ: 2123185 - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, '111', 1, 973000, 994000, NULL, 2, '2023-11-05 17:00:00', '2023-11-06 09:48:58'),
-	(30, 23, 'Tên người nhận: Phạm Văn Cường - Email: cuongdtnt109@gmail.com - Số điện thoại: 0943206425 - Địa chỉ: Điềm Mặc, Định Hoá, Thái Nguyên - Huyện Định Hóa - Tỉnh Thái Nguyên', NULL, NULL, '111', 1, 821000, 843000, NULL, 1, '2023-11-07 17:00:00', '2023-11-08 09:18:41'),
-	(31, 23, 'Tên người nhận: Phạm Văn Cường - Email: cuongdtnt109@gmail.com - Số điện thoại: 0943206425 - Địa chỉ: Điềm Mặc, Định Hoá, Thái Nguyên - Huyện Định Hóa - Tỉnh Thái Nguyên', NULL, NULL, '111', 1, 821000, 843000, NULL, 1, '2023-11-07 17:00:00', '2023-11-08 09:19:05'),
-	(32, 23, 'Tên người nhận: Phạm Văn Cường - Email: cuongdtnt109@gmail.com - Số điện thoại: 0943206425 - Địa chỉ: Điềm Mặc, Định Hoá, Thái Nguyên - Huyện Định Hóa - Tỉnh Thái Nguyên', NULL, NULL, '111', 1, 821000, 843000, NULL, 1, '2023-11-07 17:00:00', '2023-11-08 09:19:25'),
-	(33, 23, 'Tên người nhận: Phạm Văn Cường - Email: cuongdtnt109@gmail.com - Số điện thoại: 0943206425 - Địa chỉ: Điềm Mặc, Định Hoá, Thái Nguyên - Huyện Định Hóa - Tỉnh Thái Nguyên', NULL, NULL, '111', 1, 905000, 1405000, NULL, 1, '2023-11-07 17:00:00', '2023-11-08 09:24:05'),
-	(39, 23, 'Tên người nhận: Phạm Văn Cường - Email: cuongdtnt109@gmail.com - Số điện thoại: 0943206425 - Địa chỉ: Điềm Mặc, Định Hoá, Thái Nguyên - Huyện Định Hóa - Tỉnh Thái Nguyên', NULL, NULL, NULL, 1, 973000, 1494000, NULL, 5, '2023-11-16 17:00:00', '2024-01-09 10:19:23'),
-	(40, 23, 'Tên người nhận: Phạm Văn Cường - Email: cuongdtnt109@gmail.com - Số điện thoại: 0943206425 - Địa chỉ: Điềm Mặc, Định Hoá, Thái Nguyên - Huyện Định Hóa - Tỉnh Thái Nguyên', NULL, NULL, NULL, 1, 1025420, 1546420, NULL, 6, '2023-11-16 17:00:00', '2024-01-09 10:21:54'),
-	(41, 23, 'Tên người nhận: Phạm Văn Cường - Email: cuongdtnt109@gmail.com - Số điện thoại: 0943206425 - Địa chỉ: số 10, Nguyễn Văn Trỗi, Hà Đông, Hà Nôi - Quận Hà Đông - Thành phố Hà Nội', 'số 10, Nguyễn Văn Trỗi, Hà Đông, Hà Nôi', 'số 10, Nguyễn Văn Trỗi, Hà Đông, Hà Nôi', NULL, 1, 1003000, 1024000, NULL, 1, '2023-11-16 17:00:00', '2023-11-16 11:39:20'),
-	(43, NULL, 'Tên người nhận: Hoàng Trung Kiên - Email: cuongdtnt109@gmail.com - Số điện thoại: 0943206425 - Địa chỉ: Xã Điềm Mặc, Huyện Định Hoá, Tỉnh Thái Nguyên - Huyện Định Hóa - Tỉnh Thái Nguyên', 'Xã Điềm Mặc, Huyện Định Hoá, Tỉnh Thái Nguyên', 'Xã Điềm Mặc, Huyện Định Hoá, Tỉnh Thái Nguyên', NULL, 2, 1018000, 1039000, NULL, 4, '2023-11-28 17:00:00', '2024-01-09 10:19:08'),
-	(44, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ: Xã Điềm Mặc, Huyện Định Hoá, Tỉnh Thái Nguyên - Huyện Định Hóa - Tỉnh Thái Nguyên', 'Xã Điềm Mặc, Huyện Định Hoá, Tỉnh Thái Nguyên', 'Xã Điềm Mặc, Huyện Định Hoá, Tỉnh Thái Nguyên', NULL, 3, 55000, 355000, NULL, 2, '2023-12-25 17:00:00', '2023-12-28 10:13:28'),
-	(45, NULL, 'Tên người nhận: Hoàng Trung Kiên - Email: cuongdtnt109@gmail.com - Số điện thoại: 0943206425 - Địa chỉ: Điềm Mặc, Định Hoá, Thái Nguyên - Huyện Định Hóa - Tỉnh Thái Nguyên', 'Điềm Mặc, Định Hoá, Thái Nguyên', 'Điềm Mặc, Định Hoá, Thái Nguyên', NULL, 3, 54000, 55000, NULL, 3, '2023-12-25 17:00:00', '2024-01-09 10:18:54'),
-	(46, NULL, 'Tên người nhận: Phạm Văn Cường - Email: cuongdtnt109@gmail.com - Số điện thoại: 0943206425 - Địa chỉ: Xã Điềm Mặc, Huyện Định Hoá, Tỉnh Thái Nguyên - Huyện Định Hóa - Tỉnh Thái Nguyên', 'Xã Điềm Mặc, Huyện Định Hoá, Tỉnh Thái Nguyên', 'Xã Điềm Mặc, Huyện Định Hoá, Tỉnh Thái Nguyên', NULL, 2, 1474150, 2497150, NULL, 2, '2024-01-08 17:00:00', '2024-01-11 08:19:24'),
-	(47, NULL, 'Tên người nhận: Phạm Văn Cường - Email: cuongdtnt109@gmail.com - Số điện thoại: 0943206425 - Địa chỉ: 445 Đ. Nguyễn Văn Trỗi, Phường 11, Phú Nhuận, Thành phố Hồ Chí Minh, Việt Nam 2021 - Quận Phú Nhuận - Thành phố Hồ Chí Minh', '445 Đ. Nguyễn Văn Trỗi, Phường 11, Phú Nhuận, Thành phố Hồ Chí Minh, Việt Nam 2021', '445 Đ. Nguyễn Văn Trỗi, Phường 11, Phú Nhuận, Thành phố Hồ Chí Minh, Việt Nam 2021', NULL, 2, 37000, 238000, NULL, 2, '2024-01-10 17:00:00', '2024-01-11 08:12:18'),
-	(48, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0985332007 - Địa chỉ: Điềm Mặc, Định Hoá, Thái Nguyên - Quận Ba Đình - Thành phố Hà Nội', 'Điềm Mặc, Định Hoá, Thái Nguyên', 'Điềm Mặc, Định Hoá, Thái Nguyên', NULL, 1, 4150000, 5350000, NULL, 1, '2025-02-17 17:00:00', '2025-02-18 01:35:49'),
-	(49, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0985332007 - Địa chỉ: Điềm Mặc, Định Hoá, Thái Nguyên - Quận Cầu Giấy - Thành phố Hà Nội', 'Điềm Mặc, Định Hoá, Thái Nguyên', 'Điềm Mặc, Định Hoá, Thái Nguyên', NULL, 1, 4150000, 5350000, NULL, 2, '2025-02-17 17:00:00', '2025-02-24 01:28:46'),
-	(50, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 4015000, 5015000, NULL, 1, '2025-02-24 17:00:00', '2025-02-25 01:36:12'),
-	(51, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 4015000, 5015000, NULL, 1, '2025-02-24 17:00:00', '2025-02-25 01:54:44'),
-	(52, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 4015000, 5015000, NULL, 1, '2025-02-24 17:00:00', '2025-02-25 01:59:20'),
-	(53, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 4015000, 5015000, NULL, 1, '2025-02-24 17:00:00', '2025-02-25 02:00:52'),
-	(54, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 4015000, 5015000, NULL, 1, '2025-02-24 17:00:00', '2025-02-25 02:02:44'),
-	(55, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 4015000, 5015000, NULL, 1, '2025-02-24 17:00:00', '2025-02-25 02:03:09'),
-	(56, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 4015000, 5015000, NULL, 1, '2025-02-24 17:00:00', '2025-02-25 02:03:19'),
-	(57, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 4015000, 5015000, NULL, 1, '2025-02-24 17:00:00', '2025-02-25 02:04:21'),
-	(58, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 4015000, 5015000, NULL, 1, '2025-02-24 17:00:00', '2025-02-25 02:05:10'),
-	(59, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 4155000, 5355000, NULL, 1, '2025-02-24 17:00:00', '2025-02-25 02:41:26'),
-	(60, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 49000, 129000, NULL, 1, '2025-03-03 17:00:00', '2025-03-04 08:31:03'),
-	(61, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 49000, 129000, NULL, 1, '2025-03-03 17:00:00', '2025-03-04 08:31:36'),
-	(62, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 49000, 129000, NULL, 1, '2025-03-03 17:00:00', '2025-03-04 08:33:49'),
-	(63, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 49000, 129000, NULL, 1, '2025-03-03 17:00:00', '2025-03-04 08:34:02'),
-	(64, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 40000, 120000, NULL, 1, '2025-03-03 17:00:00', '2025-03-04 08:38:53'),
-	(65, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 60000, 160000, NULL, 1, '2025-03-05 17:00:00', '2025-03-05 10:05:53'),
-	(66, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 67000, 187000, NULL, 1, '2025-03-05 17:00:00', '2025-03-05 10:09:40'),
-	(67, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 46000, 106000, NULL, 1, '2025-03-05 17:00:00', '2025-03-05 10:19:39'),
-	(68, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 32000, 52000, NULL, 1, '2025-03-05 17:00:00', '2025-03-05 10:21:09'),
-	(69, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 78000, 158000, 50000, 1, '2025-03-05 17:00:00', '2025-03-05 10:37:34'),
-	(70, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 1, 46000, 146000, 25000, 1, '2025-03-05 17:00:00', '2025-03-05 11:14:32'),
-	(71, 23, 'Tên người nhận: admin - Email: info@maitrungkien.com - Số điện thoại: 0943206425 - Địa chỉ:  - Huyện Mèo Vạc - Tỉnh Hà Giang', NULL, NULL, NULL, 3, 42000, 102000, 25000, 1, '2025-03-05 17:00:00', '2025-03-05 11:28:48');
+-- Dumping structure for table projecttnmt.orderdetail_topping
+CREATE TABLE IF NOT EXISTS `orderdetail_topping` (
+  `order_detail_id` bigint unsigned NOT NULL,
+  `topping_id` int unsigned NOT NULL,
+  `topping_price` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`order_detail_id`,`topping_id`),
+  KEY `topping_id` (`topping_id`),
+  CONSTRAINT `orderdetail_topping_ibfk_1` FOREIGN KEY (`order_detail_id`) REFERENCES `orderdetail` (`order_detail_id`) ON DELETE CASCADE,
+  CONSTRAINT `orderdetail_topping_ibfk_2` FOREIGN KEY (`topping_id`) REFERENCES `toppings` (`topping_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- Dumping data for table projecttnmt.orderdetail_topping: ~0 rows (approximately)
+
+-- Dumping structure for table projecttnmt.orders
+CREATE TABLE IF NOT EXISTS `orders` (
+  `order_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
+  `order_shipping` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ward` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_pay_type` int NOT NULL,
+  `order_profit` int NOT NULL,
+  `order_total` int NOT NULL,
+  `shipping_fee` int DEFAULT NULL,
+  `order_status` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`order_id`) USING BTREE,
+  KEY `orders_user_id_foreign` (`user_id`) USING BTREE,
+  CONSTRAINT `orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- Dumping data for table projecttnmt.orders: ~0 rows (approximately)
+
+-- Dumping structure for table projecttnmt.posts
+CREATE TABLE IF NOT EXISTS `posts` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `post_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `post_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `post_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `posts_user_id_foreign` (`user_id`) USING BTREE,
+  CONSTRAINT `posts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table projecttnmt.posts: ~4 rows (approximately)
 INSERT INTO `posts` (`id`, `user_id`, `post_title`, `post_content`, `post_image`, `created_at`, `updated_at`) VALUES
-	(18, 23, 'Giới thiệu thương hiệu', '<p><strong>Tr&agrave; T&acirc;m Tr&agrave; Th&aacute;i Nguy&ecirc;n - Hương Vị Tinh Tế từ V&ugrave;ng Đất Tr&agrave; Quyến Rũ</strong></p>\r\n\r\n<p>Ch&agrave;o mừng đến với thế giới của Tr&agrave; T&acirc;m, nơi m&agrave; hương vị tinh tế h&ograve;a quyện với truyền thống hơn một thế kỷ của nghệ nh&acirc;n tr&agrave; Th&aacute;i Nguy&ecirc;n. Với niềm đam m&ecirc; ch&acirc;n th&agrave;nh, ch&uacute;ng t&ocirc;i tự h&agrave;o giới thiệu đến bạn những trải nghiệm tr&agrave; kh&ocirc;ng giới hạn, mang đến sự trọn vẹn từ những t&aacute;n l&aacute; tr&agrave; tinh khiết nhất.</p>\r\n\r\n<p><strong>Hồn Tr&agrave; Th&aacute;i Nguy&ecirc;n:</strong></p>\r\n\r\n<p>Tr&agrave; T&acirc;m l&agrave; một h&agrave;nh tr&igrave;nh qua những vườn tr&agrave; bậc thầy ở v&ugrave;ng n&uacute;i cao Th&aacute;i Nguy&ecirc;n, nơi tạo n&ecirc;n b&iacute; mật của hương vị đặc trưng kh&ocirc;ng thể nhầm lẫn. H&ograve;a quyện giữa đất trời v&agrave; tay nghề của những người n&ocirc;ng d&acirc;n tận t&acirc;m, ch&uacute;ng t&ocirc;i chọn lựa những t&aacute;n l&aacute; tr&agrave; tốt nhất, mỗi l&aacute; đều l&agrave; một c&acirc;u chuyện kỳ diệu về hương thơm v&agrave; vị ngon.</p>\r\n\r\n<p><strong>Đa Dạng Sản Phẩm:</strong></p>\r\n\r\n<p>Từ tr&agrave; xanh tinh tế đến tr&agrave; đen mạnh mẽ, bộ sưu tập của ch&uacute;ng t&ocirc;i đảm bảo mang lại sự đa dạng v&agrave; độc đ&aacute;o cho mọi người y&ecirc;u tr&agrave;. Bạn c&oacute; thể tận hưởng từng giọt tr&agrave;, cảm nhận hương thơm, v&agrave; kh&aacute;m ph&aacute; những tầng lớp hương vị phong ph&uacute; m&agrave; chỉ c&oacute; Tr&agrave; T&acirc;m mang lại.</p>\r\n\r\n<p><strong>Chất Lượng Đặt L&ecirc;n H&agrave;ng Đầu:</strong></p>\r\n\r\n<p>Ch&uacute;ng t&ocirc;i kh&ocirc;ng chỉ ch&uacute; trọng đến hương vị, m&agrave; c&ograve;n tận t&acirc;m với chất lượng sản phẩm. Từ qu&aacute; tr&igrave;nh thu h&aacute;i đến chế biến, ch&uacute;ng t&ocirc;i duy tr&igrave; một quy tr&igrave;nh nghi&ecirc;m ngặt để đảm bảo rằng mỗi t&aacute;ch tr&agrave; bạn thưởng thức đều l&agrave; một t&aacute;c phẩm nghệ thuật.</p>\r\n\r\n<p><strong>Sứ Mệnh Văn H&oacute;a:</strong></p>\r\n\r\n<p>Tr&agrave; T&acirc;m kh&ocirc;ng chỉ l&agrave; sản phẩm, m&agrave; c&ograve;n l&agrave; một sứ mệnh văn h&oacute;a để t&ocirc;n vinh v&agrave; bảo tồn di sản tr&agrave; Th&aacute;i Nguy&ecirc;n. Ch&uacute;ng t&ocirc;i cam kết hỗ trợ cộng đồng n&ocirc;ng d&acirc;n, bảo vệ m&ocirc;i trường v&agrave; truyền đạt tinh hoa tr&agrave; Việt đến mọi ng&oacute;c ng&aacute;ch của thế giới.</p>\r\n\r\n<p>H&atilde;y để Tr&agrave; T&acirc;m l&agrave; đối t&aacute;c đồng h&agrave;nh của bạn trong mỗi khoảnh khắc thư gi&atilde;n, để trải nghiệm hương vị tinh tế của tr&agrave; Th&aacute;i Nguy&ecirc;n l&agrave;m dịu d&agrave;ng t&acirc;m hồn v&agrave; l&agrave;m phong ph&uacute; cuộc sống.</p>\r\n\r\n<p>Ch&agrave;o mừng bạn đến với thế giới của Tr&agrave; T&acirc;m - Hương Vị Tinh Tế, Nguồn Cảm Hứng V&ocirc; Tận!</p>', '/storage/images_blog/TfwuiF4XAM_mvw-ml073-02-nam-thumb-fix-600x600.jpg', '2023-12-10 08:39:42', '2025-02-18 00:53:51'),
-	(19, 23, 'Hình thức thanh toán', '<h2><strong>Thanh to&aacute;n bằng tiền mặt</strong></h2>\r\n\r\n<p><strong>1. Thanh to&aacute;n trực tiếp</strong></p>\r\n\r\n<p>Qu&yacute; kh&aacute;ch h&agrave;ng vui l&ograve;ng thanh to&aacute;n trực tiếp ngay khi mua h&agrave;ng tại:</p>\r\n\r\n<ul>\r\n	<li>VPGD: X&oacute;m Hồng Th&aacute;i 2, X. T&acirc;n Cương, Tp. Th&aacute;i Nguy&ecirc;n, Th&aacute;i Nguy&ecirc;n</li>\r\n	<li>Hoặc c&aacute;c cửa h&agrave;ng của T&acirc;m Tr&agrave; Th&aacute;i tr&ecirc;n to&agrave;n quốc.</li>\r\n</ul>\r\n\r\n<p><strong>2. Thanh to&aacute;n khi nhận h&agrave;ng (COD)</strong></p>\r\n\r\n<ul>\r\n	<li>Nếu qu&yacute; kh&aacute;ch ở xa, qu&yacute; kh&aacute;ch c&oacute; thể chọn h&igrave;nh thức giao h&agrave;ng thu tiền (COD). Sau 3-5 ng&agrave;y đặt h&agrave;ng, đơn h&agrave;ng sẽ được chuyển đến tận nh&agrave; qu&yacute; kh&aacute;ch, Qu&yacute; kh&aacute;ch vui l&ograve;ng thanh to&aacute;n to&agrave;n bộ tiền h&agrave;ng (hoặc phần c&ograve;n lại của gi&aacute;o trị đơn h&agrave;ng nếu đ&atilde; đặt cọc) + ph&iacute; ship cho nh&acirc;n vi&ecirc;n giao h&agrave;ng.</li>\r\n</ul>\r\n\r\n<h2><strong>Thanh to&aacute;n chuyển khoản</strong></h2>\r\n\r\n<ul>\r\n	<li>Nếu địa điểm giao h&agrave;ng l&agrave; ngoại th&agrave;nh, ngoại tỉnh hoặc nội th&agrave;nh th&agrave;nh phố H&agrave; Nội nhưng kh&aacute;c với địa điểm thanh to&aacute;n (trong trường hợp Qu&yacute; kh&aacute;ch gửi qu&agrave;, gửi h&agrave;ng cho bạn b&egrave;, đối t&aacute;c &hellip;) ch&uacute;ng t&ocirc;i sẽ thu tiền trước 100% gi&aacute; trị đơn h&agrave;ng + ph&iacute; vận chuyển theo cước ph&iacute; t&iacute;nh trong chinh s&aacute;ch vận chuyển bằng phương thức chuyển khoản trước khi giao h&agrave;ng</li>\r\n	<li>Qu&yacute; kh&aacute;ch chuyển tiền cho ch&uacute;ng t&ocirc;i theo STK của T&acirc;m Tr&agrave; Th&aacute;i.</li>\r\n	<li><strong>Ghi ch&uacute;:</strong>&nbsp;Để h&agrave;ng h&oacute;a v&agrave; gi&aacute; cả được ch&iacute;nh x&aacute;c, ngay sau khi qu&yacute; kh&aacute;ch chuyển tiền xin vui l&ograve;ng fax giấy ủy nhiệm chi c&oacute; dấu ng&acirc;n h&agrave;ng chuyển tiền để nh&acirc;n vi&ecirc;n kinh doanh l&agrave;m căn cứ giữ h&agrave;ng v&agrave; gi&aacute; tiền theo đ&uacute;ng thỏa thuận cho qu&yacute; kh&aacute;ch.</li>\r\n</ul>', '/storage/images_blog/LKSMzyA2YD_orient-ra-tx0306s10b-nam-thumb-638654690266131155-600x600.jpg', '2023-12-10 08:41:14', '2025-02-18 00:53:39'),
-	(20, 23, 'Hướng dẫn mua hàng', '<p><strong>Qu&yacute; kh&aacute;ch c&oacute; thể mua h&agrave;ng trực tiếp bằng 4 c&aacute;ch:</strong></p>\r\n\r\n<ul>\r\n	<li>Gọi điện thoại đến Hotline&nbsp;<a href="tel:0901683938">0901.68.3938</a>&nbsp;(Mr.Giang) &ndash;&nbsp;<a href="tel:0829846777">0829.84.6777</a>&nbsp;(Mr.Nam)</li>\r\n	<li>Truy cập website:&nbsp;<a href="https://tamtrathai.com.vn/">https://tamtrathai.com.vn/</a></li>\r\n	<li>Đặt h&agrave;ng qua Fanpage:&nbsp;<a href="https://www.facebook.com/htxtamtrathai">https://www.facebook.com/htxtamtrathai</a></li>\r\n	<li>Đến văn ph&ograve;ng giao dịch T&acirc;m Tr&agrave; Th&aacute;i tại X&oacute;m Hồng Th&aacute;i 2, X. T&acirc;n Cương, Tp. Th&aacute;i Nguy&ecirc;n, Th&aacute;i Nguy&ecirc;n. Ngo&agrave;i mua h&agrave;ng, qu&yacute; kh&aacute;ch c&oacute; thể đến thăm quan đồi ch&egrave; của ch&uacute;ng t&ocirc;i.</li>\r\n</ul>\r\n\r\n<p><strong>Mua h&agrave;ng tại website&nbsp;<a href="https://tamtrathai.com.vn/">https://tamtrathai.com.vn&nbsp;</a>:</strong></p>\r\n\r\n<p><strong><em>Bước 1</em></strong>: Truy cập website&nbsp;<a href="https://tamtrathai.com.vn/">tamtrathai.com.vn</a>, t&igrave;m hiểu sản phẩm m&igrave;nh cần tại mục&nbsp;<a href="https://tamtrathai.com.vn/san-pham-tra/" rel="noopener" target="_blank">SẢN PHẨM</a>&nbsp;để tham khảo c&aacute;c chương tr&igrave;nh giảm gi&aacute;, qu&agrave; tặng hấp dẫn.</p>\r\n\r\n<p><em><strong>Bước 2:</strong>&nbsp;</em>Chọn sản phẩm, số lượng cần mua v&agrave; click &ldquo;Bỏ v&agrave;o giỏ h&agrave;ng&rdquo; để tiếp tục mua th&ecirc;m c&aacute;c sản phẩm kh&aacute;c, hoặc click v&agrave;o &ldquo;Mua ngay&rdquo; để tiến h&agrave;nh thanh to&aacute;n.</p>\r\n\r\n<p><em><strong>Bước 3:</strong></em>&nbsp;Sau khi chọn xong tất cả c&aacute;c sản phẩm muốn mua. Click v&agrave;o Giỏ h&agrave;ng ở g&oacute;c tr&ecirc;n b&ecirc;n phải m&agrave;n h&igrave;nh. Kiểm tra lại c&aacute;c sản phẩm v&agrave; số lượng trong giỏ h&agrave;ng v&agrave; điền c&aacute;c th&ocirc;ng tin thanh to&aacute;n cần thiết.</p>\r\n\r\n<p><em><strong>Bước 4:</strong>&nbsp;</em>Ấn X&Aacute;C NHẬN ĐẶT H&Agrave;NG sau khi đ&atilde; điền đầy đủ th&ocirc;ng tin.</p>\r\n\r\n<p><em><strong>Bước 5:</strong></em>&nbsp;Nh&acirc;n vi&ecirc;n T&acirc;m Tr&agrave; Th&aacute;i sẽ gọi điện cho bạn để x&aacute;c nhận đơn h&agrave;ng v&agrave; thực hiện đơn h&agrave;ng.</p>\r\n\r\n<p><strong>Trải nghiệm kh&ocirc;ng gian xanh an l&agrave;nh tại chuỗi cửa h&agrave;ng T&acirc;m Tr&agrave; Th&aacute;i hoặc văn ph&ograve;ng giao dịch tại T&acirc;n Cương &ndash; Th&aacute;i Nguy&ecirc;n:</strong></p>\r\n\r\n<p>Giờ mở cửa: 08h00 s&aacute;ng đến 17h30. Tất cả c&aacute;c ng&agrave;y trong tuần.</p>\r\n\r\n<p>Nghỉ c&aacute;c ng&agrave;y lễ theo quy định của Nh&agrave; nước.</p>', '/storage/images_blog/LAQLEUX42E_g-shock-gst-b400cx-1adr-nam-thumb-638727968218434621-600x600.jpg', '2023-12-10 08:42:04', '2025-02-18 00:53:29'),
-	(21, 23, 'Chứng nhận ATTP', '<h2><strong>Một số giấy chứng nhận an to&agrave;n thực phẩm của ch&uacute;ng t&ocirc;i:&nbsp;</strong></h2>\r\n\r\n<p>Với mục ti&ecirc;u v&igrave; sức khỏe cộng đồng, sản phẩm HTX T&Acirc;M TR&Agrave;&nbsp; TH&Aacute;I lu&ocirc;n l&agrave; sự lựa chọn tin cậy của người ti&ecirc;u d&ugrave;ng.</p>\r\n\r\n<p>Tr&ecirc;n lộ tr&igrave;nh ph&aacute;t triển Thương hiệu ĐẶC SẢN CH&Egrave; T&Acirc;N CƯƠNG &ndash; T&Acirc;M TR&Agrave; TH&Aacute;I&nbsp; &nbsp;được c&aacute; c&aacute; nh&acirc;n, cơ quan, tổ chức trong v&agrave; ngo&agrave;i nước ủng hộ v&agrave; đ&aacute;nh gi&aacute; cao về quy tr&igrave;nh sản xuất v&agrave; chất lượng sản phẩm. Đ&oacute; l&agrave; động lực th&uacute;c đẩy ch&uacute;ng t&ocirc;i ph&aacute;t triển v&agrave; hưng thịnh m&atilde;i m&atilde;i.</p>\r\n\r\n<p>H&atilde;y r&egrave;n luyện cho m&igrave;nh một tho&aacute;i quen một ch&eacute;n tr&agrave; xanh&nbsp; buổi s&aacute;ng b&ecirc;n gia đ&igrave;nh để bảo vệ sức khỏe v&agrave; cung cấp năng lượng cho một ng&agrave;y l&agrave;m việc hiệu quả c&aacute;c bạn nh&eacute;.</p>\r\n\r\n<p><em>Giấy chứng nhận cơ sở đủ điều kiện an to&agrave;n thực phẩm</em></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/thuc-pham-an-toan.jpg" title=""><img alt="Chuỗi cung ứng thực phẩm an toàn Tâm Trà Thái" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/thuc-pham-an-toan.jpg" style="height:1280px; width:923px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/chung-nhan-quyen-su-dung.jpg" title=""><img alt="Chứng nhận quyền sử dụng chỉ dẫn địa lý Tâm Trà Thái" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/chung-nhan-quyen-su-dung.jpg" style="height:1280px; width:927px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-2.jpg" title=""><img alt="OCOP Tâm Trà Thái - Trà Tôm Nõn" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-2.jpg" style="height:1233px; width:900px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-3.jpg" title=""><img alt="OCOP Tâm Trà Thái - Nhất Đinh Trà" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-3.jpg" style="height:1233px; width:900px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-4.jpg" title=""><img alt="Chứng nhận vệ sinh an toàn thực phẩm Tâm Trà Thái" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-4.jpg" style="height:1233px; width:900px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-6.jpg" title=""><img alt="Chứng nhận Tâm Trà Thái" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-6.jpg" style="height:629px; width:900px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-11.jpg" title=""><img alt="" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-11.jpg" style="height:1233px; width:900px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-10.jpg" title=""><img alt="" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-10.jpg" style="height:1233px; width:900px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-9.jpg" title=""><img alt="" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-9.jpg" style="height:1233px; width:900px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-8.jpg" title=""><img alt="" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-8.jpg" style="height:1233px; width:900px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/vietgapttt.jpg" title=""><img alt="Vietgap Tâm Trà Thái" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/vietgapttt.jpg" style="height:1233px; width:900px" /></a></p>', '/storage/images_blog/dPhqMqPqbw_casio-ltp-vt01gl-4budf-nu-thumb-fix-600x600.jpg', '2023-12-10 08:42:32', '2025-02-18 00:53:18');
+	(18, 23, 'Giới thiệu thương hiệu', '<p><strong>Tr&agrave; T&acirc;m Tr&agrave; Th&aacute;i Nguy&ecirc;n - Hương Vị Tinh Tế từ V&ugrave;ng Đất Tr&agrave; Quyến Rũ</strong></p>\r\n\r\n<p>Ch&agrave;o mừng đến với thế giới của Tr&agrave; T&acirc;m, nơi m&agrave; hương vị tinh tế h&ograve;a quyện với truyền thống hơn một thế kỷ của nghệ nh&acirc;n tr&agrave; Th&aacute;i Nguy&ecirc;n. Với niềm đam m&ecirc; ch&acirc;n th&agrave;nh, ch&uacute;ng t&ocirc;i tự h&agrave;o giới thiệu đến bạn những trải nghiệm tr&agrave; kh&ocirc;ng giới hạn, mang đến sự trọn vẹn từ những t&aacute;n l&aacute; tr&agrave; tinh khiết nhất.</p>\r\n\r\n<p><strong>Hồn Tr&agrave; Th&aacute;i Nguy&ecirc;n:</strong></p>\r\n\r\n<p>Tr&agrave; T&acirc;m l&agrave; một h&agrave;nh tr&igrave;nh qua những vườn tr&agrave; bậc thầy ở v&ugrave;ng n&uacute;i cao Th&aacute;i Nguy&ecirc;n, nơi tạo n&ecirc;n b&iacute; mật của hương vị đặc trưng kh&ocirc;ng thể nhầm lẫn. H&ograve;a quyện giữa đất trời v&agrave; tay nghề của những người n&ocirc;ng d&acirc;n tận t&acirc;m, ch&uacute;ng t&ocirc;i chọn lựa những t&aacute;n l&aacute; tr&agrave; tốt nhất, mỗi l&aacute; đều l&agrave; một c&acirc;u chuyện kỳ diệu về hương thơm v&agrave; vị ngon.</p>\r\n\r\n<p><strong>Đa Dạng Sản Phẩm:</strong></p>\r\n\r\n<p>Từ tr&agrave; xanh tinh tế đến tr&agrave; đen mạnh mẽ, bộ sưu tập của ch&uacute;ng t&ocirc;i đảm bảo mang lại sự đa dạng v&agrave; độc đ&aacute;o cho mọi người y&ecirc;u tr&agrave;. Bạn c&oacute; thể tận hưởng từng giọt tr&agrave;, cảm nhận hương thơm, v&agrave; kh&aacute;m ph&aacute; những tầng lớp hương vị phong ph&uacute; m&agrave; chỉ c&oacute; Tr&agrave; T&acirc;m mang lại.</p>\r\n\r\n<p><strong>Chất Lượng Đặt L&ecirc;n H&agrave;ng Đầu:</strong></p>\r\n\r\n<p>Ch&uacute;ng t&ocirc;i kh&ocirc;ng chỉ ch&uacute; trọng đến hương vị, m&agrave; c&ograve;n tận t&acirc;m với chất lượng sản phẩm. Từ qu&aacute; tr&igrave;nh thu h&aacute;i đến chế biến, ch&uacute;ng t&ocirc;i duy tr&igrave; một quy tr&igrave;nh nghi&ecirc;m ngặt để đảm bảo rằng mỗi t&aacute;ch tr&agrave; bạn thưởng thức đều l&agrave; một t&aacute;c phẩm nghệ thuật.</p>\r\n\r\n<p><strong>Sứ Mệnh Văn H&oacute;a:</strong></p>\r\n\r\n<p>Tr&agrave; T&acirc;m kh&ocirc;ng chỉ l&agrave; sản phẩm, m&agrave; c&ograve;n l&agrave; một sứ mệnh văn h&oacute;a để t&ocirc;n vinh v&agrave; bảo tồn di sản tr&agrave; Th&aacute;i Nguy&ecirc;n. Ch&uacute;ng t&ocirc;i cam kết hỗ trợ cộng đồng n&ocirc;ng d&acirc;n, bảo vệ m&ocirc;i trường v&agrave; truyền đạt tinh hoa tr&agrave; Việt đến mọi ng&oacute;c ng&aacute;ch của thế giới.</p>\r\n\r\n<p>H&atilde;y để Tr&agrave; T&acirc;m l&agrave; đối t&aacute;c đồng h&agrave;nh của bạn trong mỗi khoảnh khắc thư gi&atilde;n, để trải nghiệm hương vị tinh tế của tr&agrave; Th&aacute;i Nguy&ecirc;n l&agrave;m dịu d&agrave;ng t&acirc;m hồn v&agrave; l&agrave;m phong ph&uacute; cuộc sống.</p>\r\n\r\n<p>Ch&agrave;o mừng bạn đến với thế giới của Tr&agrave; T&acirc;m - Hương Vị Tinh Tế, Nguồn Cảm Hứng V&ocirc; Tận!</p>', '/storage/images_blog/FnU1FIL27z_900x900-Xanh-Sua-Nhai-Dao-Tien.jpg', '2023-12-10 08:39:42', '2025-03-06 09:47:45'),
+	(19, 23, 'Hình thức thanh toán', '<h2><strong>Thanh to&aacute;n bằng tiền mặt</strong></h2>\r\n\r\n<p><strong>1. Thanh to&aacute;n trực tiếp</strong></p>\r\n\r\n<p>Qu&yacute; kh&aacute;ch h&agrave;ng vui l&ograve;ng thanh to&aacute;n trực tiếp ngay khi mua h&agrave;ng tại:</p>\r\n\r\n<ul>\r\n	<li>VPGD: X&oacute;m Hồng Th&aacute;i 2, X. T&acirc;n Cương, Tp. Th&aacute;i Nguy&ecirc;n, Th&aacute;i Nguy&ecirc;n</li>\r\n	<li>Hoặc c&aacute;c cửa h&agrave;ng của T&acirc;m Tr&agrave; Th&aacute;i tr&ecirc;n to&agrave;n quốc.</li>\r\n</ul>\r\n\r\n<p><strong>2. Thanh to&aacute;n khi nhận h&agrave;ng (COD)</strong></p>\r\n\r\n<ul>\r\n	<li>Nếu qu&yacute; kh&aacute;ch ở xa, qu&yacute; kh&aacute;ch c&oacute; thể chọn h&igrave;nh thức giao h&agrave;ng thu tiền (COD). Sau 3-5 ng&agrave;y đặt h&agrave;ng, đơn h&agrave;ng sẽ được chuyển đến tận nh&agrave; qu&yacute; kh&aacute;ch, Qu&yacute; kh&aacute;ch vui l&ograve;ng thanh to&aacute;n to&agrave;n bộ tiền h&agrave;ng (hoặc phần c&ograve;n lại của gi&aacute;o trị đơn h&agrave;ng nếu đ&atilde; đặt cọc) + ph&iacute; ship cho nh&acirc;n vi&ecirc;n giao h&agrave;ng.</li>\r\n</ul>\r\n\r\n<h2><strong>Thanh to&aacute;n chuyển khoản</strong></h2>\r\n\r\n<ul>\r\n	<li>Nếu địa điểm giao h&agrave;ng l&agrave; ngoại th&agrave;nh, ngoại tỉnh hoặc nội th&agrave;nh th&agrave;nh phố H&agrave; Nội nhưng kh&aacute;c với địa điểm thanh to&aacute;n (trong trường hợp Qu&yacute; kh&aacute;ch gửi qu&agrave;, gửi h&agrave;ng cho bạn b&egrave;, đối t&aacute;c &hellip;) ch&uacute;ng t&ocirc;i sẽ thu tiền trước 100% gi&aacute; trị đơn h&agrave;ng + ph&iacute; vận chuyển theo cước ph&iacute; t&iacute;nh trong chinh s&aacute;ch vận chuyển bằng phương thức chuyển khoản trước khi giao h&agrave;ng</li>\r\n	<li>Qu&yacute; kh&aacute;ch chuyển tiền cho ch&uacute;ng t&ocirc;i theo STK của T&acirc;m Tr&agrave; Th&aacute;i.</li>\r\n	<li><strong>Ghi ch&uacute;:</strong>&nbsp;Để h&agrave;ng h&oacute;a v&agrave; gi&aacute; cả được ch&iacute;nh x&aacute;c, ngay sau khi qu&yacute; kh&aacute;ch chuyển tiền xin vui l&ograve;ng fax giấy ủy nhiệm chi c&oacute; dấu ng&acirc;n h&agrave;ng chuyển tiền để nh&acirc;n vi&ecirc;n kinh doanh l&agrave;m căn cứ giữ h&agrave;ng v&agrave; gi&aacute; tiền theo đ&uacute;ng thỏa thuận cho qu&yacute; kh&aacute;ch.</li>\r\n</ul>', '/storage/images_blog/KvifIekYkx_ts_tran_chau_052aed385e41470db7cec46eddfcfdbb_large.webp', '2023-12-10 08:41:14', '2025-03-06 09:47:21'),
+	(20, 23, 'Hướng dẫn mua hàng', '<p><strong>Qu&yacute; kh&aacute;ch c&oacute; thể mua h&agrave;ng trực tiếp bằng 4 c&aacute;ch:</strong></p>\r\n\r\n<ul>\r\n	<li>Gọi điện thoại đến Hotline&nbsp;<a href="tel:0901683938">0901.68.3938</a>&nbsp;(Mr.Giang) &ndash;&nbsp;<a href="tel:0829846777">0829.84.6777</a>&nbsp;(Mr.Nam)</li>\r\n	<li>Truy cập website:&nbsp;<a href="https://tamtrathai.com.vn/">https://tamtrathai.com.vn/</a></li>\r\n	<li>Đặt h&agrave;ng qua Fanpage:&nbsp;<a href="https://www.facebook.com/htxtamtrathai">https://www.facebook.com/htxtamtrathai</a></li>\r\n	<li>Đến văn ph&ograve;ng giao dịch T&acirc;m Tr&agrave; Th&aacute;i tại X&oacute;m Hồng Th&aacute;i 2, X. T&acirc;n Cương, Tp. Th&aacute;i Nguy&ecirc;n, Th&aacute;i Nguy&ecirc;n. Ngo&agrave;i mua h&agrave;ng, qu&yacute; kh&aacute;ch c&oacute; thể đến thăm quan đồi ch&egrave; của ch&uacute;ng t&ocirc;i.</li>\r\n</ul>\r\n\r\n<p><strong>Mua h&agrave;ng tại website&nbsp;<a href="https://tamtrathai.com.vn/">https://tamtrathai.com.vn&nbsp;</a>:</strong></p>\r\n\r\n<p><strong><em>Bước 1</em></strong>: Truy cập website&nbsp;<a href="https://tamtrathai.com.vn/">tamtrathai.com.vn</a>, t&igrave;m hiểu sản phẩm m&igrave;nh cần tại mục&nbsp;<a href="https://tamtrathai.com.vn/san-pham-tra/" rel="noopener" target="_blank">SẢN PHẨM</a>&nbsp;để tham khảo c&aacute;c chương tr&igrave;nh giảm gi&aacute;, qu&agrave; tặng hấp dẫn.</p>\r\n\r\n<p><em><strong>Bước 2:</strong>&nbsp;</em>Chọn sản phẩm, số lượng cần mua v&agrave; click &ldquo;Bỏ v&agrave;o giỏ h&agrave;ng&rdquo; để tiếp tục mua th&ecirc;m c&aacute;c sản phẩm kh&aacute;c, hoặc click v&agrave;o &ldquo;Mua ngay&rdquo; để tiến h&agrave;nh thanh to&aacute;n.</p>\r\n\r\n<p><em><strong>Bước 3:</strong></em>&nbsp;Sau khi chọn xong tất cả c&aacute;c sản phẩm muốn mua. Click v&agrave;o Giỏ h&agrave;ng ở g&oacute;c tr&ecirc;n b&ecirc;n phải m&agrave;n h&igrave;nh. Kiểm tra lại c&aacute;c sản phẩm v&agrave; số lượng trong giỏ h&agrave;ng v&agrave; điền c&aacute;c th&ocirc;ng tin thanh to&aacute;n cần thiết.</p>\r\n\r\n<p><em><strong>Bước 4:</strong>&nbsp;</em>Ấn X&Aacute;C NHẬN ĐẶT H&Agrave;NG sau khi đ&atilde; điền đầy đủ th&ocirc;ng tin.</p>\r\n\r\n<p><em><strong>Bước 5:</strong></em>&nbsp;Nh&acirc;n vi&ecirc;n T&acirc;m Tr&agrave; Th&aacute;i sẽ gọi điện cho bạn để x&aacute;c nhận đơn h&agrave;ng v&agrave; thực hiện đơn h&agrave;ng.</p>\r\n\r\n<p><strong>Trải nghiệm kh&ocirc;ng gian xanh an l&agrave;nh tại chuỗi cửa h&agrave;ng T&acirc;m Tr&agrave; Th&aacute;i hoặc văn ph&ograve;ng giao dịch tại T&acirc;n Cương &ndash; Th&aacute;i Nguy&ecirc;n:</strong></p>\r\n\r\n<p>Giờ mở cửa: 08h00 s&aacute;ng đến 17h30. Tất cả c&aacute;c ng&agrave;y trong tuần.</p>\r\n\r\n<p>Nghỉ c&aacute;c ng&agrave;y lễ theo quy định của Nh&agrave; nước.</p>', '/storage/images_blog/T4ghdqnIK1_ts_tran_chau_052aed385e41470db7cec46eddfcfdbb_large.webp', '2023-12-10 08:42:04', '2025-03-06 09:47:06'),
+	(21, 23, 'Chứng nhận ATTP', '<h2><strong>Một số giấy chứng nhận an to&agrave;n thực phẩm của ch&uacute;ng t&ocirc;i:&nbsp;</strong></h2>\r\n\r\n<p>Với mục ti&ecirc;u v&igrave; sức khỏe cộng đồng, sản phẩm HTX T&Acirc;M TR&Agrave;&nbsp; TH&Aacute;I lu&ocirc;n l&agrave; sự lựa chọn tin cậy của người ti&ecirc;u d&ugrave;ng.</p>\r\n\r\n<p>Tr&ecirc;n lộ tr&igrave;nh ph&aacute;t triển Thương hiệu ĐẶC SẢN CH&Egrave; T&Acirc;N CƯƠNG &ndash; T&Acirc;M TR&Agrave; TH&Aacute;I&nbsp; &nbsp;được c&aacute; c&aacute; nh&acirc;n, cơ quan, tổ chức trong v&agrave; ngo&agrave;i nước ủng hộ v&agrave; đ&aacute;nh gi&aacute; cao về quy tr&igrave;nh sản xuất v&agrave; chất lượng sản phẩm. Đ&oacute; l&agrave; động lực th&uacute;c đẩy ch&uacute;ng t&ocirc;i ph&aacute;t triển v&agrave; hưng thịnh m&atilde;i m&atilde;i.</p>\r\n\r\n<p>H&atilde;y r&egrave;n luyện cho m&igrave;nh một tho&aacute;i quen một ch&eacute;n tr&agrave; xanh&nbsp; buổi s&aacute;ng b&ecirc;n gia đ&igrave;nh để bảo vệ sức khỏe v&agrave; cung cấp năng lượng cho một ng&agrave;y l&agrave;m việc hiệu quả c&aacute;c bạn nh&eacute;.</p>\r\n\r\n<p><em>Giấy chứng nhận cơ sở đủ điều kiện an to&agrave;n thực phẩm</em></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/thuc-pham-an-toan.jpg" title=""><img alt="Chuỗi cung ứng thực phẩm an toàn Tâm Trà Thái" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/thuc-pham-an-toan.jpg" style="height:1280px; width:923px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/chung-nhan-quyen-su-dung.jpg" title=""><img alt="Chứng nhận quyền sử dụng chỉ dẫn địa lý Tâm Trà Thái" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/chung-nhan-quyen-su-dung.jpg" style="height:1280px; width:927px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-2.jpg" title=""><img alt="OCOP Tâm Trà Thái - Trà Tôm Nõn" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-2.jpg" style="height:1233px; width:900px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-3.jpg" title=""><img alt="OCOP Tâm Trà Thái - Nhất Đinh Trà" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-3.jpg" style="height:1233px; width:900px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-4.jpg" title=""><img alt="Chứng nhận vệ sinh an toàn thực phẩm Tâm Trà Thái" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-4.jpg" style="height:1233px; width:900px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-6.jpg" title=""><img alt="Chứng nhận Tâm Trà Thái" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-6.jpg" style="height:629px; width:900px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-11.jpg" title=""><img alt="" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-11.jpg" style="height:1233px; width:900px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-10.jpg" title=""><img alt="" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-10.jpg" style="height:1233px; width:900px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-9.jpg" title=""><img alt="" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-9.jpg" style="height:1233px; width:900px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-8.jpg" title=""><img alt="" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/Chung-nhan-che-8.jpg" style="height:1233px; width:900px" /></a></p>\r\n\r\n<p><a href="https://tamtrathai.com.vn/wp-content/uploads/2021/12/vietgapttt.jpg" title=""><img alt="Vietgap Tâm Trà Thái" src="https://tamtrathai.com.vn/wp-content/uploads/2021/12/vietgapttt.jpg" style="height:1233px; width:900px" /></a></p>', '/storage/images_blog/kJHBvVIg0R_luc_tra_hoang_kim_4b2ef28d7cc04db0a47c0587e05f8963_large.webp', '2023-12-10 08:42:32', '2025-03-06 09:46:50');
 
--- Dumping data for table projecttnmt.products: ~6 rows (approximately)
+-- Dumping structure for table projecttnmt.products
+CREATE TABLE IF NOT EXISTS `products` (
+  `product_id` int NOT NULL AUTO_INCREMENT,
+  `product_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_id` tinyint unsigned DEFAULT NULL,
+  `brand_id` tinyint unsigned DEFAULT NULL,
+  `product_image` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_price_buy` int NOT NULL,
+  `product_price_sell` int NOT NULL,
+  `product_amount` int NOT NULL,
+  `product_sale` int DEFAULT NULL,
+  `product_attribute` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_detail` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_keyword` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `product_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`product_id`) USING BTREE,
+  KEY `products_category_id_foreign` (`category_id`) USING BTREE,
+  KEY `products_brand_id_foreign` (`brand_id`) USING BTREE,
+  CONSTRAINT `products_brand_id_foreign` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`brand_id`) ON DELETE SET NULL,
+  CONSTRAINT `products_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categorys` (`category_id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- Dumping data for table projecttnmt.products: ~4 rows (approximately)
 INSERT INTO `products` (`product_id`, `product_name`, `category_id`, `brand_id`, `product_image`, `product_price_buy`, `product_price_sell`, `product_amount`, `product_sale`, `product_attribute`, `product_detail`, `product_keyword`, `product_description`) VALUES
-	(56, 'Đồng hồ nữ Daniel Rose Gold', 30, 2, '/storage/images_product/0OgDLDefzX_elio-ess11-02-unisex-thumb-600x600.jpg', 800000, 800000000, 999, 10, '<p>Th&ocirc;ng tin sản phẩm</p>\r\n\r\n<table border="0" cellpadding="0" style="width:100%">\r\n	<tbody>\r\n		<tr>\r\n			<td>Giới t&iacute;nh:</td>\r\n			<td>Nữ</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Kiểu d&aacute;ng:</td>\r\n			<td>Mặt tr&ograve;n</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Loại m&aacute;y:</td>\r\n			<td>Quartz (M&aacute;y pin - điện tử)</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Phong c&aacute;ch:</td>\r\n			<td>Sang trọng</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Mặt k&iacute;nh:</td>\r\n			<td>Mặt k&iacute;nh cứng</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Đường k&iacute;nh:</td>\r\n			<td>32mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu vỏ:</td>\r\n			<td>Th&eacute;p kh&ocirc;ng gỉ 316L mạ v&agrave;ng c&ocirc;ng nghệ PVD</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ d&agrave;y:</td>\r\n			<td>6mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu d&acirc;y:</td>\r\n			<td>D&acirc;y da</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Size d&acirc;y:</td>\r\n			<td>14mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ chịu nước:</td>\r\n			<td>30m</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Trọng Lượng:</td>\r\n			<td>29g</td>\r\n		</tr>\r\n		<tr>\r\n			<td>T&iacute;nh năng kh&aacute;c:</td>\r\n			<td>Đồng hồ 2 kim hiển thị giờ, ph&uacute;t. Vỏ v&agrave; mặt số đ&iacute;nh đ&aacute; qu&yacute;</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh ch&iacute;nh h&atilde;ng:</td>\r\n			<td>2 năm quốc tế</td>\r\n		</tr>\r\n		<tr>\r\n			<td>M&agrave;u mặt:</td>\r\n			<td>Trắng ngọc trai</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh Duy Anh:</td>\r\n			<td>5 năm (đ&atilde; bao gồm bảo h&agrave;nh quốc tế), Thay pin miễn ph&iacute; trọn đời</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Xuất xứ thương hiệu:</td>\r\n			<td>Thụy Điển</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', '<p>Th&ocirc;ng tin sản phẩm</p>\r\n\r\n<table border="0" cellpadding="0" style="width:100%">\r\n	<tbody>\r\n		<tr>\r\n			<td>Giới t&iacute;nh:</td>\r\n			<td>Nữ</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Kiểu d&aacute;ng:</td>\r\n			<td>Mặt tr&ograve;n</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Loại m&aacute;y:</td>\r\n			<td>Quartz (M&aacute;y pin - điện tử)</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Phong c&aacute;ch:</td>\r\n			<td>Sang trọng</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Mặt k&iacute;nh:</td>\r\n			<td>Mặt k&iacute;nh cứng</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Đường k&iacute;nh:</td>\r\n			<td>32mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu vỏ:</td>\r\n			<td>Th&eacute;p kh&ocirc;ng gỉ 316L mạ v&agrave;ng c&ocirc;ng nghệ PVD</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ d&agrave;y:</td>\r\n			<td>6mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu d&acirc;y:</td>\r\n			<td>D&acirc;y da</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Size d&acirc;y:</td>\r\n			<td>14mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ chịu nước:</td>\r\n			<td>30m</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Trọng Lượng:</td>\r\n			<td>29g</td>\r\n		</tr>\r\n		<tr>\r\n			<td>T&iacute;nh năng kh&aacute;c:</td>\r\n			<td>Đồng hồ 2 kim hiển thị giờ, ph&uacute;t. Vỏ v&agrave; mặt số đ&iacute;nh đ&aacute; qu&yacute;</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh ch&iacute;nh h&atilde;ng:</td>\r\n			<td>2 năm quốc tế</td>\r\n		</tr>\r\n		<tr>\r\n			<td>M&agrave;u mặt:</td>\r\n			<td>Trắng ngọc trai</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh Duy Anh:</td>\r\n			<td>5 năm (đ&atilde; bao gồm bảo h&agrave;nh quốc tế), Thay pin miễn ph&iacute; trọn đời</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Xuất xứ thương hiệu:</td>\r\n			<td>Thụy Điển</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'DW00100828', 'Đồng hồ nữ Daniel Wellington Crystalline Bezel Black Croc Rose Gold DW00100828'),
-	(57, 'Đồng hồ nữ Daniel', 30, 2, '/storage/images_product/UbrbXCzEam_casio-ltp-vt01gl-4budf-nu-thumb-fix-600x600.jpg', 500000, 5000000, 99, 10, '<p>Th&ocirc;ng tin sản phẩm</p>\r\n\r\n<table border="0" cellpadding="0" style="width:100%">\r\n	<tbody>\r\n		<tr>\r\n			<td>Giới t&iacute;nh:</td>\r\n			<td>Nữ</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Kiểu d&aacute;ng:</td>\r\n			<td>Mặt tr&ograve;n</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Loại m&aacute;y:</td>\r\n			<td>Quartz (M&aacute;y pin - điện tử)</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Phong c&aacute;ch:</td>\r\n			<td>Sang trọng</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Mặt k&iacute;nh:</td>\r\n			<td>Mặt k&iacute;nh cứng</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Đường k&iacute;nh:</td>\r\n			<td>32mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu vỏ:</td>\r\n			<td>Th&eacute;p kh&ocirc;ng gỉ 316L mạ v&agrave;ng c&ocirc;ng nghệ PVD</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ d&agrave;y:</td>\r\n			<td>6mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu d&acirc;y:</td>\r\n			<td>D&acirc;y da</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Size d&acirc;y:</td>\r\n			<td>14mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ chịu nước:</td>\r\n			<td>30m</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Trọng Lượng:</td>\r\n			<td>29g</td>\r\n		</tr>\r\n		<tr>\r\n			<td>T&iacute;nh năng kh&aacute;c:</td>\r\n			<td>Đồng hồ 2 kim hiển thị giờ, ph&uacute;t. Vỏ v&agrave; mặt số đ&iacute;nh đ&aacute; qu&yacute;</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh ch&iacute;nh h&atilde;ng:</td>\r\n			<td>2 năm quốc tế</td>\r\n		</tr>\r\n		<tr>\r\n			<td>M&agrave;u mặt:</td>\r\n			<td>Trắng ngọc trai</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh Duy Anh:</td>\r\n			<td>5 năm (đ&atilde; bao gồm bảo h&agrave;nh quốc tế), Thay pin miễn ph&iacute; trọn đời</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Xuất xứ thương hiệu:</td>\r\n			<td>Thụy Điển</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', '<p>Th&ocirc;ng tin sản phẩm</p>\r\n\r\n<table border="0" cellpadding="0" style="width:100%">\r\n	<tbody>\r\n		<tr>\r\n			<td>Giới t&iacute;nh:</td>\r\n			<td>Nữ</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Kiểu d&aacute;ng:</td>\r\n			<td>Mặt tr&ograve;n</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Loại m&aacute;y:</td>\r\n			<td>Quartz (M&aacute;y pin - điện tử)</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Phong c&aacute;ch:</td>\r\n			<td>Sang trọng</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Mặt k&iacute;nh:</td>\r\n			<td>Mặt k&iacute;nh cứng</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Đường k&iacute;nh:</td>\r\n			<td>32mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu vỏ:</td>\r\n			<td>Th&eacute;p kh&ocirc;ng gỉ 316L mạ v&agrave;ng c&ocirc;ng nghệ PVD</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ d&agrave;y:</td>\r\n			<td>6mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu d&acirc;y:</td>\r\n			<td>D&acirc;y da</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Size d&acirc;y:</td>\r\n			<td>14mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ chịu nước:</td>\r\n			<td>30m</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Trọng Lượng:</td>\r\n			<td>29g</td>\r\n		</tr>\r\n		<tr>\r\n			<td>T&iacute;nh năng kh&aacute;c:</td>\r\n			<td>Đồng hồ 2 kim hiển thị giờ, ph&uacute;t. Vỏ v&agrave; mặt số đ&iacute;nh đ&aacute; qu&yacute;</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh ch&iacute;nh h&atilde;ng:</td>\r\n			<td>2 năm quốc tế</td>\r\n		</tr>\r\n		<tr>\r\n			<td>M&agrave;u mặt:</td>\r\n			<td>Trắng ngọc trai</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh Duy Anh:</td>\r\n			<td>5 năm (đ&atilde; bao gồm bảo h&agrave;nh quốc tế), Thay pin miễn ph&iacute; trọn đời</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Xuất xứ thương hiệu:</td>\r\n			<td>Thụy Điển</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'DW00100827', 'Đồng hồ nữ Daniel Wellington Crystalline Bezel Black Croc Rose Gold DW00100827'),
-	(58, 'Xanh Sữa Nhài Đào Tiên', 6, 3, '/storage/images_product/pHyYMYAg26_900x900-Xanh-Sua-Nhai-Dao-Tien.jpg', 20000, 20000, 46, 0, '<p><strong>Hương vị ngọt ng&agrave;o của đ&agrave;o ch&iacute;n mọng kết hợp c&ugrave;ng sự thanh m&aacute;t của tr&agrave; xanh, th&ecirc;m ch&uacute;t b&eacute;o nhẹ từ sữa, tạo n&ecirc;n một thức uống ho&agrave;n hảo, sảng kho&aacute;i</strong></p>', '<p><strong>Hương vị ngọt ng&agrave;o của đ&agrave;o ch&iacute;n mọng kết hợp c&ugrave;ng sự thanh m&aacute;t của tr&agrave; xanh, th&ecirc;m ch&uacute;t b&eacute;o nhẹ từ sữa, tạo n&ecirc;n một thức uống ho&agrave;n hảo, sảng kho&aacute;i</strong></p>', 'ECB-10DB-1ADF', 'Xanh Sữa Nhài Đào Tiên'),
-	(59, 'Đồng hồ nam Casio Edifice EQS-950D-1AVUDF', 6, 3, '/storage/images_product/iNfeT3YZCe_citizen-bi5120-51l-nam-thumb-638702011223823983-600x600.jpg', 250000, 500000, 999, 0, '<p>Th&ocirc;ng tin sản phẩm</p>\r\n\r\n<table border="0" cellpadding="0" style="width:100%">\r\n	<tbody>\r\n		<tr>\r\n			<td>Giới t&iacute;nh:</td>\r\n			<td>Nam</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Kiểu d&aacute;ng:</td>\r\n			<td>Mặt tr&ograve;n</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Loại m&aacute;y:</td>\r\n			<td>Pin năng lượng mặt trời</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Phong c&aacute;ch:</td>\r\n			<td>Thể thao</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Mặt k&iacute;nh:</td>\r\n			<td>Mặt k&iacute;nh cứng</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Đường k&iacute;nh:</td>\r\n			<td>44mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu vỏ:</td>\r\n			<td>Th&eacute;p kh&ocirc;ng gỉ 316L</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ d&agrave;y:</td>\r\n			<td>12.4mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu d&acirc;y:</td>\r\n			<td>Th&eacute;p kh&ocirc;ng gỉ 316L</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ chịu nước:</td>\r\n			<td>100m</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Lug to Lug:</td>\r\n			<td>48.4mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh ch&iacute;nh h&atilde;ng:</td>\r\n			<td>5 năm quốc tế</td>\r\n		</tr>\r\n		<tr>\r\n			<td>M&agrave;u mặt:</td>\r\n			<td>Đen</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh Duy Anh:</td>\r\n			<td>5 Năm ( Đ&atilde; bao gồm bảo h&agrave;nh Quốc tế )</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Xuất xứ thương hiệu:</td>\r\n			<td>Nhật Bản</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', '<p>Th&ocirc;ng tin sản phẩm</p>\r\n\r\n<table border="0" cellpadding="0" style="width:100%">\r\n	<tbody>\r\n		<tr>\r\n			<td>Giới t&iacute;nh:</td>\r\n			<td>Nam</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Kiểu d&aacute;ng:</td>\r\n			<td>Mặt tr&ograve;n</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Loại m&aacute;y:</td>\r\n			<td>Pin năng lượng mặt trời</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Phong c&aacute;ch:</td>\r\n			<td>Thể thao</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Mặt k&iacute;nh:</td>\r\n			<td>Mặt k&iacute;nh cứng</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Đường k&iacute;nh:</td>\r\n			<td>44mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu vỏ:</td>\r\n			<td>Th&eacute;p kh&ocirc;ng gỉ 316L</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ d&agrave;y:</td>\r\n			<td>12.4mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu d&acirc;y:</td>\r\n			<td>Th&eacute;p kh&ocirc;ng gỉ 316L</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ chịu nước:</td>\r\n			<td>100m</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Lug to Lug:</td>\r\n			<td>48.4mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh ch&iacute;nh h&atilde;ng:</td>\r\n			<td>5 năm quốc tế</td>\r\n		</tr>\r\n		<tr>\r\n			<td>M&agrave;u mặt:</td>\r\n			<td>Đen</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh Duy Anh:</td>\r\n			<td>5 Năm ( Đ&atilde; bao gồm bảo h&agrave;nh Quốc tế )</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Xuất xứ thương hiệu:</td>\r\n			<td>Nhật Bản</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'EQS-950D-1AVUDF', 'Đồng hồ nam Casio Edifice EQS-950D-1AVUDF'),
-	(60, 'Đồng hồ nam Seiko SPB415J1', 6, 2, '/storage/images_product/EGQKTzVwOS_citizen-em0500-73l-nu-600x600.jpg', 300000, 400000, 99, 0, '<p>Th&ocirc;ng tin sản phẩm</p>\r\n\r\n<table border="0" cellpadding="0" style="width:100%">\r\n	<tbody>\r\n		<tr>\r\n			<td>Giới t&iacute;nh:</td>\r\n			<td>Nam</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Kiểu d&aacute;ng:</td>\r\n			<td>Mặt tr&ograve;n</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Loại m&aacute;y:</td>\r\n			<td>Automatic (M&aacute;y cơ tự động)</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Phong c&aacute;ch:</td>\r\n			<td>Hiện đại</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Mặt k&iacute;nh:</td>\r\n			<td>Sapphire</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Đường k&iacute;nh:</td>\r\n			<td>40.2mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu vỏ:</td>\r\n			<td>Th&eacute;p kh&ocirc;ng gỉ 316L</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ d&agrave;y:</td>\r\n			<td>13.5mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu d&acirc;y:</td>\r\n			<td>Th&eacute;p kh&ocirc;ng gỉ 316L</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Size d&acirc;y:</td>\r\n			<td>20mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ chịu nước:</td>\r\n			<td>100m</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Lug to Lug:</td>\r\n			<td>47.4mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>T&iacute;nh năng kh&aacute;c:</td>\r\n			<td>Open Heart. Caliber 6R5J, 24 ch&acirc;n k&iacute;nh, trữ c&oacute;t 72h. Sapphire chống l&oacute;a.</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh ch&iacute;nh h&atilde;ng:</td>\r\n			<td>3 năm quốc tế</td>\r\n		</tr>\r\n		<tr>\r\n			<td>M&agrave;u mặt:</td>\r\n			<td>Trắng</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh Duy Anh:</td>\r\n			<td>5 năm (đ&atilde; bao gồm Bảo h&agrave;nh Quốc tế).</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Xuất xứ thương hiệu:</td>\r\n			<td>Nhật Bản</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', '<p>Th&ocirc;ng tin sản phẩm</p>\r\n\r\n<table border="0" cellpadding="0" style="width:100%">\r\n	<tbody>\r\n		<tr>\r\n			<td>Giới t&iacute;nh:</td>\r\n			<td>Nam</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Kiểu d&aacute;ng:</td>\r\n			<td>Mặt tr&ograve;n</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Loại m&aacute;y:</td>\r\n			<td>Automatic (M&aacute;y cơ tự động)</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Phong c&aacute;ch:</td>\r\n			<td>Hiện đại</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Mặt k&iacute;nh:</td>\r\n			<td>Sapphire</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Đường k&iacute;nh:</td>\r\n			<td>40.2mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu vỏ:</td>\r\n			<td>Th&eacute;p kh&ocirc;ng gỉ 316L</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ d&agrave;y:</td>\r\n			<td>13.5mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu d&acirc;y:</td>\r\n			<td>Th&eacute;p kh&ocirc;ng gỉ 316L</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Size d&acirc;y:</td>\r\n			<td>20mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ chịu nước:</td>\r\n			<td>100m</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Lug to Lug:</td>\r\n			<td>47.4mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>T&iacute;nh năng kh&aacute;c:</td>\r\n			<td>Open Heart. Caliber 6R5J, 24 ch&acirc;n k&iacute;nh, trữ c&oacute;t 72h. Sapphire chống l&oacute;a.</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh ch&iacute;nh h&atilde;ng:</td>\r\n			<td>3 năm quốc tế</td>\r\n		</tr>\r\n		<tr>\r\n			<td>M&agrave;u mặt:</td>\r\n			<td>Trắng</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh Duy Anh:</td>\r\n			<td>5 năm (đ&atilde; bao gồm Bảo h&agrave;nh Quốc tế).</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Xuất xứ thương hiệu:</td>\r\n			<td>Nhật Bản</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'SPB415J1', 'Đồng hồ nam Seiko SPB415J1'),
-	(61, 'Đồ hồ Casio XX', 6, 3, '/storage/images_product/8mWAbbD7C6_casio-mtp-vt01gl-1b2udf-nam-thumb-600x600.jpg', 200000, 400000, 98, 15, '<p>Th&ocirc;ng tin sản phẩm</p>\r\n\r\n<table border="0" cellpadding="0" style="width:100%">\r\n	<tbody>\r\n		<tr>\r\n			<td>Giới t&iacute;nh:</td>\r\n			<td>Nam</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Kiểu d&aacute;ng:</td>\r\n			<td>Mặt tr&ograve;n</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Loại m&aacute;y:</td>\r\n			<td>Pin năng lượng mặt trời</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Phong c&aacute;ch:</td>\r\n			<td>Thể thao</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Mặt k&iacute;nh:</td>\r\n			<td>Mặt k&iacute;nh cứng</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Đường k&iacute;nh:</td>\r\n			<td>44mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu vỏ:</td>\r\n			<td>Th&eacute;p kh&ocirc;ng gỉ 316L</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ d&agrave;y:</td>\r\n			<td>12.4mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu d&acirc;y:</td>\r\n			<td>Th&eacute;p kh&ocirc;ng gỉ 316L</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ chịu nước:</td>\r\n			<td>100m</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Lug to Lug:</td>\r\n			<td>48.4mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh ch&iacute;nh h&atilde;ng:</td>\r\n			<td>5 năm quốc tế</td>\r\n		</tr>\r\n		<tr>\r\n			<td>M&agrave;u mặt:</td>\r\n			<td>Đen</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh Duy Anh:</td>\r\n			<td>5 Năm ( Đ&atilde; bao gồm bảo h&agrave;nh Quốc tế )</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Xuất xứ thương hiệu:</td>\r\n			<td>Nhật Bản</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', '<p>&nbsp;</p>\r\n\r\n<p>Th&ocirc;ng tin sản phẩm</p>\r\n\r\n<table border="0" cellpadding="0" style="width:100%">\r\n	<tbody>\r\n		<tr>\r\n			<td>Giới t&iacute;nh:</td>\r\n			<td>Nam</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Kiểu d&aacute;ng:</td>\r\n			<td>Mặt tr&ograve;n</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Loại m&aacute;y:</td>\r\n			<td>Pin năng lượng mặt trời</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Phong c&aacute;ch:</td>\r\n			<td>Thể thao</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Mặt k&iacute;nh:</td>\r\n			<td>Mặt k&iacute;nh cứng</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Đường k&iacute;nh:</td>\r\n			<td>44mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu vỏ:</td>\r\n			<td>Th&eacute;p kh&ocirc;ng gỉ 316L</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ d&agrave;y:</td>\r\n			<td>12.4mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Chất liệu d&acirc;y:</td>\r\n			<td>Th&eacute;p kh&ocirc;ng gỉ 316L</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Độ chịu nước:</td>\r\n			<td>100m</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Lug to Lug:</td>\r\n			<td>48.4mm</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh ch&iacute;nh h&atilde;ng:</td>\r\n			<td>5 năm quốc tế</td>\r\n		</tr>\r\n		<tr>\r\n			<td>M&agrave;u mặt:</td>\r\n			<td>Đen</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Bảo h&agrave;nh Duy Anh:</td>\r\n			<td>5 Năm ( Đ&atilde; bao gồm bảo h&agrave;nh Quốc tế )</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Xuất xứ thương hiệu:</td>\r\n			<td>Nhật Bản</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', 'SPB417J1', 'Đồ hồ Casio XX');
+	(62, 'Trà Sữa Trân Châu', 4, NULL, '/storage/images_product/iYPFmWsVEX_ts_tran_chau_052aed385e41470db7cec46eddfcfdbb_large.webp', 30000, 45000, 999, 0, '<p>Tr&agrave; Sữa Tr&acirc;n Ch&acirc;u</p>', '<p>Tr&agrave; Sữa Tr&acirc;n Ch&acirc;u</p>', 'TSTC', 'Trà Sữa Trân Châu'),
+	(63, 'Trà Dứa Xiêm', 1, NULL, '/storage/images_product/Ga5yALAVjQ_ts_suong_sao_c5f9f21a549543f89ec8fa2a74885b41_large.webp', 30000, 45000, 999, 0, '<p>Tr&agrave; Dứa Xi&ecirc;m</p>', '<p>Tr&agrave; Dứa Xi&ecirc;m</p>', 'TDX', 'Trà Dứa Xiêm'),
+	(64, 'Matcha Kem', 2, NULL, '/storage/images_product/At5EkvNMWu_ts_tran_chau_052aed385e41470db7cec46eddfcfdbb_large.webp', 30000, 45000, 999, 0, '<p>Matcha Kem</p>', '<p>Matcha Kem</p>', 'MK', 'Matcha Kem'),
+	(65, 'Trà Tươi Kem Orion', 3, NULL, '/storage/images_product/Cz67FLus0e_luc_tra_hoang_kim_4b2ef28d7cc04db0a47c0587e05f8963_large.webp', 30000, 45000, 999, 0, '<p>Tr&agrave; Tươi Kem Orion</p>', '<p>Tr&agrave; Tươi Kem Orion</p>', 'TTKO', 'Trà Tươi Kem Orion');
 
--- Dumping data for table projecttnmt.requirement: ~0 rows (approximately)
-INSERT INTO `requirement` (`id`, `requirement_name`, `requirement_email`, `requirement_title`, `requirement_value`, `requirement_active`, `created_at`, `updated_at`) VALUES
-	(1, 'Mi Trung Kiên', 'maitrungkien1002@gmail.com', 'ggf', 'fffffsfdfdf', 2, '2022-11-19 03:17:32', '2022-11-19 03:17:49');
+-- Dumping structure for table projecttnmt.ships
+CREATE TABLE IF NOT EXISTS `ships` (
+  `ship_id` int unsigned NOT NULL AUTO_INCREMENT,
+  `city_id` int NOT NULL,
+  `district_id` int NOT NULL,
+  `ship_price` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`ship_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table projecttnmt.ships: ~0 rows (approximately)
 
+-- Dumping structure for table projecttnmt.slide
+CREATE TABLE IF NOT EXISTS `slide` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `slide_title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `target` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active` int NOT NULL,
+  `type` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
 -- Dumping data for table projecttnmt.slide: ~7 rows (approximately)
 INSERT INTO `slide` (`id`, `slide_title`, `image`, `target`, `active`, `type`, `created_at`, `updated_at`) VALUES
-	(15, 'Logo Footer', '/storage/images_slide/tueZQ7nemF_OIP.jfif', 'Logo Footer', 1, 4, '2023-12-10 08:34:22', '2025-02-17 20:30:01'),
-	(16, 'Mẫu mã đa dạng', '/storage/images_slide/JyruSUS4AD_2612-bonest-gatti_1711706293.webp', 'Lựa chọn thỏa thích', 1, 1, '2023-12-10 08:37:08', '2025-02-23 20:58:00'),
-	(17, 'Mua 1 tặng 1', '/storage/images_slide/fjqEJc9tx1_bst-dong-ho-doi-koi-tank.jpg', 'Nhanh tay kẻo hết', 1, 1, '2023-12-10 08:37:26', '2025-02-23 20:57:44'),
-	(18, 'banner 1', '/storage/images_slide/UqncS4vpWh_dong-ho-lo-co-giam-49-collection_1712583882.webp', 'banner 1', 1, 2, '2023-12-10 09:32:05', '2025-02-23 21:22:09'),
-	(19, 'THƯƠNG HIỆU HÀNG ĐẦU ĐỒNG HỒ', '/storage/images_slide/2qRRTs2mJ0_15-1876581131-798434204_1711706245.webp', 'Uy tín - Sang Trọng - Lịch Lãm', 1, 1, '2023-12-10 09:32:26', '2025-02-23 20:57:29'),
-	(20, 'logo chính', '/storage/images_slide/eMpC9RR5fO_OIP.jfif', 'logo chính', 1, 3, '2023-12-14 00:46:35', '2025-02-17 20:30:15'),
-	(21, 'banner ngang', '/storage/images_slide/e27lKO7GCX_banner-tieu-rolex_1712583819.webp', 'banner ngang', 1, 2, '2025-02-23 21:12:22', '2025-02-23 21:22:28');
+	(15, 'Logo Footer', '/storage/images_slide/71ZsnD4hn3_OIP.jpg', 'Logo Footer', 1, 4, '2023-12-10 08:34:22', '2025-03-06 09:13:51'),
+	(16, 'Mẫu mã đa dạng', '/storage/images_slide/uPgsVPiBoC_slider_3.webp', 'Lựa chọn thỏa thích', 1, 1, '2023-12-10 08:37:08', '2025-03-06 07:29:16'),
+	(17, 'Mua 1 tặng 1', '/storage/images_slide/KfMrqPbsAS_slider_1.webp', 'Nhanh tay kẻo hết', 1, 1, '2023-12-10 08:37:26', '2025-03-06 07:27:57'),
+	(18, 'banner 1', '/storage/images_slide/Swbz2kw5O2_image (4).png', 'banner 1', 1, 2, '2023-12-10 09:32:05', '2025-03-06 09:08:10'),
+	(19, 'THƯƠNG HIỆU HÀNG ĐẦU ĐỒNG HỒ', '/storage/images_slide/tjihipEuzi_slider_2.webp', 'Uy tín - Sang Trọng - Lịch Lãm', 1, 4, '2023-12-10 09:32:26', '2025-03-06 07:28:21'),
+	(20, 'logo chính', '/storage/images_slide/WrmK8wZNYR_OIP.jpg', 'logo chính', 1, 3, '2023-12-14 00:46:35', '2025-03-06 07:25:54'),
+	(22, 'Menu shop', '/storage/images_slide/eGdTBULF7V_download.jpg', 'Menu shop', 1, 5, '2025-03-06 08:01:08', '2025-03-06 08:07:38');
+
+-- Dumping structure for table projecttnmt.toppings
+CREATE TABLE IF NOT EXISTS `toppings` (
+  `topping_id` int unsigned NOT NULL AUTO_INCREMENT,
+  `topping_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`topping_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- Dumping data for table projecttnmt.toppings: ~3 rows (approximately)
 INSERT INTO `toppings` (`topping_id`, `topping_name`, `price`, `created_at`, `updated_at`) VALUES
@@ -1121,9 +1191,31 @@ INSERT INTO `toppings` (`topping_id`, `topping_name`, `price`, `created_at`, `up
 	(2, 'Thạch', 2000.00, NULL, NULL),
 	(3, 'Kem', 3000.00, NULL, NULL);
 
+-- Dumping structure for table projecttnmt.users
+CREATE TABLE IF NOT EXISTS `users` (
+  `user_id` int NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_email` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_phone` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_district` int DEFAULT NULL,
+  `user_city` int DEFAULT NULL,
+  `provider` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `provider_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `role_id` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `is_verify` tinyint(1) NOT NULL,
+  `verification_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_seen` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`) USING BTREE,
+  UNIQUE KEY `users_user_email_unique` (`user_email`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
 -- Dumping data for table projecttnmt.users: ~12 rows (approximately)
 INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `password`, `user_phone`, `user_address`, `user_district`, `user_city`, `provider`, `provider_id`, `role_id`, `created_at`, `updated_at`, `is_verify`, `verification_code`, `last_seen`) VALUES
-	(23, 'admin', 'info@maitrungkien.com', '$2a$12$VxqsJdoYt7X2L.EfaL5yGOcBm4RYq4Q/uyvNrZjuZA4rXdb35hUwy', '0943206425', 'Điềm Mặc, Định Hoá, Thái Nguyên', 27, 2, NULL, NULL, 1, '2021-12-21 19:23:27', '2025-03-05 12:16:24', 1, '', '2025-03-05 12:16:24'),
+	(23, 'admin', 'info@maitrungkien.com', '$2a$12$VxqsJdoYt7X2L.EfaL5yGOcBm4RYq4Q/uyvNrZjuZA4rXdb35hUwy', '0943206425', 'Điềm Mặc, Định Hoá, Thái Nguyên', 27, 2, NULL, NULL, 1, '2021-12-21 19:23:27', '2025-03-06 11:11:24', 1, '', '2025-03-06 11:11:24'),
 	(24, 'MAI TRUNG KIÊN', 'maitrungkien1002@gmail.com', '$2a$12$VxqsJdoYt7X2L.EfaL5yGOcBm4RYq4Q/uyvNrZjuZA4rXdb35hUwy', NULL, NULL, NULL, NULL, 'google', '108963655266565491761', 1, '2022-11-13 08:52:42', '2023-11-20 10:57:04', 1, '', '2023-11-20 10:57:04'),
 	(38, 'kien đây', 'hoangkienzx@gmail.com', '$2y$10$7Azcbot.9DldE88CYBP2U.5tz3MsEBuHAeARMIpkieYFbONBg79gW', NULL, NULL, NULL, NULL, NULL, NULL, 3, '2023-09-21 20:57:35', '2023-09-21 20:57:35', 1, 'be6ab80086cb47317769fbbce97a9c0656973807', '2023-10-29 08:56:45'),
 	(40, 'quản lý sản phẩm', 'cuong.pv@tinasoft.vn', '$2y$10$UCoFS.haL43n4uZvokfu6OBf/L592Q0J2WhgwC6DAzdPFFz2FpNgq', NULL, NULL, NULL, NULL, NULL, NULL, 2, '2023-10-10 00:51:42', '2024-01-12 00:13:40', 1, 'b08150009ca96cd896ab016e33700a8449f44b52', '2024-01-12 00:13:40'),
@@ -1136,9 +1228,19 @@ INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `password`, `user_pho
 	(59, 'Hà Quang Uy', 'dtc1955103020102@ictu.edu.vn', '$2y$10$3PcLZWj10EOCLBYy1WNpNeYM7qpGkHF5AQ78y3waJn.C8p7At7jQa', NULL, NULL, NULL, NULL, NULL, NULL, 3, '2023-11-21 21:19:24', '2023-12-03 10:34:55', 1, 'f6d26ecbf7be22220b1de02791816574d126446c', '2023-12-03 10:34:55'),
 	(63, 'NVTEASHOP', 'cuongdtnt109@gmail.com', '$2y$10$x9xrvO9dS24D0thspDmyZu7sQTMN/40Ia/c.a.KxuXsv539jhula.', NULL, NULL, NULL, NULL, NULL, NULL, 3, '2025-03-05 08:54:27', '2025-03-05 08:54:54', 1, 'dd0798e988e26afaff6f1fa7a7a3aba7fd84de40', NULL);
 
+-- Dumping structure for table projecttnmt.wishlist
+CREATE TABLE IF NOT EXISTS `wishlist` (
+  `wishlist_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`wishlist_id`) USING BTREE,
+  KEY `wishlist_user_id_foreign` (`user_id`) USING BTREE,
+  KEY `wishlist_product_id_foreign` (`product_id`) USING BTREE,
+  CONSTRAINT `wishlist_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE,
+  CONSTRAINT `wishlist_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
 -- Dumping data for table projecttnmt.wishlist: ~0 rows (approximately)
-INSERT INTO `wishlist` (`wishlist_id`, `product_id`, `user_id`) VALUES
-	(5, 56, 55);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
