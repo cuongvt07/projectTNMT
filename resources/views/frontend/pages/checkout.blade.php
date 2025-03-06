@@ -406,7 +406,6 @@
             });
         });
 
-        // Hàm chọn phương thức thanh toán từ label
         window.selectPaymentOption = function(event) {
             const radio = event.currentTarget.nextElementSibling;
             radio.checked = true;
@@ -415,7 +414,6 @@
     });
 </script>
 <script>
-
     $("#delete_coupon_cart").click(function () {
         var _token = $('input[name=_token]').val();
         var selectedShippingOption = $('select.selectpicker').val();
@@ -455,10 +453,14 @@
                 selectedShippingOption: selectedShippingOption
             },
             success: function (data) {
-                $('#cart_coupon_message').text(data.message);
-                $('#coupon_cart').text(data[1] + 'VNĐ');
-                $('#cart_totals').text((data[2]).toLocaleString('ja-JP') + ' VNĐ');
-                $('#delete_coupon_cart').show();
+                if(data.status) {
+                    $('#cart_coupon_message').text(data.message).show().delay(5000).fadeOut();
+                    $('#coupon_cart').text(data.coupon_show);
+                    $('#cart_totals').text(Number(data.cart_totals).toLocaleString('ja-JP') + ' VNĐ');
+                    $('#delete_coupon_cart').show();
+                } else {
+                    $('#cart_coupon_message').text(data.message).show().delay(5000).fadeOut();
+                };
             }
         });
     });

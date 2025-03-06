@@ -416,12 +416,15 @@
     });    
 
     $('.brand__list').owlCarousel({
-      loop: true,
+      loop: false,
       margin:0,
       nav:false,
-      items:5,
+      items:4,
       dots: false,
-      lazyLoad: true,
+      navText: [
+        '<',
+        '>'
+    ],
       responsive: {
         0: {
           items: 2,
@@ -430,7 +433,7 @@
           items: 4,
         },
         991: {
-          items: 5,
+          items: 4,
         }
       }
     });
@@ -537,6 +540,21 @@
         }
         });
     }
+
+    $('.tab-category').owlCarousel({
+        loop: false,   
+        animateOut: 'fadeOut',
+        animateIn: 'fadeIn',   
+        lazyLoad: true,
+        responsive: {
+          0: {
+            items: 2     
+          },
+          992: {
+            items: 4  
+          }
+        }
+      });
 
 
 

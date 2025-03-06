@@ -90,16 +90,6 @@
                             </ul>
                         </div>
                         <!-- End Category Area -->
-                        <!-- Start Category Area -->
-                        <div class="htc__category">
-                            <h4 class="title__line--4">Thương Hiệu</h4>
-                            <ul class="ht__cat__list">
-                                @foreach ($dataBrand as $item)
-                                <li><a href="/shop/brand/{{$item->brand_id}}">{{$item->brand_name}}</a></li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <!-- End Category Area -->
                         <!-- Start Best Sell Area -->
                         <div class="htc__recent__product">
                             <h2 class="title__line--4">Khuyến mãi</h2>

@@ -159,9 +159,14 @@
                     coupon_code: couponCode,
                 },
                 success: function (data) {
-                    $('#cart_coupon_message').text(data[0]);
-                    $('#cart_coupon').html(data[3]);
-                    $('#cart_totals').text(data[2].toLocaleString('ja-JP') + ' VNĐ');
+                    if(data.status) {
+                        $('#cart_coupon_message').text(data.message).show().delay(5000).fadeOut();
+                        $('#coupon_cart').text(data.coupon_show);
+                        $('#cart_totals').text(Number(data.cart_totals).toLocaleString('ja-JP') + ' VNĐ');
+                        $('#delete_coupon_cart').show();
+                    } else {
+                        $('#cart_coupon_message').text(data.message).show().delay(5000).fadeOut();
+                    };
                 }
             });
         });

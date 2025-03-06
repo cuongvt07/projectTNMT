@@ -64,9 +64,6 @@ Route::get('/chat', [ChatController::class, 'index'])->name('chat.home');
 Route::get('/message/{id}',[ChatController::class, 'getMessage'])->name('chat.message');
 Route::post('message', [ChatController::class, 'sendMessage']);
 
-//Route gửi lời nhắn
-Route::post('/contact/send', [\App\Http\Controllers\frontend\RequirementController::class, 'send']);
-
 //Route blog
 Route::get('/blog', [PageController::class, 'blog']);
 Route::get('/blog/{id}', [PageController::class, 'viewBlog']);

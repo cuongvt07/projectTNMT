@@ -225,4 +225,26 @@ class PageController extends Controller
             return $data = ProductModel::where('category_id', $id)->orderBy('product_name', 'DESC')->paginate(Constant::NUMBER_PRODUCT);
         }
     }
+
+    public function category($id){
+        $dataProductSales = ProductModel::orderBy('product_sale', 'DESC')->limit(4)->get();
+        $data_category = CategoryModel::find($id);
+        if($this->checkFilter()){
+            // echo $id;
+            $price_start = $_GET['price_start'];
+            $price_end = $_GET['price_end'];
+            $data = ProductModel::where('category_id', $id)->whereBetween('product_price_sell', [$price_start, $price_end])->orderBy('product_id', 'DESC')->paginate(Constant::NUMBER_PRODUCT);
+        }
+        else if($this->checkSort()){
+            $sortBy = $_GET['sort_by'];
+            $data = $this->sortByCategory($sortBy, $id);
+        }
+        else{
+            $data = ProductModel::where('category_id', $id)->orderBy('product_id', 'DESC')->paginate(Constant::NUMBER_PRODUCT);
+        }
+        return view('frontend.pages.shop',[
+            'data' => $data,
+            'dataProductSales' => $dataProductSales,
+        ]);
+    }
 }

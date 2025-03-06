@@ -117,16 +117,16 @@
                             @if (!empty($item['topping_detail']))
                                 @foreach ($item['topping_detail'] as $toppingDetail)
                                     {{ $toppingDetail['topping_name'] ?? 'Topping đã xóa' }}
-                                    ({{ number_format($toppingDetail['topping_price'] ?? 0) }}đ)
+                                    ({{ number_format($toppingDetail['topping_price'] ?? 0) }}VNĐ)
                                     <br>
                                 @endforeach
                             @endif
                             @if (!empty($item['size'])) 
                                 Size: {{ $item['size'] }} 
-                                @if ($item['size'] == 'L') (+{{ number_format(7000) }}đ) @endif
+                                @if ($item['size'] == 'L') (+{{ number_format(7000) }}VNĐ) @endif
                             @endif
                         </td>
-                        <td>{{ number_format($item['order_detail_price']) }}đ</td>
+                        <td>{{ number_format($item['order_detail_price']) }}VNĐ</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -134,8 +134,9 @@
         </div>
         <hr>
         <div>
-            <p>Phí vận chuyển: {{ number_format($dataOrder['shipping_fee']) }}đ</p>
-            <p class="bold">Tổng: {{ number_format($dataOrder['order_total']) }}đ</p>
+            <p>Phí vận chuyển: {{ number_format($dataOrder['shipping_fee']) }}VNĐ</p>
+            <P>Giảm giá coupon: - {{ ($dataOrder['order_discount']) }}</P> 
+            <p class="bold">Tổng: {{ number_format($dataOrder['order_total']) }}VNĐ</p>
         </div>
         <hr>
         <div class="text-center small">
