@@ -33,6 +33,7 @@
                                         <!-- End Single Mega Menu -->
                                     </ul>
                                 </li>
+                                <li><a href="/menu">Menu</a></li>
                                 <li><a href="/contact">Liên Hệ</a></li>
                             </ul>
                         </nav>

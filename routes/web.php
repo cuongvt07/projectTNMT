@@ -42,6 +42,7 @@ Route::get('/shop/brand/{id}', [PageController::class, 'brand']);
 Route::get('/shop/category/{id}', [PageController::class, 'category']);
 Route::get('/shop/product/{id}', [PageController::class, 'product']);
 Route::get('/contact', [PageController::class, 'contact']);
+Route::get('/menu', [PageController::class, 'menu']);
 
 //Route handle cart
 Route::get('/cart', [CartController::class, 'cart']);

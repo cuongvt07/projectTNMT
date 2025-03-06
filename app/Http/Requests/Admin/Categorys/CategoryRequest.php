@@ -24,7 +24,7 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'category_name' => 'required|max:50|min:10',
+            'category_name' => 'required|max:50|min:5',
             'category_keyword' => 'required',
             'category_description' => 'required',
         ];
@@ -34,8 +34,8 @@ class CategoryRequest extends FormRequest
     {
         return [
             'category_name.required' => 'Tên loại danh mục TS không được để trống',
-            'category_name.max' => 'Tên loại danh mục TS không được ngắn hơn 10 kí tự và không được dài hơn 50 kí tự',
-            'category_name.min' => 'Tên loại danh mục TS không được ngắn hơn 10 kí tự và không được dài hơn 50 kí tự',
+            'category_name.max' => 'Tên loại danh mục TS không được ngắn hơn 5 kí tự và không được dài hơn 50 kí tự',
+            'category_name.min' => 'Tên loại danh mục TS không được ngắn hơn 5 kí tự và không được dài hơn 50 kí tự',
             'category_keyword.required' => 'Mã loại danh mục TS không được để trống',
             'category_description.required' => 'Mô tả loại danh mục TS không được để trống',
         ];

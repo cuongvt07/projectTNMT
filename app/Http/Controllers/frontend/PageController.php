@@ -51,25 +51,20 @@ class PageController extends Controller
     }
 
     public function index(){
-        $dataProductNews = ProductModel::orderBy('product_id', 'DESC')->limit(Constant::NUMBER_PRODUCT)->get();
-        $dataProductSales = ProductModel::orderBy('product_sale', 'DESC')->limit(Constant::NUMBER_PRODUCT)->get();
-        $dataProductSell = ProductModel::whereIn('product_id', 
-                        OrderdetailModel::select('product_id')
-                                        ->groupBy('product_id')
-                                        ->limit(Constant::NUMBER_PRODUCT)
-                                        ->pluck('product_id') )
-                        ->get();
-        $dataComment = CommentModel::where('comment_status', 3)->limit(4)->get();
+        $dataTS = ProductModel::where('category_id', 4)->orderBy('product_id', 'DESC')->get();
+        $dataTT = ProductModel::where('category_id', 3)->orderBy('product_id', 'DESC')->get();
+        $dataKL = ProductModel::where('category_id', 2)->orderBy('product_id', 'DESC')->get();
+        $dataTC = ProductModel::where('category_id', 1)->orderBy('product_id', 'DESC')->get();
         $dataSilde = SlideModel::where('active', 1)->where('type', 1)->orderBy('id', 'DESC')->limit(Constant::NUMBER_PRODUCT)->get();
         $dataBanner = SlideModel::where('active', 1)->where('type', 2)->orderBy('id', 'DESC')->get();
         $dataPost = PostModel::orderBy('id', 'DESC')->limit(4)->get();
         $dataTopping = ToppingModel::all();
 
         return view('frontend.pages.home',[
-            'dataProductNews' => $dataProductNews,
-            'dataProductSales' => $dataProductSales,
-            'dataProductSell' => $dataProductSell,
-            'dataComment' => $dataComment,
+            'dataTS' => $dataTS,
+            'dataTT' => $dataTT,
+            'dataKL' => $dataKL,
+            'dataTC' => $dataTC,
             'dataSilde' => $dataSilde,
             'dataBanner' => $dataBanner,
             'dataPost' => $dataPost,
@@ -245,6 +240,13 @@ class PageController extends Controller
         return view('frontend.pages.shop',[
             'data' => $data,
             'dataProductSales' => $dataProductSales,
+        ]);
+    }
+
+    public function menu(){
+        $dataMenu = SlideModel::where('type', 5)->get();
+        return view('frontend.pages.menu',[
+            'dataMenu' => $dataMenu,
         ]);
     }
 }

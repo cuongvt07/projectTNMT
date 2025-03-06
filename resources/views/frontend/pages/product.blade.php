@@ -2,21 +2,21 @@
 
 @section('content')
 <!-- Start Product Details Area -->
-<section class="htc__product__details bg__cat--1" style="padding: 30px;">
+<section class="htc__product__details bg__cat--1">
     <div class="htc__product__details__top">
         <div class="container">
-            <div class="row" style="background: #999;padding: 20px;">
+            <div class="row" style="background: #004e91 ;padding: 20px;">
                 <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
                     <div class="htc__product__details__tab__content">
                         <!-- Start Product Big Images -->
                         <div class="product__big__images">
                             <div class="portfolio-full-image tab-content">
                                 <div role="tabpanel" class="tab-pane fade in active" id="img-tab-0">
-                                    <img style="width: 460px; height: 460px" src="{{$data->product_image}}" alt="full-image">
+                                    <img src="{{$data->product_image}}" alt="full-image">
                                 </div>
                                 @foreach ($dataProductImages as $item)
                                 <div role="tabpanel" class="tab-pane fade" id="img-tab-{{$item->image_id}}">
-                                    <img style="width: 460px; height: 460px" src="{{$item->image_name}}" alt="full-image">
+                                    <img src="{{$item->image_name}}" alt="full-image">
                                 </div>
                                 @endforeach
                             </div>
@@ -48,11 +48,8 @@
                             <ul class="rating">
                                 <div class="starrating risingstar d-flex justify-content-center flex-row-reverse">
                                     @for($i = 5; $i >= 1; $i--)
-                                    <label for="star{{ $i }}" title="{{ $i }} star"></label>
+                                    <label style="color:#fff" for="star{{ $i }}" title="{{ $i }} star"></label>
                                     @endfor
-                                </div>
-                                <div class="best-saler">
-                                    <span>Best Seller</span>
                                 </div>
                             </ul>
                             <div class="product-price" id="price-preview">
@@ -91,8 +88,8 @@
                                 <div class="sin__desc mt-2">
                                     <p><span>Size:</span></p>
                                     <div class="size-options" style="display: flex; gap: 10px;">
-                                        <label><input type="radio" name="size_{{$data->product_id}}" value="M" checked> M</label>
-                                        <label><input type="radio" name="size_{{$data->product_id}}" value="L"> L (+7000đ)</label>
+                                        <label style="color:#fff"><input type="radio" name="size_{{$data->product_id}}" value="M" checked> M</label>
+                                        <label style="color:#fff"><input type="radio" name="size_{{$data->product_id}}" value="L"> L (+7000đ)</label>
                                     </div>
                                 </div>
 
@@ -101,17 +98,17 @@
                                     <p><span>Topping:</span></p>
                                     <div class="topping-options" style="display: flex; gap: 10px; flex-wrap: wrap;">
                                         @foreach ($dataToppings as $topping)
-                                        <label><input type="checkbox" name="topping_{{$data->product_id}}[]" value="{{$topping->topping_id}}"> {{$topping->topping_name}} ({{number_format($topping->price)}}đ)</label>
+                                        <label style="color:#fff"><input type="checkbox" name="topping_{{$data->product_id}}[]" value="{{$topping->topping_id}}"> {{$topping->topping_name}} ({{number_format($topping->price)}}đ)</label>
                                         @endforeach
                                     </div>
                                 </div>
 
                                 <div class="sin__desc">
                                     <ul class="payment__btn">
-                                        <li style="display: flex;">
+                                        <li class="payment__btn__item">
                                             @if ($data->product_amount != 0)
-                                            <button class="add_to_cart btn" style="width:200px; margin-right: 20px" data-id="{{$data->product_id}}" type="button">Thêm Vào Giỏ Hàng <i class="icon-handbag icons"></i></button>
-                                            <button class="buy-now btn" style="width:200px; margin-right: 20px; background:#f40000" data-id="{{$data->product_id}}" type="button">Mua ngay</button>
+                                                <button class="add_to_cart btn" style="width:200px; margin-right: 20px; background-color: #28a745; color: #fff; border: none; border-radius: 5px;" data-id="{{$data->product_id}}" type="button">Thêm Vào Giỏ Hàng <i class="icon-handbag icons"></i></button>
+                                                <button class="buy-now btn" style="width:200px; margin-right: 20px; background-color: #dc3545; color: #fff; border: none; border-radius: 5px;" data-id="{{$data->product_id}}" type="button">Mua ngay <i class="icon-handbag icons"></i></button>
                                             @endif
                                         </li>
                                     </ul>
@@ -149,17 +146,17 @@
 </section>
 <!-- End Product Details Area -->
 <!-- Start Product Description -->
-<section class="htc__produc__decription bg__cat--1">
+<section class="htc__produc__decription">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12" style="padding: 0;">
                 <ul class="pro__details__tab" role="tablist">
                     <li role="presentation" class="description active"><a href="#description" role="tab" data-toggle="tab">Thông Tin</a></li>
                 </ul>
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12" style="padding: 0;">
                 <div class="ht__pro__details__content">
                     <div role="tabpanel" id="description" class="pro__single__content tab-pane fade in active">
                         <div class="pro__tab__content__inner">
@@ -173,21 +170,20 @@
 </section>
 <!-- End Product Description -->
 <!-- Start Product Area -->
+ @if (count($dataProductCategory) > 0)
 <section class="htc__product__area--2 bg__cat--1">
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
                 <div class="section__title--2 text-center">
-                    @if (count($dataProductCategory) > 0)
                     <h2 class="title__line">SẢN PHẨM LIÊN QUAN</h2>
-                    @endif
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="product__wrap clearfix">
+            <div class="product__wrap owl-carousel clearfix"> <!-- Thay đổi ở đây -->
                 @foreach ($dataProductCategory as $item)
-                <div class="col-md-4 col-lg-3 col-sm-4 col-xs-6" style="height: 390px">
+                <div class="item col-md-4 col-lg-3 col-sm-4 col-xs-6" style="height: 390px">
                     @include('frontend.libs.product')
                 </div>
                 @endforeach
@@ -195,6 +191,7 @@
         </div>
     </div>
 </section>
+@endif
 <!-- End Product Area -->
 @endsection
 

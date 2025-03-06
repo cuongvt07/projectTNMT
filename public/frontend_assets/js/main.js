@@ -395,8 +395,51 @@
         }
     });
 
-    $('.product__list').owlCarousel({
+    $('.uti_content').owlCarousel({
         loop: true,
+        margin: 10,
+        autoplay: true,
+        items: 1,
+        nav: false,
+        margin: 15,
+        autoplayTimeout: 5000,
+        slideBy: 1,
+        navText: [
+            '<',
+            '>'
+        ],
+        responsive: {
+            0: {
+                items: 1
+            },
+            768: {
+                items: 3
+            }
+        }
+    });
+
+    $('.product__wrap').owlCarousel({
+        loop: false,
+        margin: 15,
+        autoplayTimeout: 5000,
+        slideBy: 1,
+        responsive: {
+            0: {
+                items: 2
+            },
+            768: {
+                items: 4
+            }
+        },
+        nav: true,
+        navText: [
+            '<',
+            '>'
+        ]
+    });
+
+    $('.product__list').owlCarousel({
+        loop: false,
         margin: 15,
         item: 5,
         autoHeight: true,
@@ -415,10 +458,11 @@
         ]
     });    
 
-    $('.brand__list').owlCarousel({
+    $('.blog__list').owlCarousel({
       loop: false,
       margin:0,
       nav:false,
+      margin: 15,
       items:4,
       dots: false,
       navText: [
@@ -523,7 +567,8 @@
         smartSpeed: 1000,
         autoplay: false,
         navText: [ '<i class="icon-arrow-left icons"></i>', '<i class="icon-arrow-right icons"></i>' ],
-        autoplayTimeout: 10000,
+        autoplayTimeout: 5000,
+        autoplay: true,
         items:1,
         dots: false,
         lazyLoad: true,
@@ -542,16 +587,19 @@
     }
 
     $('.tab-category').owlCarousel({
-        loop: false,   
+        loop: false,
         animateOut: 'fadeOut',
-        animateIn: 'fadeIn',   
+        animateIn: 'fadeIn',
         lazyLoad: true,
         responsive: {
           0: {
-            items: 2     
+            loop: true,
+            items: 1,
+            autoplay: true,
+            autoplayTimeout: 3000
           },
           992: {
-            items: 4  
+            items: 4
           }
         }
       });

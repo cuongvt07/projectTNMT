@@ -7,7 +7,7 @@
         <span class="sale-span" style="background-color: red;">Hết Hàng</span>
         @endif
         <a href="/shop/product/{{$item->product_id}}-{{ Str::slug($item->product_name, '-') }}.html">
-            <img style="height: 260px" src="{{$item->product_image}}" alt="{{$item->product_name}}">
+            <img style="height: auto" src="{{$item->product_image}}" alt="{{$item->product_name}}">
         </a>
     </div>
     <div class="fr__hover__info">

@@ -139,8 +139,8 @@
 
 
 .footer__container {
-    padding-bottom: 80px;
-    padding-top: 60px;
+    padding: 40px 0;
+    background-color: #2c4d6a;
 }
 .title__line--2 {
     color: #ffffff;
@@ -194,6 +194,7 @@
 }
 .social__link {
     display: flex;
+    align-items: center;
 }
 .social__link li a i {
     background: transparent none repeat scroll 0 0;
