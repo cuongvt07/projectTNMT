@@ -382,28 +382,29 @@ class CartController extends Controller
 
     //Tạo thanh toán bằng vn pay
     public function paymentCreate(Request $request){
-        $vnp_TmnCode = "ES8W4TH7";
-        $vnp_HashSecret = "BYAOHQMNDPHLWRUFHXGJKPLUXWRCMNBW";
+        $vnp_TmnCode = "XK4IRSUC";
+        $vnp_HashSecret = "XCHA64TCCPNZVHQ0E9MP2BEW75O53IW3";
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = "http://127.0.0.1:8000/payment/return";
         $vnp_TxnRef = rand(1,10000);
-        $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
-        $vnp_OrderType = 'billpayment';
+        $vnp_OrderInfo = "Thanh toán hóa đơn" .' '. $request->orderInfo;
+        $vnp_OrderType = 'other';
         $vnp_Amount = str_replace(',', '', $request->input('amount'));
 
-        // Kiểm tra xem amount có phải là số hợp lệ không
         if (!is_numeric($vnp_Amount) || $vnp_Amount <= 0) {
             return redirect()->back()->with('msgError', 'Số tiền không hợp lệ. Vui lòng kiểm tra lại.');
         }
         $vnp_Locale = 'vn';
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+        $createDate = Carbon::now('Asia/Ho_Chi_Minh');
+        $expireDate = $createDate->copy()->addMinutes(30);
 
         $inputData = array(
             "vnp_Version" => "2.1.0",
             "vnp_TmnCode" => $vnp_TmnCode,
-            "vnp_Amount" => $vnp_Amount,
+            "vnp_Amount" => $vnp_Amount*100,
             "vnp_Command" => "pay",
-            "vnp_CreateDate" => date('YmdHis'),
+            "vnp_CreateDate" => $createDate->format('YmdHis'),
             "vnp_CurrCode" => "VND",
             "vnp_IpAddr" => $vnp_IpAddr,
             "vnp_Locale" => $vnp_Locale,
@@ -411,6 +412,7 @@ class CartController extends Controller
             "vnp_OrderType" => $vnp_OrderType,
             "vnp_ReturnUrl" => $vnp_Returnurl,
             "vnp_TxnRef" => $vnp_TxnRef,
+            "vnp_ExpireDate" => $expireDate->format('YmdHis'),
         );
 
         if (isset($vnp_BankCode) && $vnp_BankCode != "") {
@@ -430,11 +432,11 @@ class CartController extends Controller
             }
             $query .= urlencode($key) . "=" . urlencode($value) . '&';
         }
-
+        
         $vnp_Url = $vnp_Url . "?" . $query;
         if (isset($vnp_HashSecret)) {
-            $vnpSecureHash = hash('sha256', $vnp_HashSecret . $hashdata);
-            $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
+            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//  m
+            $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
         return redirect($vnp_Url);
     }

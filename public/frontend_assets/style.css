@@ -293,7 +293,7 @@
 .fr__product__inner h4 a {
     color: #444;
     font-family: 'Times New Roman';
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
     text-transform: capitalize;
     transition: all 0.3s ease 0s;
@@ -314,7 +314,7 @@
 }
 .fr__pro__prize li {
     color: #e81307;
-    font-size: 1.07143em;
+    font-size: 16px;
     line-height: 1.71429em;
     display: block;
     font-weight: 800;

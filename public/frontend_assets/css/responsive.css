@@ -289,6 +289,8 @@ nav.off__canvars--menu ul li {
 .header__top__area, .menumenu__container {
   padding-left: 20px;
   padding-right: 20px;
+  display: flex;
+  align-items: center;
 }
 .ht__header__right li + li {
   margin-left: 19px;
@@ -610,7 +612,7 @@ nav.off__canvars--menu ul li {
 
 nav.mean-nav {
   position: absolute;
-  left: 111px;
+  left: -7px;
 }
 
 .custom-order-process .step-icon {
@@ -1244,7 +1246,7 @@ nav.mean-nav {
 }
 .header__search a i ,
 .htc__shopping__cart a i {
-  font-size: 16px;
+  font-size: 22px;
 }
 .slider__inner h2 {
   line-height: 38px;
@@ -1376,16 +1378,6 @@ nav.mean-nav {
 }
 .bootstrap-select>.dropdown-toggle.bs-placeholder, .bootstrap-select>.dropdown-toggle.bs-placeholder:active, .bootstrap-select>.dropdown-toggle.bs-placeholder:focus, .bootstrap-select>.dropdown-toggle.bs-placeholder:hover{
     color: #000;
-}
-.dropdown-toggle::after {
-    content: "";
-    position: absolute;
-    border-top: .5em solid;
-    border-right: .5em solid transparent;
-    border-bottom: 0;
-    border-left: .5em solid transparent;
-    right: 10px;
-    top: 48%;
 }
 .dropdown-menu{
     box-shadow: 0px 0px 15px rgba(60, 76, 150, 0.1);

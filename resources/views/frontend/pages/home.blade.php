@@ -125,67 +125,55 @@
                 @endforeach
             </div>
             @foreach ($dataTS as $item)
-            <div id="cartModal_{{$item->product_id}}" class="cart-modal cart-modal-{{$item->product_id}}">
+            <div id="cartModal_{{$item->product_id}}" class="cart-modal modal cart-modal-{{$item->product_id}}">
                 <div class="modal-content">
-                    <button href="#"><i class="zmdi zmdi-close close-btn" data-id="{{$item->product_id}}"></i></button>
+                    <button class="close-btn" data-id="{{$item->product_id}}"><i class="zmdi zmdi-close"></i></button>
                     <div class="modal-body">
-                        <!-- Phần trên: Chia thành 2 khối ngang -->
+                        <!-- Top Section: Split into two blocks -->
                         <div class="modal-top">
                             <div class="modal-left">
-                                <img src="{{$item->product_image}}" alt="{{$item->product_name}}"
-                                    class="modal-product-image">
+                                <img src="{{$item->product_image}}" alt="{{$item->product_name}}" class="modal-product-image">
                             </div>
                             <div class="modal-right">
                                 <h2 class="title-product">{{$item->product_name}}</h2>
-                            </div>
-                        </div>
-
-                        <!-- Phần giữa: Mô tả ngắn (giá cả) -->
-                        <div class="modal-description">
-                            <p class="product-price-popup">
-                                @if ($item->product_sale != 0)
-                                <span class="old-price" style="color: #000;"> Giá:
-                                    {{ number_format($item->product_price_sell) }}đ</span>
-                                @endif
-                                <span class="sale-price" style="color: #000;">
-                                    Giá:
-                                    {{ number_format($item->product_price_sell - ($item->product_price_sell / 100 * $item->product_sale)) }}đ
-                                </span>
-                            </p>
-                        </div>
-
-                        <!-- Phần dưới: Các option -->
-                        <div class="modal-options">
-                            <div class="modal-option" style="display: flex; align-items: center;">
-                                <label>Size: </label>
-                                <div class="modal-size" style="display: flex; gap: 10px;">
-                                    <label><input class="type_payment" type="radio" name="size_{{$item->product_id}}"
-                                            value="M" checked="checked" required> M</label>
-                                    <label><input class="type_payment" type="radio" name="size_{{$item->product_id}}"
-                                            value="L" required> L (+7000)</label>
+                                <span class="product-description">{{$item->product_description}}</span>
+                                <div class="modal-description">
+                                    <p class="product-price-popup">
+                                        @if ($item->product_sale != 0)
+                                        <span class="old-price">Giá: {{ number_format($item->product_price_sell) }}đ</span>
+                                        @endif
+                                        <span class="sale-price">Giá: {{ number_format($item->product_price_sell - ($item->product_price_sell / 100 * $item->product_sale)) }}đ</span>
+                                    </p>
                                 </div>
                             </div>
-                            <div class="modal-option" style="display: flex; align-items: center;">
-                                <label>Topping:&nbsp;</label>
-                                <div class="topping-options" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        </div>
+                        <!-- Bottom Section: Options -->
+                        <div class="modal-options">
+                            <div class="modal-option">
+                                <label>Size:</label>
+                                <div class="modal-size">
+                                    <label><input type="radio" name="size_{{$item->product_id}}" value="M" checked required> M</label>
+                                    <label><input type="radio" name="size_{{$item->product_id}}" value="L" required> L (+7000)</label>
+                                </div>
+                            </div>
+                            <div class="modal-option">
+                                <label>Topping:</label>
+                                <div class="topping-options">
                                     @foreach ($dataTopping as $topping)
-                                    <label><input type="checkbox" name="topping[]" value="{{$topping->topping_id}}">
-                                        {{$topping->topping_name}}</label>
+                                    <label><input type="checkbox" name="topping[]" value="{{$topping->topping_id}}"> {{$topping->topping_name}}</label>
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="sin__desc mt-2 quantity-container">
-                                <label>Số lượng:</label>&nbsp;
+                            <div class="quantity-container">
+                                <label>Số lượng:</label>
                                 <div class="quantity">
                                     <button type="button" class="minus" aria-label="Decrease">&minus;</button>
-                                    <input type="number" class="input-box cart_quantity_{{$item->product_id}}" value="1"
-                                        min="1" max="{{$item->product_amount}}" readonly>
+                                    <input type="number" class="input-box cart_quantity_{{$item->product_id}}" value="1" min="1" max="{{$item->product_amount}}" readonly>
                                     <button type="button" class="plus" aria-label="Increase">&plus;</button>
                                 </div>
                             </div>
-                            <!-- Nút thêm vào giỏ hàng -->
-                            <button class="add-to-cart-with-options" data-id="{{$item->product_id}}"
-                                data-item="{{ json_encode($item) }}" type="button">
+                            <!-- Add to Cart Button -->
+                            <button class="add-to-cart-with-options" data-id="{{$item->product_id}}" data-item="{{ json_encode($item) }}" type="button">
                                 Thêm vào giỏ hàng
                             </button>
                         </div>

@@ -404,10 +404,7 @@
         margin: 15,
         autoplayTimeout: 5000,
         slideBy: 1,
-        navText: [
-            '<',
-            '>'
-        ],
+        navText: [ '<i class="icon-arrow-left icons"></i>', '<i class="icon-arrow-right icons"></i>' ],
         responsive: {
             0: {
                 items: 1
