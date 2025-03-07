@@ -93,7 +93,7 @@ class ProductExport implements FromCollection, WithHeadings, WithCustomStartCell
                 $event->sheet->mergeCells(sprintf('A2:%s2', $last_column));
                 $event->sheet->mergeCells(sprintf('A%d:%s%d', $last_row, $last_column, $last_row));
 
-                $event->sheet->setCellValue('A1', 'Thông kê sản phẩm TEA SHOP');
+                $event->sheet->setCellValue('A1', 'Thông kê sản phẩm BUBBLE TEA');
                 $event->sheet->setCellValue('A2', "(Ngày: $currentTime)");
                 $event->sheet->setCellValue(sprintf('A%d', $last_row), "(Ngày: $currentTime)");
                 $event->sheet->getStyle('A1:A2')->applyFromArray($style_text_center);

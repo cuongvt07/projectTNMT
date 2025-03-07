@@ -1419,6 +1419,12 @@ nav.mean-nav {
 
 .product-price {
   align-items: center;
+  background: #b6cee3;
+}
+
+.product-price-popup {
+    font-size: 18px;
+    font-weight: 600;
 }
 
 .starrating > label

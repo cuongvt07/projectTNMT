@@ -142,7 +142,7 @@
 
                         <!-- Phần giữa: Mô tả ngắn (giá cả) -->
                         <div class="modal-description">
-                            <p class="product-price">
+                            <p class="product-price-popup">
                                 @if ($item->product_sale != 0)
                                 <span class="old-price" style="color: #000;"> Giá:
                                     {{ number_format($item->product_price_sell) }}đ</span>
@@ -265,7 +265,7 @@
 
                         <!-- Phần giữa: Mô tả ngắn (giá cả) -->
                         <div class="modal-description">
-                            <p class="product-price">
+                            <p class="product-price-popup">
                                 @if ($item->product_sale != 0)
                                 <span class="old-price" style="color: #000;"> Giá:
                                     {{ number_format($item->product_price_sell) }}đ</span>
@@ -364,7 +364,7 @@
 
                         <!-- Phần giữa: Mô tả ngắn (giá cả) -->
                         <div class="modal-description">
-                            <p class="product-price">
+                            <p class="product-price-popup">
                                 @if ($item->product_sale != 0)
                                 <span class="old-price" style="color: #000;"> Giá:
                                     {{ number_format($item->product_price_sell) }}đ</span>
@@ -428,22 +428,22 @@
             <div class="col-xs-12">
                 <div class="section__title--2 text-center">
                     <h2 class="title__line">
-                        <a>Trà Trái Cây</a>
+                        <a>Trà Tươi</a>
                     </h2>
-                    <img class="img-title" src="https://i.postimg.cc/P59kxv8g/image-3.png" alt="">
+                    <img class="img-title" src="https://i.postimg.cc/ZqKrT6Tk/image.png" alt="">
                 </div>
             </div>
         </div>
         <div class="htc__product__container">
             <!-- Owl Carousel wrapper -->
             <div class="owl-carousel product__list mt--30 mb--20" style="height: auto;">
-                @foreach ($dataTC as $item)
+                @foreach ($dataTT as $item)
                 <div class="item" style="height: 390px;">
                     @include('frontend.libs.product')
                 </div>
                 @endforeach
             </div>
-            @foreach ($dataTC as $item)
+            @foreach ($dataTT as $item)
             <div id="cartModal_{{$item->product_id}}" class="cart-modal cart-modal-{{$item->product_id}}">
                 <div class="modal-content">
                     <button href="#"><i class="zmdi zmdi-close close-btn" data-id="{{$item->product_id}}"></i></button>
@@ -461,7 +461,7 @@
 
                         <!-- Phần giữa: Mô tả ngắn (giá cả) -->
                         <div class="modal-description">
-                            <p class="product-price">
+                            <p class="product-price-popup">
                                 @if ($item->product_sale != 0)
                                 <span class="old-price" style="color: #000;"> Giá:
                                     {{ number_format($item->product_price_sell) }}đ</span>

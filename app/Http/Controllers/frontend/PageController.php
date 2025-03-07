@@ -51,10 +51,10 @@ class PageController extends Controller
     }
 
     public function index(){
-        $dataTS = ProductModel::where('category_id', 4)->orderBy('product_id', 'DESC')->get();
-        $dataTT = ProductModel::where('category_id', 3)->orderBy('product_id', 'DESC')->get();
-        $dataKL = ProductModel::where('category_id', 2)->orderBy('product_id', 'DESC')->get();
-        $dataTC = ProductModel::where('category_id', 1)->orderBy('product_id', 'DESC')->get();
+        $dataTS = ProductModel::where('category_id', 1)->orderBy('product_id', 'DESC')->get();
+        $dataTT = ProductModel::where('category_id', 2)->orderBy('product_id', 'DESC')->get();
+        $dataKL = ProductModel::where('category_id', 3)->orderBy('product_id', 'DESC')->get();
+        $dataTC = ProductModel::where('category_id', 4)->orderBy('product_id', 'DESC')->get();
         $dataSilde = SlideModel::where('active', 1)->where('type', 1)->orderBy('id', 'DESC')->limit(Constant::NUMBER_PRODUCT)->get();
         $dataBanner = SlideModel::where('active', 1)->where('type', 2)->orderBy('id', 'DESC')->get();
         $dataPost = PostModel::orderBy('id', 'DESC')->limit(4)->get();

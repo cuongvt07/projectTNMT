@@ -28,7 +28,7 @@ class CouponRequest extends FormRequest
             'coupon_code' => 'required|min:5|max:30',
             'coupon_value' => 'required',
             'coupon_status' => 'required',
-            'coupon_expiry' => 'required',
+            'coupon_expiry_date' => 'required',
         ];
     }
 
@@ -43,7 +43,7 @@ class CouponRequest extends FormRequest
             'coupon_code.max' => 'Mã giảm giá không được để ngắn hơn 5 kí tự và dài hơn 30 kí tự',
             'coupon_value.required' => 'Giá trị mã giảm giá không được để trống',
             'coupon_status.required' => 'Loại mã giảm giá không được để trống',
-            'coupon_expiry.required' => 'Hạn sử dụng mã giảm giá không được để trống',
+            'coupon_expiry_date.required' => 'Hạn sử dụng mã giảm giá không được để trống',
         ];
     }
 }

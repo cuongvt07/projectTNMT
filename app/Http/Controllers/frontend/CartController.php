@@ -317,15 +317,15 @@ class CartController extends Controller
         }
     
         // Gửi email xác nhận đơn hàng (bỏ comment nếu cần)
-        // $this->sendMailOrder(
-        //     $request->order_email,
-        //     $dataOrder,
-        //     $dataUser,
-        //     $dataCustomerOrderShow['order_shipping'],
-        //     $this->cart,
-        //     $this->coupon,
-        //     $this->shiping
-        // );
+        $this->sendMailOrder(
+            $request->order_email,
+            $dataOrder,
+            $dataUser,
+            $dataCustomerOrderShow['order_shipping'],
+            $this->cart,
+            $this->coupon,
+            $this->shiping
+        );
     
         // Xóa session sau khi đặt hàng thành công
         $this->deleteSession();
@@ -503,15 +503,15 @@ class CartController extends Controller
             }
     
             // Uncomment to send email if needed
-            // $this->sendMailOrder(
-            //     $dataUser->user_email,
-            //     $dataOrder,
-            //     $dataUser,
-            //     $dataCustomerOrderShow['order_shipping'],
-            //     $this->cart,
-            //     $this->coupon,
-            //     Session::get('priceShip')
-            // );
+            $this->sendMailOrder(
+                $dataUser->user_email,
+                $dataOrder,
+                $dataUser,
+                $dataCustomerOrderShow['order_shipping'],
+                $this->shiping,
+                $this->cart,
+                $this->coupon,
+            );
     
             $this->deleteSession();
     

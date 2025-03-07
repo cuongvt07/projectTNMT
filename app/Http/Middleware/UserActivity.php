@@ -22,8 +22,6 @@ class UserActivity
         if (Auth::check()) {
             $expiresAt = now()->addMinutes(2);
             Cache::put('user-is-online-' . Auth::user()->user_id, true, $expiresAt);
-
-            UserModel::where('user_id', Auth::user()->user_id)->update(['last_seen' => now()]);
         }
 
         return $next($request);

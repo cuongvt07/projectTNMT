@@ -33,7 +33,7 @@
 <body>
     <div class="container">
         <div class="text-center">
-            <h3 style="font-size: 10px; margin: 0;">TEA SHOP</h3>
+            <h3 style="font-size: 10px; margin: 0;">BUBBLE TEA</h3>
             <p style="margin: 1px 0;">Đơn: {{ date('d/m/Y', strtotime($dataOrder->created_at)) }}</p>
         </div>
         <hr>

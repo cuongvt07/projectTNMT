@@ -260,7 +260,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css"
       rel="stylesheet">
 <div class="container">
-    <h3 class="text-center">Chat TEA SHOP
+    <h3 class="text-center">Chat BUBBLE TEA
         <a class="backpage" href="{{ auth()->user()->role_id == 1 || auth()->user()->role_id == 2 ? '/admin/dashboard' : '/' }}">
             <i class="fa-solid fa-marker mr-1"></i> Quay lại
         </a>

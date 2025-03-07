@@ -34,7 +34,7 @@ class CouponController extends Controller
         $data->coupon_code = $request->coupon_code;
         $data->coupon_value = $request->coupon_value;
         $data->coupon_status = $request->coupon_status;
-        $data->coupon_expiry = $request->coupon_expiry;
+        $data->coupon_expiry_date = $request->coupon_expiry_date;
 
         if($data->save()){
             return redirect('admin/coupons/create')->with('msgSuccess', 'Thêm Mã Giảm Giá Thành Công');
@@ -60,7 +60,7 @@ class CouponController extends Controller
         $data->coupon_code = $request->coupon_code ?? $data->coupon_code;
         $data->coupon_value = $request->coupon_value ?? $data->coupon_value;
         $data->coupon_status = $request->coupon_status ?? $data->coupon_status;
-        $data->coupon_expiry = $request->coupon_expiry ?? $data->coupon_expiry;
+        $data->coupon_expiry_date = $request->coupon_expiry_date ?? $data->coupon_expiry_date;
 
         if($data->save()){
             return redirect()->back()->with('msgSuccess', 'Sửa Mã Giảm Giá Thành Công');

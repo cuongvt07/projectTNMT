@@ -76,7 +76,7 @@
 <body>
     <div class="container">
         <div class="text-center">
-            <h3>TEA SHOP</h3>
+            <h3>BUBBLE TEA</h3>
         </div>
         <hr>
         <form action="{{ $order_pay_type == 2 ? '/payment/online' : '/payment/momo' }}" id="create_form" method="post">
